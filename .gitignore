@@ -1,0 +1,7 @@
+/vendor/
+/temp/
+/log/
+/nbproject/
+web.config
+composer.lock
+/www/checker/
