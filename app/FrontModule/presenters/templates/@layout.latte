@@ -1,0 +1,99 @@
+{**
+ * Hlavné rozloženie stránky pre FRONT modul aplikácie
+ * My Application layout template for FRONT module.
+ *
+ *	Modul: FRONT
+ *
+ * Posledna zmena(last change): 26.01.2017
+ * @copyright  Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
+ * @license
+ * @link       http://petak23.echo-msz.eu
+ *
+ * @param string   $basePath web base path
+ * @param string   $robots   tell robots how to index the content of a page (optional)
+ * @param array    $flashes  flash messages
+ *}
+<!DOCTYPE html>
+<html>
+<head>	{* ----- Hlavicka stranky ----- *}
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta name="HandheldFriendly" content="true" />
+  <meta name="robots" content="{ifset $robots}{$robots}{else}index, follow{/ifset}" />
+  <meta name="description" content="{$udaje['description']}" />
+  <meta name="keywords" content="{$udaje['keywords']}" />
+  <meta name="author" content="{$udaje['autor']}" />
+  <title n:snippet="title">{$udaje['titulka']} {block title|stripHtml|upper}{/block}</title>
+  {control css}
+  {* ----- Favicon ------ *}
+  <link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon">
+  {block head}{/block}
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="top-header">
+        <h1 n:snippet="h1"><a n:href="Homepage:">{$udaje['titulka']}</a>
+          <br />{ifset $udaje['nazov']}{$udaje['nazov']|striptags}{/ifset}
+          <small n:ifset="$udaje['h1part2']">{$udaje['h1part2']|striptags}</small>
+        </h1>
+        <div><a n:href="Homepage:" title="{$udaje['titulka']}">
+          <img src="{$basePath}/www/images/echo_logo_uv1.png" class="logo" alt="logo">
+        </a></div>
+        <nav class="second-nav" n:snippet="second_nav">
+          {control menu templateType=>'fixed', templateFile=>'Echo_Fixed_Main2', cast=>2, article_avatar_view_in =>0}
+        </nav>
+      </div>{* ----- KONIEC horna lista ------ *}
+      
+      <div class="main-header">
+        <div>
+          {control menu templateType=>'fixed', templateFile=>'Echo_Fixed_Main1', cast=>1, article_avatar_view_in =>0, divClass=>'main-nav'}
+          <div class="row top-panel" n:snippet="top-panel">
+            {control menu templateType=>'nav', templateFile=>'Echo_Nav_Breadcrumb', level=>1}
+          </div>
+          <div class="row top-panel" n:snippet="userLangMenu">
+            {control userLangMenu}
+          </div>
+        </div>
+        {control slider}
+        <div class="col-xs-1 col-md-1 fb-icon">
+          <a href="https://www.facebook.com/echo.msz/" title="Echo na FB" target="_blank">
+            <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </header>
+    {control confirmForm}
+    {* ----- ZACIATOK content - centralna cast ----- *}
+    <section class="main-content container-fluid transition-fade transition-auto content-1" n:snippet="content">
+      <div class="row top-panel" n:if="count($flashes)">
+        <div class="col-md-10 col-md-offset-1" n:inner-foreach="$flashes as $flash" n:if="count($flashes)">
+          {var $nees = explode(',', $flash->type)}
+          <div class="alert alert-{$nees[0]} fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {if isset($nees[1]) && $nees[1] == 'n'}{$flash->message|noescape}{else}{$flash->message}{/if}
+          </div>
+        </div>
+      </div>
+      {include #content}
+      <aside class="article-podclanky">
+        {block article-podclanky}{/block}
+        {control news}
+      </aside>
+    </section>
+    {* ----- Spodok stranky - FOOTER ----- *}
+    {snippet footer}{include 'footer_template.latte'}{/snippet}
+  </div>
+  {control js}
+  {block spec_js}{/block}
+  <script>
+    ga=function(){ ga.q.push(arguments) };ga.q=[];ga.l=+new Date;
+    ga('create','UA-52835371-1','auto');ga('send','pageview');
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+</body>
+</html>

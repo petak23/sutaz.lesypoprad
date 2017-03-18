@@ -1,0 +1,39 @@
+{* Sablona pre vypis kategorii uzivatelov
+ *
+ * Modul: ADMIN
+ *
+ * Posledna zmena(last change): 26.05.2016
+ * @copyright  Copyright (c) 2012 - 2016 Ing. Peter VOJTECH ml.
+ * @license
+ * @link       http://petak23.echo-msz.eu
+ *
+ * @param Nette\Database\Table\Selection  $categories  kategorie z DB
+*}
+{block content}
+<h2 n:block="title">Kategorie uzivatelov</h2>
+
+<div class="col-xs-12 col-md-12">
+  <a n:if="$user->isInRole('admin')" n:href="User:editCategori"  title="Pridanie novej kategórie užívateľov" class="button-right edit-link">
+    <i class="fa fa-user-plus fa-2x"></i>Pridanie novej kategorie</a>
+</div>
+<div class="col-xs-12 col-md-12 table-responsive">
+  <table class="table table-bordered table-striped table-hover table-clenovia">
+    <tr><th>Ikonka</th><th>Id</th><th>Názov</th><th></th></tr>
+    <tr n:foreach="$categories as $ca">
+      <td class="center"><i n:ifset="$ca->fa_class" class="fa fa-{$ca->fa_class}"></i></td>
+      <td class="center">{$ca->id}</td>
+      <td>
+        {if $ca->id_registracia <= $user->getIdentity()->id_registracia}
+          <a n:href="User:editCategori $ca->id" title="Editácia kategórie: {$ca->nazov}">{$ca->nazov}</a>
+        {else}
+          {$ca->nazov}
+        {/if}
+      </td>
+      <td class="editacne center" n:if="$user->isInRole('admin')">
+        <a href="{link confirmForm:confirmDelete! id => $ca->id, nazov => $ca->nazov, druh =>'categori', zdroj_na_zmazanie => 'kategóriu'}"
+          n:if="$ca->id_registracia <= $user->getIdentity()->id_registracia" title="Vymazanie kategórie {$ca->nazov}" class="button-right">
+          <i class="fa fa-trash-o fa-1_5x"></i></a>
+      </td>
+    </tr>
+  </table>
+</div>

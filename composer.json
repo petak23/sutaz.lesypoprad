@@ -31,6 +31,9 @@
 		"nette/utils": "^2.4",
 		"latte/latte": "^2.4",
 		"tracy/tracy": "^2.4",
+    "dg/adminer-custom": "^1.6",
+    "janmarek/webloader": "^2.5",
+	  "joseki/webloader-filters": "^1.1",
     "olicek/google-map-api": "dev-master",
 		"lukyrys/nette-forms-gpspicker": "^1.4"
 	},

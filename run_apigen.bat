@@ -1,0 +1,1 @@
+../_sources/apigen generate --config ../sutaz.lesypoprad/apigen.neon

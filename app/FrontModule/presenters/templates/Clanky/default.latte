@@ -1,0 +1,51 @@
+{* Sablona pre zobrazenie clanku
+ *
+ * Modul: FRONT
+ *
+ * Posledna zmena(last change): 21.10.2016
+ * @copyright  Copyright (c) 2012 - 2016 Ing. Peter VOJTECH ml.
+ * @license
+ * @link       http://petak23.echo-msz.eu
+ *
+ * @param string  $h2 Nadpis
+ * @param int     $uroven Uroven menu
+ * @param string  $avatar_path  cestak obrazku
+ * @param string  $viac_info  Nadpis menu
+ * @param boolean $clanok_view  Zobrazenie
+ * @param array   $komponenty Komponenty pod clankom
+ * @param boolean $komentare_povolene Povolenie komentarov
+*}
+{var $uroven_aside = $uroven > 2 ? $uroven - 1 : 2}
+{block title}{$h2}{/block}
+{block article-podclanky}
+  {control menu templateType=>'tree', templateFile=>'Echo_Tree_Clanky', level=>$uroven_aside, avatar => $avatar_path, anotacia => TRUE, nadpis => $viac_info, divClass => FALSE}
+{/block}
+
+{block content}
+<article class="article-main">
+  <div class="row">
+    <div class="col-xs-12 col-md-12">
+      {if $clanok_view}
+        {control ukazTentoClanok}
+      {else}
+        {control menu templateType=>'single', cast => 1, level => $uroven, avatar => $avatar_path, article_avatar_view_in => TRUE, anotacia => TRUE, nadpis => $viac_info, divClass => 'podclanky'}
+      {/if}  
+    </div>
+  </div>
+  {control prilohy}
+  <div class="row" n:if="(isset($komponenty) && count($komponenty)) || $komentare_povolene">
+    <div class="col-xs-12 col-md-12">
+      <section id="nahlady" n:if="isset($komponenty) && count($komponenty)">
+        {foreach $komponenty as $komp}
+          {ifset $komp["parametre"]}
+            {var $nazov_komp = $komp['nazov'].'-'.$iterator->counter}
+            {control $nazov_komp, $komp["parametre"]}
+          {else}
+            {control $komp["nazov"]}
+          {/ifset}
+        {/foreach}
+      </section>
+      {if $komentare_povolene}{control komentar-$komentare_povolene}{/if}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,7 @@
+<h4>{$texty->trText('base_component_news_h4')}</h4>
+<ul n:inner-foreach="$news as $n">
+  <li>
+    <span>{$n->created|date:'j.n.Y'}</span>
+    <p>{$n->text|noescape}</p>
+  </li>
+</ul>

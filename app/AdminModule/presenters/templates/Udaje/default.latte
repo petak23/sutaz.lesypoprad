@@ -1,0 +1,36 @@
+{* Sablona pre vypis uzivatelov
+ *
+ * Modul: ADMIN
+ *
+ * Posledna zmena(last change): 16.06.2016
+ * @copyright  Copyright (c) 2012 - 2016 Ing. Peter VOJTECH ml.
+ * @license
+ * @link       http://petak23.echo-msz.eu
+ *
+ * @param Nette\Database\Table\Selection  $udaje_w  udaje z DB
+ *}
+{block content}
+<h2 n:block=title>Administrácia hlavných udajov webu</h2>
+<div class="col-xs-12 col-md-12" n:if="$user->isAllowed('Admin:Udaje', 'add')">
+  <a n:href="Udaje:add"  title="Pridanie nového údaja" class="button-right edit-link">
+    <i class="fa fa-file-text fa-2x"></i>Pridanie nového údaja</a>
+</div>
+<div class="col-xs-12 col-md-12 table-responsive">
+  <table class="table table-bordered table-striped table-hover table-clenovia">
+    <tr><th>Komentár</th><th>Názov</th><th>Hodnota</th><th>Prístup</th><th>Druh</th><th>Typ</th><th></th></tr>
+    <tr n:foreach="$udaje_w as $u">
+      <td>{$u->comment}</td>
+      <td>{$u->nazov}</td>
+      <td n:if="$u->id_udaje_typ == 3 " n:class="$u->text == 1 ? success : danger">{$p = $u->text == 1 ? 'Povolene' : 'Zakázané'}</td>
+      <td n:if="$u->id_udaje_typ <> 3 ">{$u->text}</td>
+      <td>{$u->registracia->role}</td>
+      <td>{ifset $u->id_druh}{$u->druh->presenter}{/ifset}</td>
+      <td>{$u->udaje_typ->nazov}</td>
+      <td class="editacne center" n:if="$user->isAllowed('Admin:Udaje', 'edit')">
+        <a n:href="Udaje:edit $u->id" title="Editacia údaja {$u->nazov}" class="button-right edit-ikon"><i class="fa fa-pencil-square fa-1_5x"></i></a>
+        <a href="{link confirmForm:confirmDelete! id => $u->id, nazov => $u->nazov}"
+          title="Vymazanie údaja {$u->nazov}" class="button-right"><i class="fa fa-trash-o fa-1_5x"></i></a>
+      </td>
+    </tr>
+  </table>
+</div>

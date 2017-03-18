@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Nový oznam na {$site_name} !</title>
+  <style>
+    body { color: #333; 
+           background: white; 
+           max-width: 800px; 
+           width: 80%; 
+           margin: 0 5%; 
+           padding: 10px 10px 10px 10px; 
+           font: 13px/18px Arial, Helvetica, sans-serif; 
+           border: 5px solid #2470bd;
+         }
+    a { color: #2470bd; text-decoration: none; }
+    a:hover { color: #666; text-decoration: underline; }
+    h2 { font: normal 20px/23px Arial, Helvetica, sans-serif; margin: 0 10px 15px 0px; padding: 7px 0 7px 18px; color: #0050a3; background-color: #b0d9ff;}
+    h3 { font: normal 16px/18px Arial, Helvetica, sans-serif; margin: 0; padding: 0;}
+    big { font: bold 16px/18px Arial, Helvetica, sans-serif; }
+    small { font-size: 70%; color: gray; margin-left: 20px; }
+    div { background-color: #eee; padding: 5px}
+    p { padding: 0 5px;}
+    .text { background-color: #fff; padding: 0 10px;}
+    .odhlasenie-odberu { background-color: #999; margin-top: 10px; text-align: center;}
+    .odhlasenie-odberu a { color: #eee;}
+    table { background-color: #eee;}
+    td { padding: 0; margin: 0;}
+  </style>
+</head>
+  
+<body>
+  <table>
+    <tr>
+      <td style="width: 100%">
+        <p>Na stránke <a href="http://{$site_name}" title="{$site_name}">{$site_name}</a> bol zverejnený nový oznam:</p>
+      </td>
+      <td rowspan="3" style="width: 150px; text-align: right"><img src="http://{$site_name}/www/images/echo_logo_uv1.png"></td>
+    </tr>
+    <tr><td><h2><a href="{$odkaz}" title="{$nazov}">{$nazov}</a></h2></td></tr>
+    <tr><td><h3>Platnosť: <strong>{$datum_platnosti|date:'j.n.Y'}</strong></h3></td></tr>
+  </table>
+  <div class="text">{$text|noescape}</div>
+  <p>
+    <i>Príjemný deň praje <strong><a href="http://{$site_name}" title="{$site_name}">{$site_name}</a></strong></i>
+  </p>
+  <div n:if="$oznam_ucast">
+    <h4>Potvrdenie účasti:</h4>
+    {foreach $volby as $k=>$v}
+      <a href="{$v['odkaz']}" title="{$v['nazov']}">{$v['nazov']|trim}</a>
+      {sep} | {/sep}
+    {/foreach}
+  </div>
+  
+  <div class="odhlasenie-odberu">
+    <a href="{$odhlasenie['odkaz']}" title="{$odhlasenie['text']}">{$odhlasenie['text']}</a>
+  </div>
+</body>
+</html>

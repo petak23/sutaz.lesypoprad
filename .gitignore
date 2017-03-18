@@ -5,3 +5,6 @@
 web.config
 composer.lock
 /www/checker/
+/app/config/database.neon
+/app/config/config.local.neon
+/webtemp/
