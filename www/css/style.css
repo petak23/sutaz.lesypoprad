@@ -52,3 +52,7 @@ form .error {
 .logo {
   background-color: #9c0;
 }
+
+.user-lang-menu img.avatar{
+  width: 16px;
+}

@@ -8,3 +8,5 @@ composer.lock
 /app/config/database.neon
 /app/config/config.local.neon
 /webtemp/
+/www/ikonky/
+/www/fonts/

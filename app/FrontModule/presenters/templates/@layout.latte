@@ -32,6 +32,26 @@
 </head>
 
 <body>
+  <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+    <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      {*<a class="navbar-brand" href="#">Brand</a>*}
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      {control userLangMenu}
+      
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+  </nav>
   <div class="container">
     <header>
       <div class="top-header">
@@ -42,20 +62,20 @@
         <div><a n:href="Homepage:" title="{$udaje['titulka']}">
           <img src="{$basePath}/www/images/logoML.png" class="logo" alt="logo">
         </a></div>
-        <nav class="second-nav" n:snippet="second_nav">
+        {*<nav class="second-nav" n:snippet="second_nav">
           {control menu templateType=>'fixed', templateFile=>'Echo_Fixed_Main2', cast=>2, article_avatar_view_in =>0}
-        </nav>
+        </nav>*}
       </div>{* ----- KONIEC horna lista ------ *}
       
       <div class="main-header">
         <div>
           {control menu templateType=>'fixed', templateFile=>'Echo_Fixed_Main1', cast=>1, article_avatar_view_in =>0, divClass=>'main-nav'}
-          <div class="row top-panel" n:snippet="top-panel">
+          {*<div class="row top-panel" n:snippet="top-panel">
             {control menu templateType=>'nav', templateFile=>'Echo_Nav_Breadcrumb', level=>1}
-          </div>
-          <div class="row top-panel" n:snippet="userLangMenu">
+          </div>*}
+          {*<div class="row top-panel" n:snippet="userLangMenu">
             {control userLangMenu}
-          </div>
+          </div>*}
         </div>
         {* control slider}
         <div class="col-xs-1 col-md-1 fb-icon">
@@ -82,7 +102,7 @@
       {include #content}
       <aside class="article-podclanky">
         {block article-podclanky}{/block}
-        {control news}
+        {* control news *}
       </aside>
     </section>
     {* ----- Spodok stranky - FOOTER ----- *}
