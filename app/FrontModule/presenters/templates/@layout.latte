@@ -24,7 +24,7 @@
   <meta name="description" content="{$udaje['description']}" />
   <meta name="keywords" content="{$udaje['keywords']}" />
   <meta name="author" content="{$udaje['autor']}" />
-  <title n:snippet="title">{$udaje['titulka']} {block title|stripHtml|upper}{/block}</title>
+  <title n:snippet="title">{$udaje['titulka']} {block title|stripHtml}{/block}</title>
   {control css}
   {* ----- Favicon ------ *}
   <link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon">
@@ -40,7 +40,7 @@
           <small n:ifset="$udaje['h1part2']">{$udaje['h1part2']|striptags}</small>
         </h1>
         <div><a n:href="Homepage:" title="{$udaje['titulka']}">
-          <img src="{$basePath}/www/images/echo_logo_uv1.png" class="logo" alt="logo">
+          <img src="{$basePath}/www/images/logoML.png" class="logo" alt="logo">
         </a></div>
         <nav class="second-nav" n:snippet="second_nav">
           {control menu templateType=>'fixed', templateFile=>'Echo_Fixed_Main2', cast=>2, article_avatar_view_in =>0}
@@ -57,12 +57,12 @@
             {control userLangMenu}
           </div>
         </div>
-        {control slider}
+        {* control slider}
         <div class="col-xs-1 col-md-1 fb-icon">
           <a href="https://www.facebook.com/echo.msz/" title="Echo na FB" target="_blank">
             <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
           </a>
-        </div>
+        </div>*}
       </div>
     </header>
     {control confirmForm}

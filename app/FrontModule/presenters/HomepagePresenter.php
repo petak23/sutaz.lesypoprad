@@ -47,4 +47,9 @@ class HomepagePresenter extends \App\FrontModule\Presenters\BasePresenter {
   public function actionNotAllowed() {
     $this->setView("Default");
   }
+  
+  public function renderDefault() {
+    $this->template->h2="Úvodná stránka";
+    
+  }
 }

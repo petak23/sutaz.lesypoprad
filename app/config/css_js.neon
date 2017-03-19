@@ -42,55 +42,56 @@ webloader:
   css:
     front:
       files:
-#        - %appDir%/../www/css/font-awesome.min.css
-#        - %appDir%/../www/css/bootstrap.min.css
-#        - %appDir%/../www/css/bootstrap-theme.css
-#        - %appDir%/../www/css/lightbox.css
-#        - {files: ["*.css", "*.less"], from: %appDir%/../www/css/front} # Nette\Utils\Finder support
+        - %appDir%/../www/css/style.css
+        - %appDir%/../www/css/font-awesome.min.css
+        - %appDir%/../www/css/bootstrap.min.css
+        - %appDir%/../www/css/bootstrap-theme.css
+        - %appDir%/../www/css/lightbox.css
+        - {files: ["*.css", "*.less"], from: %appDir%/../www/css/front} # Nette\Utils\Finder support
       filters:
         - @jwlCssMinFilter
 #      fileFilters:
 #        - @lessFilter
 #        - @wlCssFilter
       watchFiles:     # only watch modify file
-#        - {files: ["*.css", "*.less"], from: %appDir%/../www/css/front}
-#        - {files: ["*.css", "*.less"], in: %appDir%/../www/css/front}
+        - {files: ["*.css", "*.less"], from: %appDir%/../www/css/front}
+        - {files: ["*.css", "*.less"], in: %appDir%/../www/css/front}
     admin:
       files:
-#        - %appDir%/../www/css/font-awesome.min.css
-#        - %appDir%/../www/css/bootstrap.min.css
-#        - %appDir%/../www/css/bootstrap-theme.css
-#        - %appDir%/../www/css/lightbox.css
-#        - {files: ["*.css", "*.less"], from: %appDir%/../www/css/admin} # Nette\Utils\Finder support
+        - %appDir%/../www/css/font-awesome.min.css
+        - %appDir%/../www/css/bootstrap.min.css
+        - %appDir%/../www/css/bootstrap-theme.css
+        - %appDir%/../www/css/lightbox.css
+        - {files: ["*.css", "*.less"], from: %appDir%/../www/css/admin} # Nette\Utils\Finder support
       filters:
         - @jwlCssMinFilter
 #      fileFilters:
 #        - @lessFilter
 #        - @wlCssFilter
       watchFiles:     # only watch modify file
-#        - {files: ["*.css", "*.less"], from: %appDir%/../www/css/admin}
-#        - {files: ["*.css", "*.less"], in: %appDir%/../www/css/admin}
+        - {files: ["*.css", "*.less"], from: %appDir%/../www/css/admin}
+        - {files: ["*.css", "*.less"], in: %appDir%/../www/css/admin}
 
   js:
     front:
       files:
-#        - %appDir%/../www/js/jquery.js
-#        - %appDir%/../www/js/bootstrap.min.js
-#        - %appDir%/../www/js/netteForms.js
-#        - %appDir%/../www/js/nette.ajax.js
-#        - %appDir%/../www/js/modernizr-2.6.2.min.js
-#        - %appDir%/../www/js/js-image-slider.js
-#        - %appDir%/../www/js/lightbox.min.js
-#        - %appDir%/../www/js/pomocne_front.js
+        - %appDir%/../www/js/jquery.js
+        - %appDir%/../www/js/bootstrap.min.js
+        - %appDir%/../www/js/netteForms.js
+        - %appDir%/../www/js/nette.ajax.js
+        - %appDir%/../www/js/modernizr-2.6.2.min.js
+        - %appDir%/../www/js/js-image-slider.js
+        - %appDir%/../www/js/lightbox.min.js
+        - %appDir%/../www/js/pomocne_front.js
 
     admin:
       files:
-#        - %appDir%/../www/js/jquery.js
-#        - %appDir%/../www/js/bootstrap.min.js
-#        - %appDir%/../www/js/netteForms.js
-#        - %appDir%/../www/js/nette.ajax.js
-#        - %appDir%/../www/js/jquery-ui.min.js
-#        - %appDir%/../www/js/jquery.ui.datepicker-sk.js
-#        - %appDir%/../www/js/grid.js
-#        - %appDir%/../www/js/lightbox.min.js
-#        - %appDir%/../www/js/pomocne_admin.js
+        - %appDir%/../www/js/jquery.js
+        - %appDir%/../www/js/bootstrap.min.js
+        - %appDir%/../www/js/netteForms.js
+        - %appDir%/../www/js/nette.ajax.js
+        - %appDir%/../www/js/jquery-ui.min.js
+        - %appDir%/../www/js/jquery.ui.datepicker-sk.js
+        - %appDir%/../www/js/grid.js
+        - %appDir%/../www/js/lightbox.min.js
+        - %appDir%/../www/js/pomocne_admin.js
