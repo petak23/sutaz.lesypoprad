@@ -14,3 +14,32 @@ and open the template in the editor.
 .user-lang-menu img.avatar{
   width: 16px;
 }
+.my-info dt {
+  float: left;
+  font-weight: normal;
+  display: inline-block;
+  width: 25%;
+}
+.my-info dd {
+  font-weight: bold;
+  display: inline-block;
+  width: 75%;
+}
+
+#footer {
+  font-size: 80%;
+  text-align: center;
+}
+#footer ul {
+  display: inline-block;
+  margin: 0;
+}
+#footer li {
+  float: left;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+#footer p {
+  float: none;
+  margin: 0;
+}

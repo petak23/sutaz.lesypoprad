@@ -452,7 +452,7 @@ abstract class ArticlePresenter extends \App\AdminModule\Presenters\BasePresente
   protected function _delClanok($id) {
     $dokumenty = $this->dokumenty->findBy(["id_hlavne_menu"=>$id]);
     $komponenty = $this->clanok_komponenty->findBy(["id_hlavne_menu"=>$id]);
-    $komentar = $this->clanok_komentar->findBy(["id_hlavne_menu"=>$id]);
+//    $komentar = $this->clanok_komentar->findBy(["id_hlavne_menu"=>$id]);
     $hl_m_m = $this->hlavne_menu_lang->findBy(["id_hlavne_menu"=>$id])->fetchPairs("id", "id_clanok_lang");
     if ($dokumenty !== FALSE && ($pocita = count($dokumenty))) {
       $do = 0;
@@ -462,7 +462,7 @@ abstract class ArticlePresenter extends \App\AdminModule\Presenters\BasePresente
       $out = ($do == $pocita) ? ($dokumenty->delete() == $pocita ? TRUE : FALSE) : FALSE;
     } else { $out = TRUE; }
     $out_k = ($komponenty !== FALSE && ($pocita = count($komponenty))) ? ($komponenty->delete() == $pocita ? TRUE : FALSE) : TRUE;
-    $out_d = ($komentar !== FALSE && ($pocita = count($komentar))) ? ($komentar->delete() == $pocita ? TRUE : FALSE) : TRUE;
+//    $out_d = ($komentar !== FALSE && ($pocita = count($komentar))) ? ($komentar->delete() == $pocita ? TRUE : FALSE) : TRUE;
     $pocita = 0;
     $this->hlavne_menu_lang->findBy(["id_hlavne_menu"=>$id])->update(["id_clanok_lang"=>NULL]);
     foreach ($hl_m_m as $k=>$v) {
@@ -474,7 +474,7 @@ abstract class ArticlePresenter extends \App\AdminModule\Presenters\BasePresente
     }
     $out_c = (count($hl_m_m) == $pocita);
     $out_h = $this->_delHlMenu($id);
-    return $out_k AND $out_d AND $out_c AND $out_h;
+    return $out_k AND /*$out_d AND */$out_c AND $out_h;
   }
   
   /** Komponenta pre vypis kontaktneho formulara

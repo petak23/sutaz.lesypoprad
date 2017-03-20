@@ -1,0 +1,35 @@
+{var $robots = noindex}
+{block content}
+
+<article class="article-main row">
+  <div class="col-md-10 col-md-offset-1">
+    <h2 n:inner-block="title">{$h2}</h2>
+    <div class="row">
+      <div class="col-md-2 bg-info">
+        <img src="{$basePath}/www/{('/www/'.isset($clen->avatar_75) ? $clen->avatar_75 : 'ikonky/64/figurky_64.png')}" alt="avatar" class="img-thumbnail" />
+      </div>
+      <dl class="col-md-10 my-info">
+        <dt>{$texty->trText('default_meno')} {$texty->trText('default_priezvisko')}:</dt>
+        <dd>{$clen->meno} {$clen->priezvisko|upper}</dd>
+        <dt>{$texty->trText('default_log_name')}:</dt>
+        <dd>{$clen->users->username}</dd>
+        <dt>{$texty->trText('default_email')}:</dt>
+        <dd>{$clen->users->email} {$clen->priezvisko|upper}</dd>
+        <dt>{$texty->trText('default_registracia')}:</dt>
+        <dd>{$clen->id_registracia} - {$clen->registracia->nazov} ({$clen->registracia->role})</dd>
+      </dl>
+    </div>
+    <div class="row">
+      {foreach $foto as $f}
+        <img src="{$basePath}/www/ikonky/64/figurky_64.png" alt="txt" class="img-thumbnail" /> 
+      {/foreach}
+      <p class="bg-warning">
+        <a href="#" title="Pridaj">Pridaj nový obrázok</a>
+      </p>
+    </div>
+  </div>
+</article>
+{/block}
+{block spec_js}
+  <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+  <script src="{$basePath}/vendor/lukyrys/nette-forms-gpspicker/client/nette.gpsPicker.js"></script>

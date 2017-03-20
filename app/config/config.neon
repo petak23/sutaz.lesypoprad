@@ -77,3 +77,6 @@ includes:
   - css_js.neon
   - komponenty.neon
   - database.neon
+
+extensions:
+  gpspicker: VojtechDobes\NetteForms\GpsPickerExtension
