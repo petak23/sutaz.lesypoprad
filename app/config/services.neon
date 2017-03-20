@@ -121,6 +121,7 @@ services:
   - App\AdminModule\Presenters\Forms\Oznam\EditOznamFormFactory
 
   - App\FrontModule\Presenters\Forms\User\SignInFormFactory
+  - App\FrontModule\Presenters\Forms\User\RegisterFormFactory
   - App\FrontModule\Presenters\Forms\UserLog\UserEditFormFactory
 # component services 
 

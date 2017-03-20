@@ -69,6 +69,31 @@ INSERT INTO `dlzka_novinky` (`id`, `nazov`, `dlzka`) VALUES
 (6,	'Pol roka(182 dní)',	182),
 (7,	'Rok',	365);
 
+DROP TABLE IF EXISTS `dokumenty`;
+CREATE TABLE `dokumenty` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_hlavne_menu` int(11) NOT NULL DEFAULT '1' COMMENT 'Id položky hl. menu ku ktorej patrí',
+  `id_user_profiles` int(11) NOT NULL DEFAULT '0' COMMENT 'Kto pridal dokument',
+  `id_registracia` int(11) NOT NULL DEFAULT '0' COMMENT 'Úroveň registrácie',
+  `znacka` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT 'Značka súboru pre vloženie do textu',
+  `nazov` varchar(50) COLLATE utf8_bin NOT NULL COMMENT 'Názov titulku pre daný dokument',
+  `pripona` varchar(20) COLLATE utf8_bin NOT NULL COMMENT 'Prípona súboru',
+  `spec_nazov` varchar(50) COLLATE utf8_bin NOT NULL COMMENT 'Špecifický názov dokumentu pre URL',
+  `popis` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT 'Popis dokumentu',
+  `subor` varchar(255) COLLATE utf8_bin NOT NULL COMMENT 'Názov súboru s relatívnou cestou',
+  `thumb` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT 'Názov súboru thumb pre obrázky a iné ',
+  `zmena` datetime NOT NULL COMMENT 'Dátum uloženia alebo opravy - časová pečiatka',
+  `zobraz_v_texte` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Zobrazenie obrázku v texte',
+  `pocitadlo` int(11) NOT NULL DEFAULT '0' COMMENT 'Počítadlo stiahnutí',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `spec_nazov` (`spec_nazov`),
+  KEY `id_user_profiles` (`id_user_profiles`),
+  KEY `id_registracia` (`id_registracia`),
+  KEY `id_hlavne_menu` (`id_hlavne_menu`),
+  CONSTRAINT `dokumenty_ibfk_2` FOREIGN KEY (`id_user_profiles`) REFERENCES `user_profiles` (`id`),
+  CONSTRAINT `dokumenty_ibfk_3` FOREIGN KEY (`id_hlavne_menu`) REFERENCES `hlavne_menu` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 DROP TABLE IF EXISTS `druh`;
 CREATE TABLE `druh` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '[A]Id položiek',
@@ -88,18 +113,18 @@ INSERT INTO `druh` (`id`, `druh`, `modul`, `presenter`, `popis`, `povolene`, `je
 (5,	'oznam',	NULL,	'Oznam',	'Vypísanie oznamov',	1,	0,	1),
 (7,	'dokumenty',	NULL,	'Dokumenty',	'Vkladanie dokumentov do stránky',	0,	0,	0);
 
--- DROP TABLE IF EXISTS `hlavicka`;
--- CREATE TABLE `hlavicka` (
---   `id` int(11) NOT NULL COMMENT '[A]Index',
---   `nazov` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT 'Veľká' COMMENT 'Zobrazený názov pre daný typ hlavičky',
---   `pripona` varchar(10) COLLATE utf8_bin DEFAULT NULL COMMENT 'Prípona názvu súborov',
---   PRIMARY KEY (`id`)
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- 
--- INSERT INTO `hlavicka` (`id`, `nazov`, `pripona`) VALUES
--- (0,	'Nerozhoduje',	' '),
--- (1,	'Veľká',	'normal'),
--- (2,	'Malá',	'small');
+DROP TABLE IF EXISTS `hlavicka`;
+CREATE TABLE `hlavicka` (
+  `id` int(11) NOT NULL COMMENT '[A]Index',
+  `nazov` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT 'Veľká' COMMENT 'Zobrazený názov pre daný typ hlavičky',
+  `pripona` varchar(10) COLLATE utf8_bin DEFAULT NULL COMMENT 'Prípona názvu súborov',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+INSERT INTO `hlavicka` (`id`, `nazov`, `pripona`) VALUES
+(0,	'Nerozhoduje',	' '),
+(1,	'Veľká',	'normal'),
+(2,	'Malá',	'small');
 
 DROP TABLE IF EXISTS `hlavne_menu`;
 CREATE TABLE `hlavne_menu` (

@@ -10,15 +10,15 @@ use DbTable, Language_support;
 /**
  * Prezenter pre prihlasenie, registraciu a aktiváciu uzivatela, obnovenie zabudnutého hesla a zresetovanie hesla.
  *
- * Posledna zmena(last change): 30.05.2016
+ * Posledna zmena(last change): 20.03.2017
  *
  *	Modul: FRONT
  *
  * @author Ing. Peter VOJTECH ml. <petak23@gmail.com>
- * @copyright  Copyright (c) 2012 - 2016 Ing. Peter VOJTECH ml.
+ * @copyright  Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link       http://petak23.echo-msz.eu
- * @version 1.0.9
+ * @version 1.1.0
  */
 class UserPresenter extends \App\FrontModule\Presenters\BasePresenter {
 	/**
@@ -38,6 +38,8 @@ class UserPresenter extends \App\FrontModule\Presenters\BasePresenter {
   // -- Forms
   /** @var Forms\User\SignInFormFactory @inject*/
 	public $signInForm;
+  /** @var Forms\User\RegisterFormFactory @inject*/
+	public $registerForm;
   
 	protected function startup() {
     parent::startup();
@@ -124,55 +126,22 @@ class UserPresenter extends \App\FrontModule\Presenters\BasePresenter {
 		return $fooo;
 	}
   
-  /** Formular pre registraciu uzivatela.
-	 * @return Nette\Application\UI\Form
-	 */
+  /** 
+   * Formular pre registraciu uzivatela.
+	 * @return Nette\Application\UI\Form */
 	protected function createComponentClenRegistraciaForm() {
-		$form = new Form();
-		$form->addProtection();
-		$form->addText('meno', $this->trLang('RegistraciaForm_meno'), 50, 50)
-				 ->addRule(Form::MIN_LENGTH, $this->trLang('RegistraciaForm_meno_ar'), 2)
-         ->setAttribute('autofocus', 'autofocus')
-				 ->setRequired($this->trLang('RegistraciaForm_meno_sr'));
-    $form->addText('priezvisko', $this->trLang('RegistraciaForm_priezvisko'), 50, 50)
-				 ->addRule(Form::MIN_LENGTH, $this->trLang('RegistraciaForm_priezvisko_ar'), 3)
-				 ->setRequired($this->trLang('RegistraciaForm_priezvisko_sr'));
-    $form->addText('username', $this->trLang('RegistraciaForm_username'), 50, 50)
-				 ->addRule(Form::MIN_LENGTH, $this->trLang('RegistraciaForm_username_ar'), 3)
-				 ->setRequired($this->trLang('RegistraciaForm_username_sr'));
-    $form->addText('email', $this->trLang('Form_email'), 50, 50)
-         ->setType('email')
-				 ->addRule(Form::EMAIL, $this->trLang('Form_email_ar'))
-				 ->setRequired($this->trLang('Form_email_sr'));
-    $form->addPassword('heslo', $this->trLang('RegistraciaForm_heslo'), 50, 50)
-				 ->addRule(Form::MIN_LENGTH, $this->trLang('RegistraciaForm_heslo_ar'), 5)
-				 ->setRequired($this->trLang('RegistraciaForm_heslo_sr'));
-    $form->addPassword('heslo2', $this->trLang('RegistraciaForm_heslo2'), 50, 50)
-         ->addRule(Form::EQUAL, $this->trLang('RegistraciaForm_heslo2_ar'), $form['heslo'])
-				 ->setRequired($this->trLang('RegistraciaForm_heslo2_sr'));
-    if ($this->user_view_fields["pohl"]) {
-      $form->addSelect('pohl', $this->trLang('RegistraciaForm_pohl'),
-        							 ['M'=>$this->trLang('RegistraciaForm_m'),'Z'=>$this->trLang('RegistraciaForm_z')]);
-    }
-		$form->addSubmit('uloz', $this->trLang('RegistraciaForm_uloz'));
-		$form->onSuccess[] = [$this, 'userRegisterFormSubmitted'];
+    $form = $this->registerForm->create($this->user_view_fields, $this->link('User:forgotPassword'));
+    $form['uloz']->onClick[] = [$this, 'userRegisterFormSubmitted'];
+    $form->getElementPrototype()->class = 'noajax';
 		return $this->_vzhladForm($form);
 	}
 
-  /** Spracovanie reistracneho formulara
-   * @param Nette\Application\UI\Form $button Data formulara
-   */
+  /** 
+   * Spracovanie reistracneho formulara
+   * @param Nette\Application\UI\Form $button Data formulara */
   public function userRegisterFormSubmitted($button) {
 		// Inicializacia
     $values = $button->getForm()->getValues(); 	//Nacitanie hodnot formulara
-    // Over, ci dane username uz existuje. Ak ano vypis a skonc.
-    if ($this->users->testUsername($values->username)) {
-      $this->flashMessage($this->trLang('registracia_username_duble'), 'danger'); return;
-    }
-    // Over, ci dany email uz existuje. Ak ano vypis a skonc.
-    if ($this->users->testEmail($values->email)) {
-      $this->flashMessage(sprintf($this->trLang('registracia_email_duble'), $values->email, $this->link('User:forgotPassword')), 'danger,n'); return;
-    }
     $new_password_key = $this->hasser->HashPassword($values->heslo.StrFTime("%Y-%m-%d %H:%M:%S", Time()));
     $uloz_data_user_profiles = [ //Nastavenie vstupov pre tabulku user_profiles
       'meno'      => $values->meno,

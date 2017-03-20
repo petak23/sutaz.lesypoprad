@@ -48,11 +48,9 @@ form .error {
 	color: #D00;
 	font-weight: bold;
 }
-
-.logo {
-  background-color: #9c0;
+.required label{
+  color: #e42f29;
 }
-
-.user-lang-menu img.avatar{
-  width: 16px;
+.required input{
+  border: 1px solid #e42f29;
 }

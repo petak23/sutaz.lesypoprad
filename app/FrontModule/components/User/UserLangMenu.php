@@ -57,22 +57,22 @@ class UserLangMenuControl extends Control {
         'class'=>'noajax',
         'data'=>['name'=>'ajax', 'value'=>'false'],
                         ]);
-    if ($vlnh > 0) {//Ak je >0 zobraz link
-      $menu_user[] = new MenuItem([
-          'odkaz'=>'User:forgottenPassword',
-          'title'=>$udaje_webu['forgot_password'],
-          'ikonka'=>($this->nastavenie['view_log_in_link_in_header'] & 2) ? "frown-o" : NULL,
-          'nazov'=>($this->nastavenie['view_log_in_link_in_header'] & 1) ? $udaje_webu['forgot_password'] : NULL,
-                          ]);
-    } else {//Ak je 0 nezobraz link
-      $this->template->fl = new MenuItem([
-        'odkaz'=>'User:forgottenPassword',
-        'title'=>$udaje_webu['forgot_password'],
-        'class'=>'fl',
-        'ikonka'=>"frown-o",
-        'nazov'=>$udaje_webu['forgot_password'],
-                        ]);
-    }
+//    if ($vlnh > 0) {//Ak je >0 zobraz link
+//      $menu_user[] = new MenuItem([
+//          'odkaz'=>'User:forgottenPassword',
+//          'title'=>$udaje_webu['forgot_password'],
+//          'ikonka'=>($this->nastavenie['view_log_in_link_in_header'] & 2) ? "frown-o" : NULL,
+//          'nazov'=>($this->nastavenie['view_log_in_link_in_header'] & 1) ? $udaje_webu['forgot_password'] : NULL,
+//                          ]);
+//    } else {//Ak je 0 nezobraz link
+//      $this->template->fl = new MenuItem([
+//        'odkaz'=>'User:forgottenPassword',
+//        'title'=>$udaje_webu['forgot_password'],
+//        'class'=>'fl',
+//        'ikonka'=>"frown-o",
+//        'nazov'=>$udaje_webu['forgot_password'],
+//                        ]);
+//    }
     if (isset($udaje_webu['registracia_enabled']) && $udaje_webu['registracia_enabled']) {
       $menu_user[] = new MenuItem([
           'odkaz'=>'User:registracia', 

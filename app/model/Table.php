@@ -5,13 +5,13 @@ use Nette\Utils\Strings;
 
 /**
  * Reprezentuje repozitar pre databázovu tabulku
- * Posledna zmena(last change): 19.12.2016
+ * Posledna zmena(last change): 20.03.2017
  * 
  * @author Ing. Peter VOJTECH ml <petak23@gmail.com>
- * @copyright  Copyright (c) 2012 - 2016 Ing. Peter VOJTECH ml.
+ * @copyright  Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link       http://petak23.echo-msz.eu
- * @version 1.0.6
+ * @version 1.0.7
 */
 abstract class Table {
 
@@ -131,7 +131,7 @@ abstract class Table {
    * Funkcia skontroluje a priradi specificky nazov
    * @param string - nazov clanku
 	 * @return string */
-	protected function najdiSpecNazov($nazov = 'spec-nazov') {
+	public function najdiSpecNazov($nazov = 'spec-nazov') {
     //Prevedie na tvar pre URL s tym, ze _ akceptuje
     $spec_nazov = Strings::webalize($nazov, '_');
     $pom = 0;

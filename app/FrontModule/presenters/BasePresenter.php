@@ -11,7 +11,7 @@ use DbTable;
 /**
  * Zakladny presenter pre vsetky presentery vo FRONT module
  * 
- * Posledna zmena(last change): 06.03.2017
+ * Posledna zmena(last change): 20.03.2017
  *
  *	Modul: FRONT
  *
@@ -19,7 +19,7 @@ use DbTable;
  * @copyright Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link      http://petak23.echo-msz.eu
- * @version 1.2.7
+ * @version 1.2.8
  */
 
 abstract class BasePresenter extends UI\Presenter {
@@ -251,10 +251,7 @@ abstract class BasePresenter extends UI\Presenter {
 		$this->getUser()->logout();
     $this->id_reg = 0;
 		$this->flashMessage($this->trLang('base_log_out_mess'), 'success');
-    // Kontrola ACL
-    if (!$this->user->isAllowed($this->name, $this->action)) {
-      $this->flashRedirect('Homepage:', sprintf($this->trLang('base_nie_je_opravnenie'), $this->action), 'danger');
-    }
+    $this->redirect('Homepage:');
 	}
 
   /** 

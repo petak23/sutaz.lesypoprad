@@ -4,7 +4,10 @@
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
       <h2 n:inner-block="title"><i class="fa fa-sign-in" aria-hidden="true"></i> {$h2}</h2>
-      <div class="bg-primary user-forms">{control signInForm}</div> 
+      <div class="{*bg-primary *}user-forms">{control signInForm}</div> 
+    </div>
+    <div class="col-md-10 col-md-offset-1">
+      <a n:href="User:forgottenPassword" title="{$udaje['forgot_password']}">{$udaje['forgot_password']}</a>
     </div>
   </div>
 </article>

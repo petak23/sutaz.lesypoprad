@@ -10,15 +10,15 @@ use DbTable;
 /**
  * Zakladny presenter pre presentery obsluhujuce polozky hlavneho menu v module ADMIN
  * 
- * Posledna zmena(last change): 07.06.2016
+ * Posledna zmena(last change): 20.03.2017
  *
  * Modul: ADMIN
  *
  * @author Ing. Peter VOJTECH ml. <petak23@gmail.com>
- * @copyright  Copyright (c) 2012 - 2016 Ing. Peter VOJTECH ml.
+ * @copyright  Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link       http://petak23.echo-msz.eu
- * @version 1.2.1
+ * @version 1.2.2
  */
 
 Container::extensionMethod('addDatePicker', function (Container $container, $name, $label = NULL) {
@@ -36,6 +36,8 @@ abstract class ArticlePresenter extends \App\AdminModule\Presenters\BasePresente
 	public $clanok_komentar;
   /** @var DbTable\Dokumenty @inject */
 	public $dokumenty;
+  /** @var DbTable\Druh @inject*/
+	public $druh;
   /** @var DbTable\Hlavne_menu_cast @inject*/
 	public $hlavne_menu_cast;
   /** @var DbTable\Hlavne_menu_lang @inject*/
