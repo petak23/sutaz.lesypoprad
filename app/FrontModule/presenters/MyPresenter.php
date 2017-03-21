@@ -38,6 +38,8 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
   
   /** @var \App\FrontModule\Components\My\FotoPrilohy\IFotoPrilohyControl @inject */
   public $fotoPrilohyControlFactory;
+  /** @var string */
+  private $h2;
 
 	protected function startup() {
     parent::startup();
@@ -60,6 +62,13 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
     $this->template->foto = $this->dokumenty->findBy(["id_user_profiles"=>  $this->clen->id, "id_hlavne_menu"=>  $this->udaje_webu["hl_udaje"]["id"]]);
   }
   
+  public function actionAdd() {
+    $this->h2 = "Pridanie fotky";
+    $this["fotoEditForm"]->setDefaults(["id"=>0, "id_hlavne_menu"=>$this->udaje_webu["hl_udaje"]["id"], "id_registracia"=>$this->id_reg]);
+    $this->setView("edit");
+    
+  }
+  
   /** Akcia pre editaciu informacii o dokumente
    * @param int $id Id dokumentu na editaciu
    */
@@ -67,12 +76,13 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
 		if (($this->dokument = $this->dokumenty->find($id)) === FALSE) { 
       return $this->error(sprintf("Pre zadané id som nenašiel prílohu! id=' %s'!", $id)); 
     }
+    $this->h2 =  'Editácia údajov fotky:'.$this->dokument->nazov;
     $this["fotoEditForm"]->setDefaults($this->dokument);
   }
   
   /** Render pre editaciu prilohy. */
 	public function renderEdit() {
-		$this->template->h2 = 'Editácia údajov fotky:'.$this->dokument->nazov;
+		$this->template->h2 = $this->h2;
 	}
   
   /** Formular pre editaciu info. o dokumente.
