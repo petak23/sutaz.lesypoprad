@@ -1,16 +1,13 @@
 <?php
 namespace App\FrontModule\Presenters;
 
-//use Nette\Application\UI\Form;
-//use Nette\Mail\Message;
-//use Nette\Mail\SendmailMailer;
-//use Latte;
+//use Nette;
 use DbTable, Language_support;
 
 /**
  * Prezenter pre vypísanie profilu a správu príloh.
  * (c) Ing. Peter VOJTECH ml.
- * Posledna zmena(last change): 20.03.2017
+ * Posledna zmena(last change): 21.03.2017
  *
  *	Modul: FRONT
  *
@@ -18,8 +15,7 @@ use DbTable, Language_support;
  * @copyright  Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link       http://petak23.echo-msz.eu
- * @version 1.0.0
- *
+ * @version 1.0.1
  */
 class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
 
@@ -37,9 +33,11 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
 
   /** @var array Nastavenie zobrazovania volitelnych poloziek */
   private $user_view_fields;
+  /** @var \Nette\Database\Table\ActiveRow */
+  private $dokument;
   
-  /** @var Forms\My\EditFotoFormFactory @inject*/
-	public $editFotoFormFactory;
+  /** @var \App\FrontModule\Components\My\FotoPrilohy\IFotoPrilohyControl @inject */
+  public $fotoPrilohyControlFactory;
 
 	protected function startup() {
     parent::startup();
@@ -53,16 +51,6 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
 	}
   
   public function actionDefault() {
-//    $clen = $this->clen;
-//    $this["userEditForm"]->setDefaults($clen);
-//    $this["userEditForm"]->setDefaults([ //Nastav vychodzie hodnoty
-//      'username'    => $clen->users->username,
-//      'email'       => $clen->users->email,
-//      'registracia' => $clen->id_registracia." - ".$clen->registracia->nazov." (".$clen->registracia->role.")",
-//      'prihlasenie' => ($clen->prihlas_teraz !== NULL ? $clen->prihlas_teraz->format('d.m.Y H:i:s')." - " : '').($clen->prihlas_predtym !== NULL ? $clen->prihlas_predtym->format('d.m.Y H:i:s') : ''),
-//      'created'     => $clen->created->format('d.m.Y H:i:s'),
-//      'modified'    => $clen->modified->format('d.m.Y H:i:s'), 
-//    ]);
   }
   
   public function renderDefault() {
@@ -70,34 +58,72 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
     $this->template->h2 = $this->trLang('h2');
     $this->template->texty = $this->texty_presentera;
     $this->template->foto = $this->dokumenty->findBy(["id_user_profiles"=>  $this->clen->id, "id_hlavne_menu"=>  $this->udaje_webu["hl_udaje"]["id"]]);
-//    dump( $this->udaje_webu["hl_udaje"]);die();
-//    $this->template->pass_change = $this->trLang('default_pass_change');
-//    $this->template->zdroj_na_zmazanie = $this->trLang('zdroj_na_zmazanie');
-//    $this->template->default_delete = $this->trLang('default_delete');
-//    $this->template->default_email_change = $this->trLang('default_email_change');
-//    $this->template->user_view_fields = $this->user_view_fields;
   }
   
-  public function actionAdd($id = 0) {
-    $foto = $this->dokumenty->find($id);
-    $this["editFotoForm"]->setDefaults();
-    $this->setView("edit");
+  /** Akcia pre editaciu informacii o dokumente
+   * @param int $id Id dokumentu na editaciu
+   */
+  public function actionEdit($id) {
+		if (($this->dokument = $this->dokumenty->find($id)) === FALSE) { 
+      return $this->error(sprintf("Pre zadané id som nenašiel prílohu! id=' %s'!", $id)); 
+    }
+    $this["fotoEditForm"]->setDefaults($this->dokument);
   }
   
+  /** Render pre editaciu prilohy. */
+	public function renderEdit() {
+		$this->template->h2 = 'Editácia údajov fotky:'.$this->dokument->nazov;
+	}
   
-
-  /**
-	 * Edit user form component factory.
+  /** Formular pre editaciu info. o dokumente.
 	 * @return Nette\Application\UI\Form
 	 */
-	protected function createComponentEditFotoForm() {
-    $form = $this->editFotoFormFactory->create($this->context->parameters['wwwDir']);  
-    $form['uloz']->onClick[] = function ($form) {
-      $this->flashOut(!count($form->errors), 'My:', $this->trLang('default_save_ok'), $this->trLang('default_save_err'));
+	protected function createComponentFotoEditForm() {
+    $ft = new \App\FrontModule\Components\My\FotoPrilohy\EditFotoPrilohyFormFactory($this->dokumenty, $this->user, $this->nastavenie['wwwDir']);
+    $form = $ft->create($this->upload_size, "www/files/myfoto/", $this->nastavenie['prilohy_images']);
+//    $form->setDefaults($this->dokument);
+    $form['uloz']->onClick[] = function ($button) {
+      $this->flashOut(!count($button->getForm()->errors), 'My:', 'Foto príloha bola úspešne uložená!', 'Došlo k chybe a zmena sa neuložila. Skúste neskôr znovu...');
 		};
     $form['cancel']->onClick[] = function () {
 			$this->redirect('My:');
 		};
 		return $this->_vzhladForm($form);
-	} 
+	}
+  
+  /**
+   * Komponenta pre pridanie príloh
+   * @return \App\FrontModule\Components\My\FotoPrilohy\IFotoPrilohyControl */
+	public function createComponentFotoPrilohy() {
+    $prilohyClanok = $this->fotoPrilohyControlFactory->create(); 
+    $prilohyClanok->setTitle($this->udaje_webu["hl_udaje"]["id"], $this->nazov_stranky, $this->upload_size, "www/files/myfoto/", $this->nastavenie['prilohy_images']);
+    return $prilohyClanok;
+  }
+
+  /*********** signal processing ***********/
+	function confirmedDelete($id, $nazov) {
+    $pr = $this->dokumenty->find($id);//najdenie prislusnej polozky menu, ku ktorej priloha patri
+    if ($pr !== FALSE) {
+      $vysledok = $this->vymazSubor($pr->subor) ? (in_array(strtolower($pr->pripona), ['png', 'gif', 'jpg']) ? $this->vymazSubor($pr->thumb) : TRUE) : FALSE;
+      $this->_ifMessage($vysledok ? $pr->delete() : FALSE, 'Foto príloha bola vymazaná!', 'Došlo k chybe a foto príloha nebola vymazaná!');   
+    } else { $this->flashRedirect("My:", 'Došlo k chybe a foto príloha nebola vymazaná lebo sa nenašla v DB!', 'danger');}
+	}
+  
+  /** 
+   * Funkcia vymaze subor ak exzistuje
+	 * @param string $subor Nazov suboru aj srelativnou cestou
+	 * @return int Ak zmaze alebo neexistuje(nie je co mazat) tak 1 inak 0 */
+	public function vymazSubor($subor) {
+		return (is_file($subor)) ? unlink($this->context->parameters["wwwDir"]."/".$subor) : -1;
+	}
+  
+  /** 
+   * Vypis spravy podla podmienky 
+   * @param boolean $if
+   * @param string $dobre
+   * @param string $zle */
+  public function _ifMessage($if, $dobre, $zle) {
+    if ($if) { $this->flashMessage($dobre, 'success'); }
+    else { $this->flashMessage($zle, 'danger'); }
+  }
 }

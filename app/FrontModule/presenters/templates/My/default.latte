@@ -1,6 +1,5 @@
 {var $robots = noindex}
 {block content}
-
 <article class="article-main row">
   <div class="col-md-10 col-md-offset-1">
     <h2 n:inner-block="title">{$h2}</h2>
@@ -20,12 +19,7 @@
       </dl>
     </div>
     <div class="row">
-      {foreach $foto as $f}
-        <img src="{$basePath}/www/ikonky/64/figurky_64.png" alt="txt" class="img-thumbnail" /> 
-      {/foreach}
-      <p class="bg-warning">
-        <a href="#" title="Pridaj">Pridaj nový obrázok</a>
-      </p>
+      {control fotoPrilohy}
     </div>
   </div>
 </article>

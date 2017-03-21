@@ -124,7 +124,8 @@ services:
   - App\AdminModule\Presenters\Forms\Verzie\EditVerzieFormFactory
   - App\AdminModule\Presenters\Forms\Oznam\EditOznamFormFactory
 
-  - App\FrontModule\Presenters\Forms\My\EditFotoFormFactory
+  - App\FrontModule\Components\My\FotoPrilohy\EditFotoPrilohyFormFactory
+#  - App\FrontModule\Presenters\Forms\My\EditFotoFormFactory
   - App\FrontModule\Presenters\Forms\User\SignInFormFactory
   - App\FrontModule\Presenters\Forms\User\RegisterFormFactory
   - App\FrontModule\Presenters\Forms\UserLog\UserEditFormFactory
@@ -153,6 +154,7 @@ services:
   - App\FrontModule\Components\Slider\ISliderControl
   - App\FrontModule\Components\User\IUserLangMenuControl
   - App\FrontModule\Components\News\INewsControl
+  - App\FrontModule\Components\My\FotoPrilohy\IFotoPrilohyControl
 
 # PeterVojtech
   - PeterVojtech\Email\IEmailControl

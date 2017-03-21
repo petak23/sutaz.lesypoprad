@@ -1,0 +1,47 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3>
+      <button type="button" class="btn btn-success button-right" data-toggle="modal" data-target="#myModalAddFotoPrilohaChange" title="Pridaj nový obrázok">
+        <i class="fa fa-file-o"></i> Pridaj nový obrázok
+      </button>
+    </h3>
+  </div>
+  <table class="table table-bordered table-striped table-hover" n:if="count($dokumenty)">
+    <tr><th></th>{*<th>Značka</th>*}<th>Názov</th><th>Popis</th><th></th></tr>
+    <tr n:foreach="$dokumenty as $d">
+      <td class="sirka15">
+        <img class="jslghtbx-thmb img-rounded" src="{$basePath}/{$d->thumb}" alt="{$d->nazov}" data-jslghtbx="{$basePath}/{$d->subor}" class="noajax" data-ajax="false" data-jslghtbx-group="mygroup1">
+      </td>  
+      {*<td class="sirka8">{$d->znacka}</td>*}
+      <td class="sirka15">
+        {$d->nazov}
+      </td>
+      <td class="sirka40">{$d->popis}</td>
+      <td>
+        <div class="btn-group" role="group" aria-label="adminLinks">
+          <a href="{link editFotoPriloha! $d->id}" class="btn btn-success btn-sm" title="Editovať"><i class="fa fa-pencil fa-1_5x"></i></a>
+          <a {* n:if="$user->isAllowed('Admin:Clanky', 'prilohy')"*} href="{plink confirmForm:confirmDelete! id=>$d->id, druh=>'priloha', nazov=>$d->nazov, zdroj_na_zmazanie=>'fotku'}" class="btn btn-danger btn-sm" title="Zmazať">
+            <i class="fa fa-trash-o fa-1_5x"></i></a>
+          {*<a n:href="showInText! $d->id" class="btn {if $d->zobraz_v_texte}btn-success{else}btn-warning{/if} btn-sm" title="Nezobraz">
+            <i class="fa fa-adjust fa-1_5x"></i>
+          </a>*}
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>  
+
+{* -- Modal dialog pre pridanie prilohy -- *}
+<div class="modal fade" id="myModalAddFotoPrilohaChange" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Pridanie foto prílohy</h4>
+      </div>
+      <div class="modal-body">
+        {control editFotoPrilohyForm}
+      </div>
+    </div>
+  </div>
+</div>
