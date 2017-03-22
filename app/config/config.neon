@@ -72,11 +72,13 @@ session:
 tracy:
   email: petak23@gmail.com
 
+extensions:
+  gpspicker: VojtechDobes\NetteForms\GpsPickerExtension
+  map: Oli\GoogleAPI\MapApiExtension
+
 includes:
   - services.neon
   - css_js.neon
   - komponenty.neon
   - database.neon
-
-extensions:
-  gpspicker: VojtechDobes\NetteForms\GpsPickerExtension
+  - map.neon

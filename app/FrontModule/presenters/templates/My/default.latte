@@ -19,7 +19,27 @@
       </dl>
     </div>
     <div class="row">
-      {control fotoPrilohy}
+      <ul class="nav nav-tabs" role="tablist" id="myTabs">
+        <li role="presentation" class="active">
+          <a href="#fototable" aria-controls="fototable" role="tab" data-toogle="tab">
+            Tabuľka fotiek
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#fotomap" aria-controls="fotomap" role="tab" data-toogle="tab">
+            Mapa fotiek
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabsContent">                                     
+        <div role="tabpanel" class="tab-pane active" id="fototable">
+          {control fotoPrilohy}
+        </div>
+        <div role="tabpanel" class="tab-pane" id="fotomap">
+          <h4>Mapa fotiek</h4>
+          {control map}
+        </div>  
+      </div>
     </div>
   </div>
 </article>
@@ -33,3 +53,6 @@
   {*<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>*}
   {*<script src="{$basePath}/vendor/lukyrys/nette-forms-gpspicker/client/nette.gpsPicker.js"></script>*}
   <script src="{$basePath}/www/js/nette.gpsPicker.js"></script>
+  
+  <script src="{$basePath}/www/js/googleMapAPI.js"></script>
+  <script src="{$basePath}/www/js/googleMapApiLoader.js"></script>
