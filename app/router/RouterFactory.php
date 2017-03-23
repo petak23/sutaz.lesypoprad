@@ -60,7 +60,6 @@ class RouterFactory {
     $frontRouter[] = new Route('login', 'User:default');
     $frontRouter[] = new Route('user[/<action>]', 'User:default');
     $frontRouter[] = new Route('userlog[/<action>]/<id>', 'UserLog:default');
-    $frontRouter[] = new Route('oznam[/<action>]', 'Oznam:default');
     $frontRouter[] = new Route('pokladnicka[/<action>]', 'Pokladnicka:default');
     $frontRouter[] = new Route('error[/<action>]', 'Error:default');
     $frontRouter[] = new Route('<presenter>/<action>[/cokolvek]', 'Homepage:default');

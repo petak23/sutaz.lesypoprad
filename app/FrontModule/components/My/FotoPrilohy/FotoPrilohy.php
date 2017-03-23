@@ -30,8 +30,8 @@ class FotoPrilohyControl extends Nette\Application\UI\Control {
   private $prilohy_adresar;
   /** @var array */
   private $prilohy_images;
-  /** @var int */
-  private $id_registracia;
+  /** @var Nette\Security\User */
+  private $user;
 
 
   /**
@@ -40,7 +40,7 @@ class FotoPrilohyControl extends Nette\Application\UI\Control {
   public function __construct(DbTable\Dokumenty $dokumenty, Nette\Security\User $user) {
     parent::__construct();
     $this->dokumenty = $dokumenty;
-    $this->id_registracia = $user->getIdentity()->id_registracia;
+    $this->user = $user;
   }
   
   /** 
@@ -63,7 +63,7 @@ class FotoPrilohyControl extends Nette\Application\UI\Control {
   /** Render */
 	public function render() {
     $this->template->setFile(__DIR__ . '/FotoPrilohy.latte');
-    $this->template->dokumenty = $this->dokumenty->findBy(['id_hlavne_menu'=>$this->udaje_webu["hl_udaje"]["id"]]);
+    $this->template->dokumenty = $this->dokumenty->findBy(['id_hlavne_menu'=>$this->udaje_webu["hl_udaje"]["id"], "id_user_profiles" =>$this->user->getIdentity()->getId()]);
     $this->template->max_pocet_foto = $this->udaje_webu["max_pocet_foto"];
 		$this->template->render();
 	}

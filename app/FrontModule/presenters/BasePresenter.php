@@ -25,8 +25,6 @@ use DbTable;
 abstract class BasePresenter extends UI\Presenter {
 
   // -- DB
-  /** @var DbTable\Adresar @inject */
-  public $adresar;
   /** @var DbTable\Dokumenty @inject */
 	public $dokumenty;
   /** @var DbTable\Druh @inject */
@@ -52,8 +50,6 @@ abstract class BasePresenter extends UI\Presenter {
   public $texty_presentera;
   
   // -- Komponenty
-  /** @var \App\FrontModule\Components\Oznam\IAktualneOznamyControl @inject */
-  public $aktualneOznamyControlFactory;
   /** @var \App\FrontModule\Components\Slider\ISliderControl @inject */
   public $sliderControlFactory;
   /** @var \App\FrontModule\Components\User\IUserLangMenuControl @inject */
@@ -363,26 +359,6 @@ abstract class BasePresenter extends UI\Presenter {
       return $ukaz_clanok;
     });
   }
-  
-  /** 
-   * Komponenta pre zobrazenie adresy
-   * @return Multiplier */
-  public function createComponentUkazAdresu() {
-    $servise = $this;
-		return new Multiplier(function ($id) use ($servise) {
-      return New \App\FrontModule\Components\Adresar\ZobrazAdresuControl($servise->adresar->find($id));
-    });
-  }
-  
-  /** 
-   * Vytvorenie komponenty pre vypisanie aktualnych oznamov
-   * @return \App\FrontModule\Components\Oznam\AktualneOznamyControl */
-	public function createComponentAktualne() {
-    $aktualne = $this->aktualneOznamyControlFactory->create();
-    $aktualne->setNastavenie($this->context->parameters['oznam'])         
-             ->setTexty(["h2"=>$this->trLang('base_aktualne_h2'),"viac"=>$this->trLang("base_viac"),"title"=>$this->trLang("base_title")]);
-    return $aktualne;
-	}
   
   /** 
    * Komponenta pre zobrazenie noviniek

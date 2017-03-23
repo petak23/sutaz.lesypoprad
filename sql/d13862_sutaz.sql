@@ -19,12 +19,11 @@ CREATE TABLE `admin_menu` (
 
 INSERT INTO `admin_menu` (`id`, `odkaz`, `nazov`, `id_registracia`, `avatar`) VALUES
 (1,	'Homepage:',	'Úvod',	3,	'ikonky/AzulLustre_icons/Cerrada.png'),
-(2,	'Lang:',	'Editácia jazykov',	4,	'ikonky/AzulLustre_icons/Webfolder.png'),
+(2,	'Lang:',	'Editácia jazykov',	5,	'ikonky/AzulLustre_icons/Webfolder.png'),
 (3,	'Slider:',	'Editácia slider-u',	4,	'ikonky/AzulLustre_icons/Imagenes.png'),
 (4,	'User:',	'Editácia členov',	5,	'ikonky/AzulLustre_icons/Fuentes.png'),
 (5,	'Verzie:',	'Verzie webu',	4,	'ikonky/AzulLustre_icons/URL_historial.png'),
-(6,	'Udaje:',	'Údaje webu',	4,	'ikonky/AzulLustre_icons/Admin.png'),
-(7,	'Oznam:',	'Aktuality(oznamy)',	4,	'ikonky/AzulLustre_icons/Documentos_azul.png');
+(6,	'Udaje:',	'Údaje webu',	4,	'ikonky/AzulLustre_icons/Admin.png');
 
 DROP TABLE IF EXISTS `clanok_komponenty`;
 CREATE TABLE `clanok_komponenty` (
@@ -97,9 +96,6 @@ CREATE TABLE `dokumenty` (
   CONSTRAINT `dokumenty_ibfk_3` FOREIGN KEY (`id_hlavne_menu`) REFERENCES `hlavne_menu` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO `dokumenty` (`id`, `id_hlavne_menu`, `id_user_profiles`, `id_registracia`, `znacka`, `nazov`, `pripona`, `spec_nazov`, `popis`, `subor`, `thumb`, `zmena`, `zobraz_v_texte`, `pocitadlo`, `lat`, `lng`) VALUES
-(3,	4,	1,	1,	'#I-3#',	'Vodná',	'jpg',	'vodna-jpg',	'Vodná panna',	'www/files/myfoto/vodna.jpg',	'www/files/myfoto/tb_vodna.jpg',	'2017-03-23 06:57:16',	1,	0,	49.0181,	20.283),
-(4,	4,	1,	1,	'#I-4#',	'Lesná',	'jpg',	'e08cb175ed8b5f769e9f27ce1ee1ad24d10338ef-jpg',	'Lesná panna',	'www/files/myfoto/e08cb175ed8b5f769e9f27ce1ee1ad24d10338ef.jpg',	'www/files/myfoto/tb_e08cb175ed8b5f769e9f27ce1ee1ad24d10338ef.jpg',	'2017-03-23 06:57:44',	1,	0,	49.0157,	20.2724);
 
 DROP TABLE IF EXISTS `druh`;
 CREATE TABLE `druh` (
@@ -117,7 +113,6 @@ CREATE TABLE `druh` (
 INSERT INTO `druh` (`id`, `druh`, `modul`, `presenter`, `popis`, `povolene`, `je_spec_naz`, `robots`) VALUES
 (1,	'clanky',	NULL,	'Clanky',	'Články - Stredná časť je ako článok, alebo je sub-menu',	1,	1,	1),
 (3,	'menupol',	NULL,	'Menu',	'Položka menu - nerobí nič, len zobrazí všetky položky, ktoré sú v nej zaradené',	1,	1,	1),
-(5,	'oznam',	NULL,	'Oznam',	'Vypísanie oznamov',	1,	0,	1),
 (7,	'dokumenty',	NULL,	'Dokumenty',	'Vkladanie dokumentov do stránky',	0,	0,	0),
 (8,	'my',	NULL,	'My',	'Vypísanie profilu a správu príloh',	1,	0,	1);
 
@@ -337,16 +332,6 @@ CREATE TABLE `slider` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Popis obrázkou slideru aj s názvami súborov';
 
-INSERT INTO `slider` (`id`, `poradie`, `nadpis`, `popis`, `subor`, `zobrazenie`, `id_hlavne_menu`) VALUES
-(1,	1,	NULL,	'',	'01_obora.jpg',	'',	NULL),
-(2,	1,	NULL,	'',	'02_mravenisko.jpg',	'',	NULL),
-(3,	1,	NULL,	'',	'03_ml.jpg',	'',	NULL),
-(4,	1,	NULL,	'',	'04_poprad.jpg',	'',	NULL),
-(5,	1,	NULL,	'',	'05_tatry.jpg',	'',	NULL),
-(6,	1,	NULL,	'',	'06_preslop.jpg',	'',	NULL),
-(7,	1,	NULL,	'',	'07_obloha.jpg',	'',	NULL),
-(8,	1,	NULL,	'',	'08_preslop.jpg',	'',	NULL),
-(9,	1,	NULL,	'',	'09_pavilon.jpg',	'',	NULL);
 
 DROP TABLE IF EXISTS `udaje`;
 CREATE TABLE `udaje` (
@@ -385,12 +370,7 @@ INSERT INTO `udaje` (`id`, `id_registracia`, `id_druh`, `id_udaje_typ`, `nazov`,
 (16,	4,	NULL,	1,	'nazov_uvod-sk',	'Úvod',	'Text pre odkaz na východziu stránku pre jazyk:sk'),
 (17,	5,	NULL,	3,	'komentare',	'0',	'Globálne povolenie komentárov'),
 (18,	4,	NULL,	3,	'registracia_enabled',	'1',	'Globálne registrácie(ak 1 tak áno, ak 0 tak nie)'),
-(19,	4,	1,	1,	'clanok_hlavicka',	'3',	'Nastavuje, ktoré hodnoty sa zobrazia v hlavičke článku Front modulu. Výsledok je súčet čísel.[1=Dátum, 2=Zadávateľ, 4=Počet zobrazení]'),
-(21,	4,	5,	3,	'oznam_komentare',	'0',	'Povolenie komentárov k aktualitám(oznamom).'),
-(22,	5,	5,	2,	'oznam_usporiadanie',	'1',	'Usporiadanie aktualít podľa dátumu platnosti. [1=od najstaršieho; 0=od najmladšieho]'),
-(23,	4,	5,	3,	'oznam_ucast',	'0',	'Povolenie potvrdenia účasti.'),
-(24,	5,	5,	1,	'oznam_prva_stranka',	'0',	'Id stránky, ktorá sa zobrazí ako 1. po načítaní webu'),
-(25,	4,	5,	3,	'oznam_title_image_en',	'1',	'Povolenie pridávania titulného obrázku k oznamu. Ak je zakázané používajú sa ikonky.'),
+(19,	4,	1,	1,	'clanok_hlavicka',	'1',	'Nastavuje, ktoré hodnoty sa zobrazia v hlavičke článku Front modulu. Výsledok je súčet čísel.[1=Dátum, 2=Zadávateľ, 4=Počet zobrazení]'),
 (26,	4,	8,	1,	'max_pocet_foto',	'5',	'Maximálny počet fotiek pre jedného užívateľa. Ak je 0 tak neobmedzený.');
 
 DROP TABLE IF EXISTS `udaje_typ`;
@@ -443,7 +423,8 @@ CREATE TABLE `user_prihlasenie` (
 INSERT INTO `user_prihlasenie` (`id`, `id_user_profiles`, `prihlasenie_datum`) VALUES
 (1,	1,	'2017-03-20 08:04:07'),
 (2,	1,	'2017-03-20 09:46:59'),
-(3,	1,	'2017-03-20 10:49:31');
+(3,	1,	'2017-03-20 10:49:31'),
+(4,	1,	'2017-03-23 09:17:18');
 
 DROP TABLE IF EXISTS `user_profiles`;
 CREATE TABLE `user_profiles` (
@@ -473,7 +454,7 @@ CREATE TABLE `user_profiles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 INSERT INTO `user_profiles` (`id`, `id_users`, `id_registracia`, `meno`, `priezvisko`, `rok`, `telefon`, `poznamka`, `pocet_pr`, `pohl`, `prihlas_teraz`, `prihlas_predtym`, `avatar_25`, `avatar_75`, `foto`, `news`, `created`, `modified`) VALUES
-(1,	1,	5,	'Peter',	'VOJTECH',	NULL,	NULL,	'Administrátor',	3,	'M',	'2017-03-20 10:49:31',	'2017-03-20 09:46:59',	'files/1/4ixm9oy1y04ehzcas1c47yn13_25.jpg',	'files/1/4ixm9oy1y04ehzcas1c47yn13_75.jpg',	NULL,	'A',	'2013-01-03 11:17:32',	'2017-03-20 10:49:21'),
+(1,	1,	5,	'Peter',	'VOJTECH',	NULL,	NULL,	'Administrátor',	4,	'M',	'2017-03-23 09:17:18',	'2017-03-20 10:49:31',	'files/1/4ixm9oy1y04ehzcas1c47yn13_25.jpg',	'files/1/4ixm9oy1y04ehzcas1c47yn13_75.jpg',	NULL,	'A',	'2013-01-03 11:17:32',	'2017-03-20 10:49:21'),
 (2,	2,	4,	'Róbert',	'DULA',	NULL,	NULL,	NULL,	0,	'M',	NULL,	NULL,	NULL,	NULL,	NULL,	'A',	'2017-02-13 08:38:27',	'2017-02-13 08:38:27'),
 (3,	3,	4,	'Jozef',	'PETRENČÍK',	NULL,	NULL,	NULL,	0,	'M',	NULL,	NULL,	NULL,	NULL,	NULL,	'A',	'2017-02-13 08:54:07',	'2017-02-13 08:54:07');
 
@@ -495,4 +476,4 @@ CREATE TABLE `verzie` (
 INSERT INTO `verzie` (`id`, `id_user_profiles`, `cislo`, `subory`, `text`, `datum`) VALUES
 (1,	1,	'0.1.',	NULL,	'Východzia verzia',	'2017-02-13 08:03:32');
 
--- 2017-03-23 05:58:49
+-- 2017-03-23 08:20:12

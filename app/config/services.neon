@@ -23,7 +23,6 @@ services:
       - addResource('Front:Dokumenty')
       - addResource('Front:Error')
       - addResource('admin')
-      - addResource('Front:Oznam')
       - addResource('Front:Clanky')
       - addResource('Front:Menu')
       - addResource('Admin:Homepage')
@@ -35,35 +34,28 @@ services:
       - addResource('Admin:Lang')
       - addResource('Admin:Slider')
       - addResource('Admin:Registracia')
-      - addResource('Admin:Oznam')
       - addResource('Admin:Clanky')
-      - addResource('Admin:Texyla')
-      - addResource('Admin:Adresar')
       - addResource('Admin:My')
-      - allow('guest', ['Front:Dokumenty', 'Front:Oznam', 'Front:Clanky', 'Front:Menu', 'Front:Homepage', 'Front:Error'])
+      - allow('guest', ['Front:Dokumenty', 'Front:Clanky', 'Front:Menu', 'Front:Homepage', 'Front:Error'])
       - allow('guest', 'Front:User', ['registracia', 'activateUser', 'forgottenPassword', 'resetPassword', 'default'])
       - allow('guest', 'Front:UserLog', ['activateNewEmail'])
       - allow('register', 'Front:UserLog', ['default', 'mailChange', 'passwordChange'])
-      - allow('register', 'Front:Oznam', 'ucast')
       - allow('register', 'Front:My')
-      - allow('pasivny', ['Front:Oznam', 'Front:Clanky'], 'komentar')
+      - allow('pasivny', ['Front:Clanky'], 'komentar')
       - allow('aktivny', 'admin', 'enter')
       - allow('aktivny', ['Admin:Clanky', 'Admin:Menu'], ['default', 'edit', 'edit2', 'add', 'add2', 'prilohy', 'del'])
       - allow('aktivny', 'Admin:Homepage', 'default')
-      - allow('aktivny', 'Admin:Adresar', ['default', 'edit'])
       - allow('aktivny', 'Admin:Dokumenty')
       - allow('spravca', ['Admin:Clanky', 'Admin:Menu'], ['addpol', 'delete', 'pocitadlo'])
       - allow('spravca', ['Admin:Verzie', 'Admin:User'], 'default')
       - allow('spravca', ['Admin:Udaje'], ['default', 'edit'])
-      - allow('spravca', 'Admin:Oznam', ['default', 'neaktualne', 'add', 'edit'])
-      - allow('spravca', ['Admin:Slider', 'Admin:Texyla', 'Admin:My'])
+      - allow('spravca', ['Admin:Slider', 'Admin:My'])
       - allow('spravca', 'Admin:Lang', ['default', 'add', 'edit'])
       - allow('spravca', 'Admin:Registracia', ['default', 'edit'])
       - allow('spravca', 'Admin:Homepage', 'udrzba')
       - allow('admin')
 
   - DbTable\Admin_menu
-  - DbTable\Adresar
   - DbTable\Clanok_komentar
   - DbTable\Clanok_komponenty
   - DbTable\Clanok_lang
@@ -87,11 +79,6 @@ services:
   - DbTable\User_profiles
   - DbTable\Users
   - DbTable\Verzie
-#blok Oznam
-  - DbTable\Oznam
-  - DbTable\Oznam_komentar
-  - DbTable\Oznam_ucast
-  - DbTable\Oznam_volba
 
   - App\RouterFactory 
   router: @App\RouterFactory::createRouter
@@ -102,7 +89,6 @@ services:
   - Language_support\Error
   - Language_support\Homepage
   - Language_support\My
-  - Language_support\Oznam
   - Language_support\UserLog
   - Language_support\User
 
@@ -113,19 +99,15 @@ services:
   - App\AdminModule\Components\Article\TitleArticle\ZmenDatumPlatnostiFormFactory
   - App\AdminModule\Components\Article\TitleImage\EditTitleImageFormFactory
   - App\AdminModule\Components\Clanky\PrilohyClanok\EditPrilohyFormFactory
-  - App\AdminModule\Components\Oznam\TitleOznam\ZmenPresmerovanieFormFactory
   - App\AdminModule\Presenters\Forms\Slider\EditSliderFormFactory
   - App\AdminModule\Presenters\Forms\Udaje\EditUdajeFormFactory
   - App\AdminModule\Presenters\Forms\Udaje\AddTypeUdajeFormFactory
   - App\AdminModule\Presenters\Forms\User\AddUserFormFactory
   - App\AdminModule\Presenters\Forms\User\EditUserFormFactory
   - App\AdminModule\Presenters\Forms\User\EditCategoriFormFactory
-  - App\AdminModule\Presenters\Forms\Adresar\EditAdresarFormFactory
   - App\AdminModule\Presenters\Forms\Verzie\EditVerzieFormFactory
-  - App\AdminModule\Presenters\Forms\Oznam\EditOznamFormFactory
 
   - App\FrontModule\Components\My\FotoPrilohy\EditFotoPrilohyFormFactory
-#  - App\FrontModule\Presenters\Forms\My\EditFotoFormFactory
   - App\FrontModule\Presenters\Forms\User\SignInFormFactory
   - App\FrontModule\Presenters\Forms\User\RegisterFormFactory
   - App\FrontModule\Presenters\Forms\UserLog\UserEditFormFactory
@@ -134,18 +116,10 @@ services:
   - App\AdminModule\Components\Article\IAdminAddMenu
   - App\AdminModule\Components\Article\TitleArticle\ITitleArticleControl
   - App\AdminModule\Components\Article\TitleImage\ITitleImageControl
-  - App\AdminModule\Components\Oznam\IAktualneOznamyControl
-  - App\AdminModule\Components\Oznam\PotvrdUcast\IPotvrdUcastControl
-  - App\AdminModule\Components\Oznam\PotvrdUcast\IPotvrdUcastEmailControl
-  - App\AdminModule\Components\Oznam\IKomentarControl
-  - App\AdminModule\Components\Oznam\TitleOznam\ITitleOznamControl
   - App\AdminModule\Components\User\IUserLastControl
   - App\AdminModule\Components\Clanky\IZobrazClanokControl
   - App\AdminModule\Components\Clanky\PrilohyClanok\IPrilohyClanokControl
 
-  - App\FrontModule\Components\Oznam\IAktualneOznamyControl
-  - App\FrontModule\Components\Oznam\IPotvrdUcastControl
-  - App\FrontModule\Components\Oznam\IKomentarControl
   - App\FrontModule\Components\Clanky\IAktualneClankyControl
   - App\FrontModule\Components\Clanky\IAktualnyProjektControl
   - App\FrontModule\Components\Clanky\IKomentarControl
