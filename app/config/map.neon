@@ -6,3 +6,4 @@ map:
   coordinates:
     lat: 49.017935
     lng: 20.276091
+  type: SATELLITE

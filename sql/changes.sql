@@ -1,5 +1,6 @@
-DELETE FROM `udaje`
-WHERE ((`id` = '20'));
+SET NAMES utf8;
+SET time_zone = '+00:00';
+SET foreign_key_checks = 0;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-INSERT INTO `udaje` (`id`, `id_registracia`, `id_druh`, `id_udaje_typ`, `nazov`, `text`, `comment`) VALUES
-(26,	4,	8,	1,	'max_pocet_foto',	'5',	'Maximálny počet fotiek pre jedného užívateľa. Ak je 0 tak neobmedzený.');
+

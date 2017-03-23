@@ -50,8 +50,8 @@ CREATE TABLE `clanok_lang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Jazyková mutácia článku';
 
 INSERT INTO `clanok_lang` (`id`, `id_lang`, `text`, `anotacia`) VALUES
-(1,	1,	'<p>Na tomto mieste budú pravidlá súťaže</p>',	NULL),
-(2,	1,	'<p>Pravidlá súťaže</p>',	'');
+(1,	1,	'<p>Úvodná stránka súťaže.</p>',	''),
+(2,	1,	'<p>Táto stránka obsahuje pravidlá súťaže, ktoré sú tu napísané</p>\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis lectus metus, at posuere neque. Sed pharetra nibh eget orci convallis at posuere leo convallis. Sed blandit augue vitae augue scelerisque bibendum. Vivamus sit amet libero turpis, non venenatis urna. In blandit, odio convallis suscipit venenatis.</p>\n<p>Ante ipsum cursus augue, et mollis nunc diam eget sapien. Nulla facilisi. Etiam feugiat imperdiet rhoncus. Sed suscipit bibendum enim, sed volutpat tortor malesuada non. Morbi fringilla dui non purus porttitor mattis. Suspendisse quis vulputate risus. Phasellus erat velit, sagittis sed varius volutpat, placerat nec urna.</p>\n<p>Nam eu metus vitae dolor fringilla feugiat. Nulla facilisi. Etiam enim metus, luctus in adipiscing at, consectetur quis sapien. Duis imperdiet egestas ligula, quis hendrerit ipsum ullamcorper et. Phasellus id tristique orci. Proin consequat mi at felis scelerisque ullamcorper. Etiam tempus, felis vel eleifend porta, velit.</p>\n\n',	'');
 
 DROP TABLE IF EXISTS `dlzka_novinky`;
 CREATE TABLE `dlzka_novinky` (
@@ -86,8 +86,8 @@ CREATE TABLE `dokumenty` (
   `zmena` datetime NOT NULL COMMENT 'Dátum uloženia alebo opravy - časová pečiatka',
   `zobraz_v_texte` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Zobrazenie obrázku v texte',
   `pocitadlo` int(11) NOT NULL DEFAULT '0' COMMENT 'Počítadlo stiahnutí',
-  `lat` float DEFAULT NULL COMMENT 'latitude',
-  `lng` float DEFAULT NULL COMMENT 'longnitude',
+  `lat` float NOT NULL COMMENT 'sirka',
+  `lng` float NOT NULL COMMENT 'vyska',
   PRIMARY KEY (`id`),
   UNIQUE KEY `spec_nazov` (`spec_nazov`),
   KEY `id_user_profiles` (`id_user_profiles`),
@@ -97,6 +97,9 @@ CREATE TABLE `dokumenty` (
   CONSTRAINT `dokumenty_ibfk_3` FOREIGN KEY (`id_hlavne_menu`) REFERENCES `hlavne_menu` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+INSERT INTO `dokumenty` (`id`, `id_hlavne_menu`, `id_user_profiles`, `id_registracia`, `znacka`, `nazov`, `pripona`, `spec_nazov`, `popis`, `subor`, `thumb`, `zmena`, `zobraz_v_texte`, `pocitadlo`, `lat`, `lng`) VALUES
+(3,	4,	1,	1,	'#I-3#',	'Vodná',	'jpg',	'vodna-jpg',	'Vodná panna',	'www/files/myfoto/vodna.jpg',	'www/files/myfoto/tb_vodna.jpg',	'2017-03-23 06:57:16',	1,	0,	49.0181,	20.283),
+(4,	4,	1,	1,	'#I-4#',	'Lesná',	'jpg',	'e08cb175ed8b5f769e9f27ce1ee1ad24d10338ef-jpg',	'Lesná panna',	'www/files/myfoto/e08cb175ed8b5f769e9f27ce1ee1ad24d10338ef.jpg',	'www/files/myfoto/tb_e08cb175ed8b5f769e9f27ce1ee1ad24d10338ef.jpg',	'2017-03-23 06:57:44',	1,	0,	49.0157,	20.2724);
 
 DROP TABLE IF EXISTS `druh`;
 CREATE TABLE `druh` (
@@ -116,7 +119,7 @@ INSERT INTO `druh` (`id`, `druh`, `modul`, `presenter`, `popis`, `povolene`, `je
 (3,	'menupol',	NULL,	'Menu',	'Položka menu - nerobí nič, len zobrazí všetky položky, ktoré sú v nej zaradené',	1,	1,	1),
 (5,	'oznam',	NULL,	'Oznam',	'Vypísanie oznamov',	1,	0,	1),
 (7,	'dokumenty',	NULL,	'Dokumenty',	'Vkladanie dokumentov do stránky',	0,	0,	0),
-(8,	'my',	NULL,	'My',	'Vkladanie fotiek',	1,	0,	0);
+(8,	'my',	NULL,	'My',	'Vypísanie profilu a správu príloh',	1,	0,	1);
 
 DROP TABLE IF EXISTS `hlavicka`;
 CREATE TABLE `hlavicka` (
@@ -176,9 +179,9 @@ CREATE TABLE `hlavne_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Položky HLAVNÉHO menu';
 
 INSERT INTO `hlavne_menu` (`id`, `spec_nazov`, `id_hlavne_menu_cast`, `id_registracia`, `id_ikonka`, `id_druh`, `uroven`, `id_nadradenej`, `id_user_profiles`, `poradie`, `poradie_podclankov`, `id_hlavicka`, `povol_pridanie`, `zvyrazni`, `pocitadlo`, `nazov_ul_sub`, `absolutna`, `ikonka`, `avatar`, `komentar`, `modified`, `datum_platnosti`, `aktualny_projekt`, `redirect_id`, `id_dlzka_novinky`) VALUES
-(1,	'home',	1,	0,	NULL,	1,	0,	NULL,	3,	1,	0,	0,	0,	0,	0,	NULL,	NULL,	NULL,	NULL,	0,	'2017-02-16 07:54:07',	NULL,	0,	NULL,	1),
-(2,	'pravidla',	1,	0,	NULL,	1,	0,	NULL,	1,	2,	0,	2,	0,	0,	0,	NULL,	NULL,	NULL,	NULL,	0,	'2017-03-22 05:43:04',	NULL,	0,	NULL,	1),
-(3,	'moje-fotky',	1,	1,	NULL,	8,	0,	NULL,	1,	3,	0,	2,	0,	0,	0,	NULL,	NULL,	NULL,	NULL,	0,	'2017-03-22 05:43:04',	NULL,	0,	NULL,	1);
+(1,	'home',	1,	0,	NULL,	1,	0,	NULL,	3,	1,	0,	1,	0,	0,	0,	NULL,	NULL,	'',	NULL,	0,	'2017-03-20 06:43:44',	NULL,	0,	NULL,	1),
+(2,	'pravidla-sutaze',	1,	0,	NULL,	1,	0,	NULL,	1,	2,	0,	2,	0,	0,	0,	NULL,	NULL,	'',	NULL,	0,	'2017-03-20 06:58:01',	NULL,	0,	NULL,	1),
+(4,	'moje-prispevky',	1,	1,	NULL,	8,	0,	NULL,	1,	3,	0,	2,	0,	0,	0,	NULL,	NULL,	'',	NULL,	0,	'2017-03-20 09:12:14',	NULL,	0,	NULL,	1);
 
 DROP TABLE IF EXISTS `hlavne_menu_cast`;
 CREATE TABLE `hlavne_menu_cast` (
@@ -214,9 +217,9 @@ CREATE TABLE `hlavne_menu_lang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Popis položiek hlavného menu pre iný jazyk';
 
 INSERT INTO `hlavne_menu_lang` (`id`, `id_lang`, `id_hlavne_menu`, `id_clanok_lang`, `nazov`, `h1part2`, `description`) VALUES
-(1,	1,	1,	1,	'home',	NULL,	'Mestské Lesy Poprad - Úvodná stránka a pravidlá'),
-(2,	1,	2,	2,	'Pravidlá',	'',	'Pravidlá'),
-(3,	1,	3,	NULL,	'Môje fotky',	'',	'Môje fotky');
+(1,	1,	1,	1,	'Úvod',	'',	'Mestské Lesy Poprad - Úvodná stránka'),
+(2,	1,	2,	2,	'Pravidlá súťaže',	'',	'Mestské lesy Poprad - Pravidlá súťaže'),
+(4,	1,	4,	NULL,	'Moje príspevky',	'',	'Moje príspevky');
 
 DROP TABLE IF EXISTS `ikonka`;
 CREATE TABLE `ikonka` (
@@ -438,7 +441,9 @@ CREATE TABLE `user_prihlasenie` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Evidencia prihlásenia užívateľov';
 
 INSERT INTO `user_prihlasenie` (`id`, `id_user_profiles`, `prihlasenie_datum`) VALUES
-(1,	1,	'2017-03-22 06:38:10');
+(1,	1,	'2017-03-20 08:04:07'),
+(2,	1,	'2017-03-20 09:46:59'),
+(3,	1,	'2017-03-20 10:49:31');
 
 DROP TABLE IF EXISTS `user_profiles`;
 CREATE TABLE `user_profiles` (
@@ -468,7 +473,7 @@ CREATE TABLE `user_profiles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 INSERT INTO `user_profiles` (`id`, `id_users`, `id_registracia`, `meno`, `priezvisko`, `rok`, `telefon`, `poznamka`, `pocet_pr`, `pohl`, `prihlas_teraz`, `prihlas_predtym`, `avatar_25`, `avatar_75`, `foto`, `news`, `created`, `modified`) VALUES
-(1,	1,	5,	'Peter',	'VOJTECH',	NULL,	NULL,	'Administrátor',	1,	'M',	'2017-03-22 06:38:11',	NULL,	'files/1/evjv4xbig05stnnihm3hbtj7f_25.jpg',	'files/1/evjv4xbig05stnnihm3hbtj7f_75.jpg',	NULL,	'A',	'2013-01-03 11:17:32',	'2017-03-22 06:43:42'),
+(1,	1,	5,	'Peter',	'VOJTECH',	NULL,	NULL,	'Administrátor',	3,	'M',	'2017-03-20 10:49:31',	'2017-03-20 09:46:59',	'files/1/4ixm9oy1y04ehzcas1c47yn13_25.jpg',	'files/1/4ixm9oy1y04ehzcas1c47yn13_75.jpg',	NULL,	'A',	'2013-01-03 11:17:32',	'2017-03-20 10:49:21'),
 (2,	2,	4,	'Róbert',	'DULA',	NULL,	NULL,	NULL,	0,	'M',	NULL,	NULL,	NULL,	NULL,	NULL,	'A',	'2017-02-13 08:38:27',	'2017-02-13 08:38:27'),
 (3,	3,	4,	'Jozef',	'PETRENČÍK',	NULL,	NULL,	NULL,	0,	'M',	NULL,	NULL,	NULL,	NULL,	NULL,	'A',	'2017-02-13 08:54:07',	'2017-02-13 08:54:07');
 
@@ -490,4 +495,4 @@ CREATE TABLE `verzie` (
 INSERT INTO `verzie` (`id`, `id_user_profiles`, `cislo`, `subory`, `text`, `datum`) VALUES
 (1,	1,	'0.1.',	NULL,	'Východzia verzia',	'2017-02-13 08:03:32');
 
--- 2017-03-22 16:48:40
+-- 2017-03-23 05:58:49
