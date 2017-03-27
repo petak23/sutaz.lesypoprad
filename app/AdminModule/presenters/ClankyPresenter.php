@@ -25,6 +25,8 @@ class ClankyPresenter extends \App\AdminModule\Presenters\ArticlePresenter {
   public $zobrazClanokControlFactory;
   /** @var \App\AdminModule\Components\Clanky\PrilohyClanok\IPrilohyClanokControl @inject */
   public $prilohyClanokControlFactory;
+  /** @var \App\AdminModule\Components\Clanky\TableOfUsers\ITableOfUsersControl @inject */
+  public $tableOfUsersControlFactory;
   
 	/** @var string */
   protected $nadpis_h2 = "";
@@ -233,6 +235,12 @@ class ClankyPresenter extends \App\AdminModule\Presenters\ArticlePresenter {
     $prilohyClanok = $this->prilohyClanokControlFactory->create(); 
     $prilohyClanok->setTitle($this->zobraz_clanok, $this->nazov_stranky, $this->upload_size, $this->prilohy_adresar, $this->nastavenie['prilohy_images'], $this->admin_links);
     return $prilohyClanok;
+  }
+  /** 
+   * Komponenta pre zobrazenie uzivatelov
+   * @return \App\AdminModule\Components\Clanky\TableOfUsers\TableOfUsersControl */
+  public function createComponentTableOfUsers() {
+    return $this->tableOfUsersControlFactory->create();
   }
   
   /** Signal pre pridanie komponenty, ktora nema parametre

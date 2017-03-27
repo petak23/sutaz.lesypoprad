@@ -119,11 +119,13 @@ services:
   - App\AdminModule\Components\User\IUserLastControl
   - App\AdminModule\Components\Clanky\IZobrazClanokControl
   - App\AdminModule\Components\Clanky\PrilohyClanok\IPrilohyClanokControl
+  - App\AdminModule\Components\Clanky\TableOfUsers\ITableOfUsersControl
 
   - App\FrontModule\Components\Clanky\IAktualneClankyControl
   - App\FrontModule\Components\Clanky\IAktualnyProjektControl
   - App\FrontModule\Components\Clanky\IKomentarControl
   - App\FrontModule\Components\Clanky\IPrilohyClanokControl
+  - App\FrontModule\Components\Clanky\TableOfUsers\ITableOfUsersControl
   - App\FrontModule\Components\Clanky\OdkazNaClanky\IOdkazNaClankyControl
   - App\FrontModule\Components\Slider\ISliderControl
   - App\FrontModule\Components\User\IUserLangMenuControl

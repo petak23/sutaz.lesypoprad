@@ -2,15 +2,26 @@
 namespace App\FrontModule\Components\Menu;
 use Nette;
 
+/**
+ * Komponenta pre zobrazenie ponuky menu pre FRONT modul
+ * Posledna zmena(last change): 27.03.2017
+ *
+ * @author Ing. Peter VOJTECH ml <petak23@gmail.com>
+ * @copyright Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
+ * @license
+ * @link http://petak23.echo-msz.eu
+ * @version 1.0.2
+ *
+ */
 class Menu extends Nette\Application\UI\Control {
 	var $rootNode; // = new MenuItem();
 	var $separateMenuLevel;
 	protected $_selected;
-	var $allNodes = array();
+	var $allNodes = [];
 	protected $_path = null;
-	var $templatePath = array();
+	var $templatePath = [];
 	public $idCounter = 0;
-  protected $nastav = array(
+  protected $nastav = [
           "level" => 0,
           "templateType" => "tree",
           "nadpis" => FALSE,
@@ -20,7 +31,7 @@ class Menu extends Nette\Application\UI\Control {
           "text_title_image" =>"Titulný obrázok",
 					"article_avatar_view_in" => 0,
           "separator" => "|",
-      );
+      ];
 
 	public function __construct(Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
 		parent::__construct($parent, $name);
@@ -31,7 +42,7 @@ class Menu extends Nette\Application\UI\Control {
 
 	public function setSelected($node) {
 		if (is_scalar($node)) {
-			if (!isset($this->allNodes[$node])) return;
+      if (!isset($this->allNodes[$node])) { return;}
 			$node = $this->allNodes[$node];
 		};
 		$this->_path = null;
@@ -53,7 +64,7 @@ class Menu extends Nette\Application\UI\Control {
 
 	function makePath() {
 		$node = $this->getSelected();
-		$path = array();
+		$path = [];
 		while ($node && ($node != $this->rootNode)) {
 			$path[] = $node;
 			$node = $node->parent;
@@ -71,14 +82,22 @@ class Menu extends Nette\Application\UI\Control {
 		$template->path = $this->getPath();
 		$template->selected = $this->getSelected();
 		$template->startNode = ($level == 0) ? $this->rootNode : (isset($this->getPath()[$level - 1]) ? $this->getPath()[$level - 1] : null);
-    if ($tT == 'tree') { $template->showAll = false; }
+    if ($tT == 'tree') { 
+      $template->showAll = false;
+      if (isset($nastav["cast"])) {
+        $p = [];
+        foreach ($this->rootNode->nodes as $v) { $p[] = $v->id; }
+        $o = array_search(-1*$nastav["cast"], $p);
+        $template->startNode = $this->rootNode->nodes[$o]; 
+      }
+    }
     elseif ($tT == 'map') {
       $nastav["templateType"] = 'tree';
       $template->showAll = true;
     } elseif ($tT == 'fixed') {
       $template->showAll = true;
       if (isset($nastav["cast"])) {
-        $p = array();
+        $p = [];
         foreach ($this->rootNode->nodes as $v) { $p[] = $v->id; }
         $o = array_search(-1*$nastav["cast"], $p);
         $template->startNode = $this->rootNode->nodes[$o]; 
@@ -95,9 +114,9 @@ class Menu extends Nette\Application\UI\Control {
 	}
 
 	public function fromTable($data, $setupNode) {
-		$usedIds = array(null);
-		$newIds = array();
-		$nodes = array();
+		$usedIds = [null];
+		$newIds = [];
+		$nodes = [];
 		foreach($data as $row) {
 			$node = new MenuNode;
 			$parentId = $setupNode($node, $row);
@@ -142,7 +161,7 @@ class MenuNode extends \Nette\Object {
 	var $link;	//Odkaz na polozku
   var $absolutna; //Ak je absolutny odkaz
   var $novinka; //Či je položka novinkou
-	var $nodes = array();
+	var $nodes = [];
 	var $parent;
 	var $id;
 	var $menu;

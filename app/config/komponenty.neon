@@ -34,3 +34,8 @@ parameters:
 #      fa_ikonka: 'columns'
 #      jedinecna: TRUE
 #      parametre: NULL
+    tableOfUsers:
+      nazov: 'Zoznam užívateľov'
+      fa_ikonka: 'users-o'
+      jedinecna: TRUE
+      parametre: NULL

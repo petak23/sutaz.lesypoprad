@@ -6,15 +6,15 @@ use DbTable, Language_support;
 
 /**
  * Prezenter pre vypisanie clankov.
- * Posledna zmena(last change): 17.05.2016
+ * Posledna zmena(last change): 27.03.2017
  *
  *	Modul: FRONT
  *
  * @author Ing. Peter VOJTECH ml. <petak23@gmail.com>
- * @copyright  Copyright (c) 2012 - 2016 Ing. Peter VOJTECH ml.
+ * @copyright  Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link       http://petak23.echo-msz.eu
- * @version 1.0.7a
+ * @version 1.0.8
  */
 
 class ClankyPresenter extends \App\FrontModule\Presenters\BasePresenter {
@@ -32,6 +32,8 @@ class ClankyPresenter extends \App\FrontModule\Presenters\BasePresenter {
   public $komentarControlControlFactory;
   /** @var \App\FrontModule\Components\Clanky\IPrilohyClanokControl @inject */
   public $prilohyClanokControlFactory;
+  /** @var \App\FrontModule\Components\Clanky\TableOfUsers\ITableOfUsersControl @inject */
+  public $tableOfUsersControlFactory;
   
 	/** @var \Nette\Database\Table\ActiveRow|FALSE */
 	public $zobraz_clanok = FALSE;
@@ -52,7 +54,7 @@ class ClankyPresenter extends \App\FrontModule\Presenters\BasePresenter {
     if (($this->zobraz_clanok = $this->hlavne_menu_lang->getOneArticleId($id, $this->language_id, $this->id_reg)) === FALSE) {
       $this->setView("notFound");
     } else { 
-      if (isset($this->zobraz_clanok->hlavne_menu->redirect_id)) { //Ak mám presmerovanie na podclanok
+      if ($this->zobraz_clanok->hlavne_menu->redirect_id) { //Ak mám presmerovanie na podclanok
         $this->redirect("Clanky:", $this->zobraz_clanok->hlavne_menu->redirect_id);              
       }
     }
@@ -120,5 +122,19 @@ class ClankyPresenter extends \App\FrontModule\Presenters\BasePresenter {
                 "nie_je"	    =>"",
                 ]);
     return $prilohy;
+  }
+  
+  /** Komponenta pre zobrazenie uzivatelov
+   * @return \App\FrontModule\Components\Clanky\TableOfUsers\TableOfUsersControl
+   */
+  public function createComponentTableOfUsers() {
+    $tou = $this->tableOfUsersControlFactory->create();
+//    $prilohy->setNastav($this->zobraz_clanok->id_hlavne_menu, $this->avatar_path)
+//            ->setTexts([
+//                "not_found"   =>$this->trLang('base_not_found'),
+//                "h3" 					=>"",
+//                "nie_je"	    =>"",
+//                ]);
+    return $tou;
   }
 }
