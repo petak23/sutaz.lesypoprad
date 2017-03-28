@@ -9,13 +9,13 @@ use Language_support;
 
 /**
  * Plugin pre zobrazenie ponuky o užívateľovi a jazykoch
- * Posledna zmena(last change): 15.11.2016
+ * Posledna zmena(last change): 28.03.2017
  *
  * @author Ing. Peter VOJTECH ml. <petak23@gmail.com>
- * @copyright  Copyright (c) 2013 - 2016 Ing. Peter VOJTECH ml.
+ * @copyright  Copyright (c) 2013 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link       http://petak23.echo-msz.eu
- * @version 1.0.7
+ * @version 1.0.8
  */
 class UserLangMenuControl extends Control {
   /** @var Language_support\User Prednastavene texty pre prihlasovaci form */
@@ -50,12 +50,11 @@ class UserLangMenuControl extends Control {
     $menu_user = [];
     $menu_user[] = new MenuItem([
         'odkaz'=>[0=>'User:', 1=>['meno'=>'backlink', 'obsah'=>$this->presenter->storeRequest()]], 
-        'class'=>'log-in'.(($vlnh) ? "" : " prazdny fa fa-lock"),
+        'class'=>'btn-success',//'log-in noajax'.(($vlnh) ? "" : " prazdny fa fa-lock"),
         'title'=>$udaje_webu['log_in'].$vlnh,
         'nazov'=>($vlnh & 1) ? $udaje_webu['log_in'] : ($vlnh ? NULL : ""),
         'ikonka'=>($vlnh & 2) ? "sign-in" : NULL,
-        'class'=>'noajax',
-        'data'=>['name'=>'ajax', 'value'=>'false'],
+//        'data'=>['name'=>'ajax', 'value'=>'false'],
                         ]);
 //    if ($vlnh > 0) {//Ak je >0 zobraz link
 //      $menu_user[] = new MenuItem([
@@ -76,7 +75,8 @@ class UserLangMenuControl extends Control {
     if (isset($udaje_webu['registracia_enabled']) && $udaje_webu['registracia_enabled']) {
       $menu_user[] = new MenuItem([
           'odkaz'=>'User:registracia', 
-          'nazov'=>$udaje_webu['register']
+          'nazov'=>$udaje_webu['register'],
+          'class'=>'btn-primary',
                           ]);
     }
     return $menu_user;
@@ -101,14 +101,15 @@ class UserLangMenuControl extends Control {
     $menu_user[] = new MenuItem([
           'odkaz'=>'UserLog:', 
           'nazov'=>$obb." ".$udata->meno.' '.$udata->priezvisko,
-          'title'=>$udata->meno.' '.$udata->priezvisko]);
+          'title'=>$udata->meno.' '.$udata->priezvisko,
+          'class'=>'btn-success',]);
     if ($this->user->isAllowed('admin', 'enter')) {
       $menu_user[] = new MenuItem([
         'odkaz'=>':Admin:Homepage:',
         'title'=>'Administrácia',
         'ikonka'  => ($this->nastavenie['admin_link'] & 1) ? 'pencil' : '',
         'nazov'=>($this->nastavenie['admin_link'] & 2) ? $this->texty->trText('base_AdminLink_name') : '',
-        'class'=>'noajax',
+        'class'=>'btn-primary noajax',
         'data'=>['name'=>'ajax', 'value'=>'false'],
       ]);
     }
@@ -127,14 +128,14 @@ class UserLangMenuControl extends Control {
         'odkaz'=>'signOut!',
         'ikonka'=>"sign-out",
         'nazov'=>$log_out,
-        'class'=>'noajax',
+        'class'=>'btn-warning noajax',
         'data'=>['name'=>'ajax', 'value'=>'false'],
                         ]);
     return $menu_user;
   }
 
   /** Vykreslenie komponenty */
-  public function render() {
+  public function render($params) {
 		//Inicializacia
 		$pthis = $this->presenter;
 		$baseUrl = $this->template->baseUrl;
@@ -160,7 +161,7 @@ class UserLangMenuControl extends Control {
 		}
 		$this->template->menu_user = isset($menu_user) ? $menu_user : [];
 		$this->template->language = $pthis->language;
-		$this->template->setFile(__DIR__ . '/UserLangMenu.latte');
+		$this->template->setFile(__DIR__ .'/'. (isset($params['templateFile']) ? $params['templateFile'] : 'UserLangMenu').'.latte');
 		$this->template->render();
 	}
 		

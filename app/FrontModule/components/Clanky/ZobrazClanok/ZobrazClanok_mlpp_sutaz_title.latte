@@ -1,0 +1,4 @@
+<h2 class="col-lg-10 col-lg-pull-1 col-lg-push-1" n:if="!(isset($nastav['view_h2']) && !$nastav['view_h2'])">{$clanok->nazov}</h2>
+{if $clanok->clanok_lang->text}
+  {$clanok->clanok_lang->text|noescape|obr_v_txt}
+{/if}

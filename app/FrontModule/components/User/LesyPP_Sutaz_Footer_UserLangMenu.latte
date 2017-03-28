@@ -10,9 +10,6 @@
   </li>
 </ul>*}
 {foreach $menu_user as $mu}
-<a href="{ifset $mu->abs_link}{$mu->abs_link}{else}{if is_array($mu->odkaz)}{plink $mu->odkaz[0], $mu->odkaz[1]['meno']=>$mu->odkaz[1]['obsah']}{else}{plink $mu->odkaz}{/if}{/ifset}"
-        type="button" class="btn {if strlen($mu->class)}{$mu->class}{/if} btn-lg"
-        title="{$mu->title}"
-        {if strlen($mu->target)}target="{$mu->target}"{/if}
-        {if $mu->data['name'] != ''}data-{$mu->data['name']}="{$mu->data['value']}"{/if}>{$mu->nazov|noescape}</a>
+<li><a href="{ifset $mu->abs_link}{$mu->abs_link}{else}{if is_array($mu->odkaz)}{plink $mu->odkaz[0], $mu->odkaz[1]['meno']=>$mu->odkaz[1]['obsah']}{else}{plink $mu->odkaz}{/if}{/ifset}"
+       title="{$mu->title}" {if strlen($mu->target)}target="{$mu->target}"{/if}>{$mu->nazov|noescape}</a></li>
 {/foreach}

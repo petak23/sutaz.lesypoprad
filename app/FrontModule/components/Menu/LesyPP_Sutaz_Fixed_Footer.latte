@@ -1,0 +1,15 @@
+{define #link}
+<li>
+    {if $node->link}
+      <a href="{$node->link}" title="{$node->name}">{$node->name}</a>
+    {else}
+      <span>{$node->name}</span>
+    {/if}
+</li>
+{/define}
+
+{if isset($startNode) && count($startNode->nodes)}
+  {foreach $startNode->nodes as $subNode}
+    {include #link node => $subNode}
+  {/foreach}
+{/if}

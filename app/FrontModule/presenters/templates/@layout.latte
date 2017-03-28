@@ -17,81 +17,52 @@
 <html>
 <head>	{* ----- Hlavicka stranky ----- *}
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge1"/>
 	<meta name="HandheldFriendly" content="true" />
   <meta name="robots" content="{ifset $robots}{$robots}{else}index, follow{/ifset}" />
   <meta name="description" content="{$udaje['description']}" />
   <meta name="keywords" content="{$udaje['keywords']}" />
   <meta name="author" content="{$udaje['autor']}" />
   <title n:snippet="title">{$udaje['titulka']} {block title|stripHtml}{/block}</title>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" rel="stylesheet">
   {control css}
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
   {* ----- Favicon ------ *}
   <link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon">
   {block head}{/block}
 </head>
 
 <body>
-  
-  <div class="container">
-    <nav class="navbar navbar-default navbar-inverse">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          {*<a class="navbar-brand" href="#">Brand</a>*}
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          {control userLangMenu}
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-    <header class="row">
-      <div class="top-header col-md-10">
-        <h1 n:snippet="h1"><a n:href="Homepage:">{$udaje['titulka']}</a>
-          <br />{* ifset $udaje['nazov']}{$udaje['nazov']|striptags}{/ifset *}
-          <small n:ifset="$udaje['h1part2']">{$udaje['h1part2']|striptags}</small>
-        </h1>
-      </div>
-      <div class="col-md-2"><a n:href="Homepage:" title="{$udaje['titulka']}">
-        <img src="{$basePath}/www/images/logoML.png" class="logo" alt="logo">
-      </a></div>
-      
-      
-      <div class="main-header col-md-12 bg-primary">
-        {control menu templateType=>'fixed', templateFile=>'Echo_Fixed_Main1', cast=>1, article_avatar_view_in =>0, divClass=>'main-nav'}
-      </div>
-    </header>
+  <div id="content" class="center-block">
     {control confirmForm}
-    {* ----- ZACIATOK content - centralna cast ----- *}
-    <section class="main-content{* container-fluid*}" n:snippet="content">
-      <div class="row top-panel" n:if="count($flashes)">
-        <div class="col-md-10 col-md-offset-1" n:inner-foreach="$flashes as $flash" n:if="count($flashes)">
-          {var $nees = explode(',', $flash->type)}
-          <div class="alert alert-{$nees[0]} fade in" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            {if isset($nees[1]) && $nees[1] == 'n'}{$flash->message|noescape}{else}{$flash->message}{/if}
-          </div>
+	  <header>
+	    <div class="col-lg-6 col-md-7 col-sm-12" id="headimg">
+        <h2 class="col-lg-3 col-sm-3 col-xs-10">SÚŤAŽ</h2>
+      </div>
+	    <div class="col-lg-4 col-md-5 col-sm-12" id="headline">
+        <h1 class="text-center text-uppercase">{$udaje['titulka']} <br><span class="text-light">{$udaje['titulka_2']}</span></h1>
+	    </div>
+	    <div class="col-lg-2 col-md-2 hidden-md" id="smallHeadimg"></div>
+    </header>
+    <div class="row top-panel" n:if="count($flashes)">
+      <div class="col-md-10 col-md-offset-1" n:inner-foreach="$flashes as $flash" n:if="count($flashes)">
+        {var $nees = explode(',', $flash->type)}
+        <div class="alert alert-{$nees[0]} fade in" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {if isset($nees[1]) && $nees[1] == 'n'}{$flash->message|noescape}{else}{$flash->message}{/if}
         </div>
       </div>
-      {include #content}
-      {*<aside class="article-podclanky">
-        {block article-podclanky}{/block}
-        {control news}
-      </aside>*}
-    </section>
+    </div>
+    {include #content}
     {* ----- Spodok stranky - FOOTER ----- *}
     {snippet footer}{include 'footer_template.latte'}{/snippet}
-  </div>
+	</div>
   {control js}
   {block spec_js}{/block}
   {*<script>

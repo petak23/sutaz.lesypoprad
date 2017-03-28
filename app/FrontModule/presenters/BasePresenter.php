@@ -360,6 +360,32 @@ abstract class BasePresenter extends UI\Presenter {
     });
   }
   
+  /** Komponenta pre zobrazenie clanku
+   * @return \App\FrontModule\Components\Clanky\ZobrazClanok\ZobrazAnotaciuControl
+   */
+  public function createComponentUkazAnotaciu() {
+    $servise = $this;
+		return new Multiplier(function ($id) use ($servise) {
+      if (is_numeric($id)) {
+        $clanok = $servise->hlavne_menu_lang->getOneArticleId($id, $servise->language_id, 0);
+      } else {
+        $clanok = $servise->hlavne_menu_lang->getOneArticleSp($id, $servise->language_id, 0);
+      }
+      $ukaz_clanok = New \App\FrontModule\Components\Clanky\ZobrazAnotaciu\ZobrazAnotaciuControl($clanok);
+      $ukaz_clanok->setTexts([
+        "not_found"         =>$servise->trLang('base_not_found'),
+        "platnost_do"       =>$servise->trLang('base_platnost_do'),
+        "zadal"             =>$servise->trLang('base_zadal'),
+        "zobrazeny"         =>$servise->trLang('base_zobrazeny'),  
+        "anotacia"          =>$servise->trLang('base_anotacia'),
+        "viac"              =>$servise->trLang('base_viac'),
+        "text_title_image"  =>$servise->trLang("base_text_title_image"),
+        ]);
+      $ukaz_clanok->setClanokHlavicka($servise->udaje_webu['clanok_hlavicka']);
+      return $ukaz_clanok;
+    });
+  }
+  
   /** 
    * Komponenta pre zobrazenie noviniek
    * @return \App\FrontModule\Components\News\INewsControl */
