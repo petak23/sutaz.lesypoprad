@@ -7,7 +7,7 @@
 parameters:
   homepage_redirect: FALSE #Clanky:default 1 #FALSE #Presmerovanie na hlavnej stranke Cesta|FALSE
   add_uroven0: FALSE # Globalne povolenie pre pridavanie do urovne 0 pre spravcu. TRUE|FALSE
-  send_e_mail_news: TRUE # Globalne povolenie posielania info mailov v pripade pridania polozky TRUE|FALSE
+  send_e_mail_news: FALSE # Globalne povolenie posielania info mailov v pripade pridania polozky TRUE|FALSE
   omrvinky_enabled: FALSE # Globalne povolenie zobrazenia omrviniek TRUE|FALSE
   aktualny_projekt_enabled: FALSE # Globalne povolenie nastavovania aktualneho projektu TRUE|FALSE
   slider:       #Nastavenie slider-u
