@@ -72,9 +72,9 @@ webloader:
         - %appDir%/../www/js/jquery.js
         - %appDir%/../www/js/bootstrap.min.js
         - %appDir%/../www/js/netteForms.js
-        - %appDir%/../www/js/nette.ajax.js
-        - %appDir%/../www/js/modernizr-2.6.2.min.js
-        - %appDir%/../www/js/js-image-slider.js
+#        - %appDir%/../www/js/nette.ajax.js
+#        - %appDir%/../www/js/modernizr-2.6.2.min.js
+#        - %appDir%/../www/js/js-image-slider.js
         - %appDir%/../www/js/lightbox.min.js
         - %appDir%/../www/js/pomocne_front.js
 

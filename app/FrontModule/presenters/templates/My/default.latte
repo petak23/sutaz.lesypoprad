@@ -19,23 +19,11 @@
       </dl>
     </div>
     <div class="row">
-      {*<ul class="nav nav-tabs" role="tablist" id="myTabs">
-        <li role="presentation" class="active">
-          <a href="#fototable" aria-controls="fototable" role="tab" data-toogle="tab">
-            Tabuľka fotiek
-          </a>
-        </li>
-        <li role="presentation">
-          <a href="#fotomap" aria-controls="fotomap" role="tab" data-toogle="tab">
-            Mapa fotiek
-          </a>
-        </li>
-      </ul>*}
-      <div {*class="tab-content" id="myTabsContent"*}>                                     
-        <div {*role="tabpanel" class="tab-pane active" id="fototable"*}>
+      <div>
+        <div>
           {control fotoPrilohy}
         </div>
-        <div {*role="tabpanel" class="tab-pane" id="fotomap"*}>
+        <div>
           <h4>Mapa fotiek</h4>
           {control map}
         </div>  
@@ -45,14 +33,11 @@
 </article>
 {/block}
 {block spec_js}
-  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCO6ozy9buzCIV-hhHULifJGdeLRHkkWw8&sensor=false"></script>{*&libraries=places*}
-  
+  {*<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCO6ozy9buzCIV-hhHULifJGdeLRHkkWw8&sensor=false"></script>{*&libraries=places*}
   
   {*<script src="http://api4.mapy.cz/loader.js"></script>
   <script>Loader.load()</script>*}
   {*<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>*}
-  {*<script src="{$basePath}/vendor/lukyrys/nette-forms-gpspicker/client/nette.gpsPicker.js"></script>*}
-  <script src="{$basePath}/www/js/nette.gpsPicker.js"></script>
   
   <script src="{$basePath}/www/js/googleMapAPI.js"></script>
   <script src="{$basePath}/www/js/googleMapApiLoader.js"></script>

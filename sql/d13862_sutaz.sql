@@ -36,6 +36,9 @@ CREATE TABLE `clanok_komponenty` (
   CONSTRAINT `clanok_komponenty_ibfk_3` FOREIGN KEY (`id_hlavne_menu`) REFERENCES `hlavne_menu` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Zoznam komponent, ktoré sú priradené k článku';
 
+INSERT INTO `clanok_komponenty` (`id`, `id_hlavne_menu`, `spec_nazov`, `parametre`) VALUES
+(1,	1,	'tableOfUsers',	NULL),
+(2,	6,	'tableOfUsers',	NULL);
 
 DROP TABLE IF EXISTS `clanok_lang`;
 CREATE TABLE `clanok_lang` (
@@ -50,7 +53,9 @@ CREATE TABLE `clanok_lang` (
 
 INSERT INTO `clanok_lang` (`id`, `id_lang`, `text`, `anotacia`) VALUES
 (1,	1,	'<p>Úvodná stránka súťaže.</p>',	''),
-(2,	1,	'<p>Táto stránka obsahuje pravidlá súťaže, ktoré sú tu napísané</p>\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis lectus metus, at posuere neque. Sed pharetra nibh eget orci convallis at posuere leo convallis. Sed blandit augue vitae augue scelerisque bibendum. Vivamus sit amet libero turpis, non venenatis urna. In blandit, odio convallis suscipit venenatis.</p>\n<p>Ante ipsum cursus augue, et mollis nunc diam eget sapien. Nulla facilisi. Etiam feugiat imperdiet rhoncus. Sed suscipit bibendum enim, sed volutpat tortor malesuada non. Morbi fringilla dui non purus porttitor mattis. Suspendisse quis vulputate risus. Phasellus erat velit, sagittis sed varius volutpat, placerat nec urna.</p>\n<p>Nam eu metus vitae dolor fringilla feugiat. Nulla facilisi. Etiam enim metus, luctus in adipiscing at, consectetur quis sapien. Duis imperdiet egestas ligula, quis hendrerit ipsum ullamcorper et. Phasellus id tristique orci. Proin consequat mi at felis scelerisque ullamcorper. Etiam tempus, felis vel eleifend porta, velit.</p>\n\n',	'');
+(2,	1,	'<p>\n	T&aacute;to str&aacute;nka obsahuje pravidl&aacute; s&uacute;ťaže, ktor&eacute; s&uacute; tu nap&iacute;san&eacute;.</p>\n<p>\n	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis lectus metus, at posuere neque. Sed pharetra nibh eget orci convallis at posuere leo convallis. Sed blandit augue vitae augue scelerisque bibendum. Vivamus sit amet libero turpis, non venenatis urna. In blandit, odio convallis suscipit venenatis.</p>\n<p>\n	Ante ipsum cursus augue, et mollis nunc diam eget sapien. Nulla facilisi. Etiam feugiat imperdiet rhoncus. Sed suscipit bibendum enim, sed volutpat tortor malesuada non. Morbi fringilla dui non purus porttitor mattis. Suspendisse quis vulputate risus. Phasellus erat velit, sagittis sed varius volutpat, placerat nec urna.</p>\n<p>\n	Nam eu metus vitae dolor fringilla feugiat. Nulla facilisi. Etiam enim metus, luctus in adipiscing at, consectetur quis sapien. Duis imperdiet egestas ligula, quis hendrerit ipsum ullamcorper et. Phasellus id tristique orci. Proin consequat mi at felis scelerisque ullamcorper. Etiam tempus, felis vel eleifend porta, velit.</p>\n',	'Pripravili sme pre Vás návod ako pridávať príspevky do súťaže.'),
+(3,	1,	'<p class=\"col-lg-10 col-lg-pull-1 col-lg-push-1\">\n	Objav&nbsp;pr&iacute;rodn&eacute; prostredie mestsk&yacute;ch lesov, kr&aacute;su a&nbsp;rozmanitosť pr&iacute;rody a&nbsp;hist&oacute;rie. Zaznamenaj r&ocirc;znou formou zauj&iacute;mavosti &uacute;zemia, pom&ocirc;ž k&nbsp;vytvoreniu nov&yacute;ch poznatkov o&nbsp;&uacute;zem&iacute; a <strong>vyhraj zauj&iacute;mav&eacute; ceny</strong>.&nbsp;S&uacute;ťaž je určen&aacute; žiakom &scaron;k&ocirc;l na &uacute;zem&iacute; mesta Poprad a jeho občanov, ktor&iacute; sa do s&uacute;ťaže zaregistruj&uacute; na str&aacute;ne sutaz.lesypoprad.sk. S&uacute;ťaž potrv&aacute; v obdob&iacute; od&nbsp;od 7.4. - do 30. 9 2017.&nbsp;S&uacute;ťaže sa m&ocirc;žu z&uacute;častniť aj t&iacute;my žiakov z rovnakej &scaron;koly, ktor&iacute; sa do s&uacute;ťaže prihl&aacute;sia spoločne.</p>\n',	''),
+(4,	1,	'',	'Tabuľka súťažiacich s aktuálnym počtom príspevkov. Pozrite sa ako na tom ste...');
 
 DROP TABLE IF EXISTS `dlzka_novinky`;
 CREATE TABLE `dlzka_novinky` (
@@ -96,6 +101,9 @@ CREATE TABLE `dokumenty` (
   CONSTRAINT `dokumenty_ibfk_3` FOREIGN KEY (`id_hlavne_menu`) REFERENCES `hlavne_menu` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+INSERT INTO `dokumenty` (`id`, `id_hlavne_menu`, `id_user_profiles`, `id_registracia`, `znacka`, `nazov`, `pripona`, `spec_nazov`, `popis`, `subor`, `thumb`, `zmena`, `zobraz_v_texte`, `pocitadlo`, `lat`, `lng`) VALUES
+(1,	4,	1,	1,	'#I-1#',	'cestapreslop-028.jpg',	'jpg',	'cestapreslop-028-jpg',	NULL,	'www/files/myfoto/cestapreslop-028.jpg',	'www/files/myfoto/tb_cestapreslop-028.jpg',	'2017-03-27 14:03:45',	1,	0,	49.0198,	20.2741),
+(2,	4,	1,	1,	'#I-2#',	'cestapreslop-045.jpg',	'jpg',	'cestapreslop-045-jpg',	NULL,	'www/files/myfoto/cestapreslop-045.jpg',	'www/files/myfoto/tb_cestapreslop-045.jpg',	'2017-03-27 14:03:58',	1,	0,	49.0179,	20.2704);
 
 DROP TABLE IF EXISTS `druh`;
 CREATE TABLE `druh` (
@@ -174,9 +182,11 @@ CREATE TABLE `hlavne_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Položky HLAVNÉHO menu';
 
 INSERT INTO `hlavne_menu` (`id`, `spec_nazov`, `id_hlavne_menu_cast`, `id_registracia`, `id_ikonka`, `id_druh`, `uroven`, `id_nadradenej`, `id_user_profiles`, `poradie`, `poradie_podclankov`, `id_hlavicka`, `povol_pridanie`, `zvyrazni`, `pocitadlo`, `nazov_ul_sub`, `absolutna`, `ikonka`, `avatar`, `komentar`, `modified`, `datum_platnosti`, `aktualny_projekt`, `redirect_id`, `id_dlzka_novinky`) VALUES
-(1,	'home',	1,	0,	NULL,	1,	0,	NULL,	3,	1,	0,	1,	0,	0,	0,	NULL,	NULL,	'',	NULL,	0,	'2017-03-20 06:43:44',	NULL,	0,	NULL,	1),
-(2,	'pravidla-sutaze',	1,	0,	NULL,	1,	0,	NULL,	1,	2,	0,	2,	0,	0,	0,	NULL,	NULL,	'',	NULL,	0,	'2017-03-20 06:58:01',	NULL,	0,	NULL,	1),
-(4,	'moje-prispevky',	1,	1,	NULL,	8,	0,	NULL,	1,	3,	0,	2,	0,	0,	0,	NULL,	NULL,	'',	NULL,	0,	'2017-03-20 09:12:14',	NULL,	0,	NULL,	1);
+(1,	'home',	1,	0,	NULL,	1,	0,	NULL,	3,	1,	0,	1,	0,	0,	0,	NULL,	'Homepage:',	'',	NULL,	0,	'2017-03-28 07:25:26',	NULL,	0,	NULL,	1),
+(2,	'ako-sutazit',	1,	0,	NULL,	1,	0,	NULL,	1,	2,	0,	2,	0,	0,	0,	'mlpp_sutaz_title_ako',	NULL,	'',	'nu9ivn96fe0chhi.png',	0,	'2017-03-28 07:22:24',	NULL,	0,	NULL,	1),
+(4,	'moje-prispevky',	1,	1,	NULL,	8,	0,	NULL,	1,	3,	0,	2,	0,	0,	0,	NULL,	NULL,	'',	NULL,	0,	'2017-03-20 09:12:14',	NULL,	0,	NULL,	1),
+(5,	'najdi-odfot-posli-a-vyhraj',	2,	0,	NULL,	1,	0,	NULL,	1,	1,	0,	0,	0,	0,	0,	'mlpp_sutaz_title',	NULL,	'',	NULL,	0,	'2017-03-28 07:03:10',	NULL,	0,	NULL,	1),
+(6,	'zoznam-sutaziacich',	1,	0,	NULL,	1,	0,	NULL,	1,	4,	0,	0,	0,	0,	0,	'mlpp_sutaz_title_ako',	NULL,	'',	'2eyckipuwu169de.png',	0,	'2017-03-28 07:29:45',	NULL,	0,	NULL,	1);
 
 DROP TABLE IF EXISTS `hlavne_menu_cast`;
 CREATE TABLE `hlavne_menu_cast` (
@@ -213,8 +223,10 @@ CREATE TABLE `hlavne_menu_lang` (
 
 INSERT INTO `hlavne_menu_lang` (`id`, `id_lang`, `id_hlavne_menu`, `id_clanok_lang`, `nazov`, `h1part2`, `description`) VALUES
 (1,	1,	1,	1,	'Úvod',	'',	'Mestské Lesy Poprad - Úvodná stránka'),
-(2,	1,	2,	2,	'Pravidlá súťaže',	'',	'Mestské lesy Poprad - Pravidlá súťaže'),
-(4,	1,	4,	NULL,	'Moje príspevky',	'',	'Moje príspevky');
+(2,	1,	2,	2,	'Ako súťažiť',	'',	'Mestské lesy Poprad - Ako súťažiť'),
+(4,	1,	4,	NULL,	'Moje príspevky',	'',	'Moje príspevky'),
+(5,	1,	5,	3,	'Nájdi, odfoť, pošli a vyhraj.',	'',	'Nájdi, odfoť, pošli a vyhraj.'),
+(6,	1,	6,	4,	'Zoznam súťažiacich.',	'',	'Zoznam súťažiacich.');
 
 DROP TABLE IF EXISTS `ikonka`;
 CREATE TABLE `ikonka` (
@@ -352,12 +364,12 @@ CREATE TABLE `udaje` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Tabuľka na uschovanie základných údajov o stránke';
 
 INSERT INTO `udaje` (`id`, `id_registracia`, `id_druh`, `id_udaje_typ`, `nazov`, `text`, `comment`) VALUES
-(1,	5,	NULL,	1,	'titulka-sk',	'Mestské lesy Poprad',	'Názov zobrazený v titulke'),
-(2,	4,	NULL,	1,	'titulka_2-sk',	'Súťaž',	'Druhá časť titulky pre jazyk: sk'),
+(1,	5,	NULL,	1,	'titulka-sk',	'Objav mestské lesy',	'Názov zobrazený v titulke'),
+(2,	4,	NULL,	1,	'titulka_2-sk',	'Poprad',	'Druhá časť titulky pre jazyk: sk'),
 (3,	4,	NULL,	1,	'titulka_citat_enable',	'0',	'Povolenie zobrazenia citátu'),
-(4,	4,	NULL,	1,	'titulka_citat_podpis',	'',	'Podpis pod citát na titulke'),
-(5,	4,	NULL,	1,	'titulka_citat-sk',	'',	'Text citátu, ktorý sa zobrazí na titulke pre jazyk: sk'),
-(6,	5,	NULL,	1,	'keywords-sk',	'Mestské lesy Poprad, Turistika, oddych, ochrana životného prostredia',	'Kľúčové slová'),
+(4,	4,	NULL,	1,	'titulka_citat_podpis',	'Nájdi, odfoť, pošli a vyhraj.',	'Podpis pod citát na titulke'),
+(5,	4,	NULL,	1,	'titulka_citat-sk',	'Objav prírodné prostredie mestských lesov, krásu a rozmanitosť prírody a histórie. Zaznamenaj rôznou formou zaujímavosti územia, pomôž k vytvoreniu nových poznatkov o území a vyhraj zaujímavé ceny. Súťaž je určená žiakom škôl na území mesta Poprad a jeho',	'Text citátu, ktorý sa zobrazí na titulke pre jazyk: sk'),
+(6,	5,	NULL,	1,	'keywords-sk',	'Mestské lesy Poprad, Turistika, oddych, ochrana životného prostredia, súťaž, objavovanie',	'Kľúčové slová'),
 (7,	5,	NULL,	1,	'autor',	'Ing. Peter VOJTECH ml., Mgr. Jozef PETRENČÍK',	'Autor stránky'),
 (8,	4,	NULL,	1,	'log_out-sk',	'Odhlás sa...',	'Text pre odkaz na odhlásenie sa'),
 (9,	4,	NULL,	1,	'log_in-sk',	'Prihlás sa',	'Text pre odkaz na prihlásenie sa'),
@@ -424,7 +436,12 @@ INSERT INTO `user_prihlasenie` (`id`, `id_user_profiles`, `prihlasenie_datum`) V
 (1,	1,	'2017-03-20 08:04:07'),
 (2,	1,	'2017-03-20 09:46:59'),
 (3,	1,	'2017-03-20 10:49:31'),
-(4,	1,	'2017-03-23 09:17:18');
+(4,	1,	'2017-03-23 09:17:18'),
+(5,	1,	'2017-03-27 11:00:19'),
+(6,	1,	'2017-03-28 08:20:10'),
+(7,	1,	'2017-03-28 08:50:41'),
+(8,	1,	'2017-03-28 09:32:53'),
+(9,	1,	'2017-03-28 12:37:03');
 
 DROP TABLE IF EXISTS `user_profiles`;
 CREATE TABLE `user_profiles` (
@@ -454,7 +471,7 @@ CREATE TABLE `user_profiles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 INSERT INTO `user_profiles` (`id`, `id_users`, `id_registracia`, `meno`, `priezvisko`, `rok`, `telefon`, `poznamka`, `pocet_pr`, `pohl`, `prihlas_teraz`, `prihlas_predtym`, `avatar_25`, `avatar_75`, `foto`, `news`, `created`, `modified`) VALUES
-(1,	1,	5,	'Peter',	'VOJTECH',	NULL,	NULL,	'Administrátor',	4,	'M',	'2017-03-23 09:17:18',	'2017-03-20 10:49:31',	'files/1/4ixm9oy1y04ehzcas1c47yn13_25.jpg',	'files/1/4ixm9oy1y04ehzcas1c47yn13_75.jpg',	NULL,	'A',	'2013-01-03 11:17:32',	'2017-03-20 10:49:21'),
+(1,	1,	5,	'Peter',	'VOJTECH',	NULL,	NULL,	'Administrátor',	9,	'M',	'2017-03-28 12:37:03',	'2017-03-28 09:32:53',	'files/1/4ixm9oy1y04ehzcas1c47yn13_25.jpg',	'files/1/4ixm9oy1y04ehzcas1c47yn13_75.jpg',	NULL,	'A',	'2013-01-03 11:17:32',	'2017-03-20 10:49:21'),
 (2,	2,	4,	'Róbert',	'DULA',	NULL,	NULL,	NULL,	0,	'M',	NULL,	NULL,	NULL,	NULL,	NULL,	'A',	'2017-02-13 08:38:27',	'2017-02-13 08:38:27'),
 (3,	3,	4,	'Jozef',	'PETRENČÍK',	NULL,	NULL,	NULL,	0,	'M',	NULL,	NULL,	NULL,	NULL,	NULL,	'A',	'2017-02-13 08:54:07',	'2017-02-13 08:54:07');
 
@@ -476,4 +493,4 @@ CREATE TABLE `verzie` (
 INSERT INTO `verzie` (`id`, `id_user_profiles`, `cislo`, `subory`, `text`, `datum`) VALUES
 (1,	1,	'0.1.',	NULL,	'Východzia verzia',	'2017-02-13 08:03:32');
 
--- 2017-03-23 08:20:12
+-- 2017-03-28 10:46:26

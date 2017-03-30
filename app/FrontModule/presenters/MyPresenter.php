@@ -6,7 +6,7 @@ use DbTable, Language_support;
 /**
  * Prezenter pre vypísanie profilu a správu foto príloh.
  * (c) Ing. Peter VOJTECH ml.
- * Posledna zmena(last change): 22.03.2017
+ * Posledna zmena(last change): 30.03.2017
  *
  *	Modul: FRONT
  *
@@ -30,8 +30,13 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
   private $user_id;
   /** @var array Nastavenie zobrazovania volitelnych poloziek */
   private $user_view_fields;
+  
+  /** @var Forms\My\EditFotoPrilohyFormFactory @inject */
+  public $editFotoPrilohyFormFactory;
   /** @var \App\FrontModule\Components\My\FotoPrilohy\IFotoPrilohyControl @inject */
   public $fotoPrilohyControlFactory;
+
+
   /** @var string */
   private $h2;
   /** @var \Oli\GoogleAPI\IMapAPI */
@@ -42,6 +47,7 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
   public $fotky;
 
 	public function __construct(\Oli\GoogleAPI\IMapAPI $mapApi, \Oli\GoogleAPI\IMarkers $markers) {
+    parent::__construct();
     $this->map = $mapApi;
     $this->markers = $markers;
   }
@@ -108,8 +114,7 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
    * Formular pre editaciu fotiek
 	 * @return Nette\Application\UI\Form */
 	protected function createComponentFotoEditForm() {
-    $ft = new \App\FrontModule\Components\My\FotoPrilohy\EditFotoPrilohyFormFactory($this->dokumenty, $this->nastavenie['wwwDir']);
-    $form = $ft->create($this->upload_size, "www/files/myfoto/", $this->nastavenie['prilohy_images']);
+    $form = $this->editFotoPrilohyFormFactory->create($this->upload_size, "www/files/myfoto/", $this->nastavenie['prilohy_images'], $this->nastavenie['wwwDir']);
     $form['uloz']->onClick[] = function ($button) {
       $this->flashOut(!count($button->getForm()->errors), 'My:', 'Foto príloha bola úspešne uložená!', 'Došlo k chybe a zmena sa neuložila. Skúste neskôr znovu...');
 		};
@@ -124,7 +129,7 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
    * @return \App\FrontModule\Components\My\FotoPrilohy\IFotoPrilohyControl */
 	public function createComponentFotoPrilohy() {
     $prilohyClanok = $this->fotoPrilohyControlFactory->create(); 
-    $prilohyClanok->setTitle($this->udaje_webu, $this->nazov_stranky, $this->upload_size, "www/files/myfoto/", $this->nastavenie['prilohy_images']);
+    $prilohyClanok->setTitle($this->udaje_webu);
     return $prilohyClanok;
   }
   

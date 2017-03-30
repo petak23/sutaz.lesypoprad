@@ -107,7 +107,7 @@ services:
   - App\AdminModule\Presenters\Forms\User\EditCategoriFormFactory
   - App\AdminModule\Presenters\Forms\Verzie\EditVerzieFormFactory
 
-  - App\FrontModule\Components\My\FotoPrilohy\EditFotoPrilohyFormFactory
+  - App\FrontModule\Presenters\Forms\My\EditFotoPrilohyFormFactory
   - App\FrontModule\Presenters\Forms\User\SignInFormFactory
   - App\FrontModule\Presenters\Forms\User\RegisterFormFactory
   - App\FrontModule\Presenters\Forms\UserLog\UserEditFormFactory

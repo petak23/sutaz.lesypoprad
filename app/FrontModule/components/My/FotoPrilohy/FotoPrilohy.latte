@@ -20,7 +20,7 @@
       <td class="sirka15">{$d->lat}<br />{$d->lng}</td>
       <td>
         <div class="btn-group" role="group" aria-label="adminLinks">
-          <a href="{link editFotoPriloha! $d->id}" class="btn btn-success btn-sm" title="Editovať"><i class="fa fa-pencil fa-1_5x"></i></a>
+          <a href="{plink My:edit $d->id}" class="btn btn-success btn-sm" title="Editovať"><i class="fa fa-pencil fa-1_5x"></i></a>
           <a {* n:if="$user->isAllowed('Admin:Clanky', 'prilohy')"*} href="{plink confirmForm:confirmDelete! id=>$d->id, druh=>'priloha', nazov=>$d->nazov, zdroj_na_zmazanie=>'fotku'}" class="btn btn-danger btn-sm" title="Zmazať">
             <i class="fa fa-trash-o fa-1_5x"></i></a>
         </div>
