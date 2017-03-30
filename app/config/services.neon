@@ -128,7 +128,8 @@ services:
   - App\FrontModule\Components\Clanky\TableOfUsers\ITableOfUsersControl
   - App\FrontModule\Components\Clanky\OdkazNaClanky\IOdkazNaClankyControl
   - App\FrontModule\Components\Slider\ISliderControl
-  - App\FrontModule\Components\User\IUserLangMenuControl
+  - App\FrontModule\Components\User\ILesyPPSutazFooterUserLangMenuControl
+  - App\FrontModule\Components\User\ILesyPPSutazMainUserLangMenuControl
   - App\FrontModule\Components\News\INewsControl
   - App\FrontModule\Components\My\FotoPrilohy\IFotoPrilohyControl
 

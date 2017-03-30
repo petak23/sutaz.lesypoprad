@@ -9,7 +9,7 @@ use Language_support;
 
 /**
  * Plugin pre zobrazenie ponuky o užívateľovi a jazykoch
- * Posledna zmena(last change): 28.03.2017
+ * Posledna zmena(last change): 30.03.2017
  *
  * @author Ing. Peter VOJTECH ml. <petak23@gmail.com>
  * @copyright  Copyright (c) 2013 - 2017 Ing. Peter VOJTECH ml.
@@ -17,7 +17,7 @@ use Language_support;
  * @link       http://petak23.echo-msz.eu
  * @version 1.0.8
  */
-class UserLangMenuControl extends Control {
+class LesyPPSutazFooterUserLangMenuControl extends Control {
   /** @var Language_support\User Prednastavene texty pre prihlasovaci form */
 	public $texty;
 	
@@ -45,10 +45,10 @@ class UserLangMenuControl extends Control {
    * Panel neprihlaseneho uzivatela
    * @param array $udaje_webu
    * @param int $vlnh
-   * @return \App\FrontModule\Components\User\MenuItem  */
+   * @return \App\FrontModule\Components\User\LesyPP_MenuItem  */
   private function _panelNeprihlaseny($udaje_webu, $vlnh) {
     $menu_user = [];
-    $menu_user[] = new MenuItem([
+    $menu_user[] = new LesyPP_MenuItem([
         'odkaz'=>[0=>'User:', 1=>['meno'=>'backlink', 'obsah'=>$this->presenter->storeRequest()]], 
         'class'=>'btn-success',//'log-in noajax'.(($vlnh) ? "" : " prazdny fa fa-lock"),
         'title'=>$udaje_webu['log_in'].$vlnh,
@@ -56,24 +56,24 @@ class UserLangMenuControl extends Control {
         'ikonka'=>($vlnh & 2) ? "sign-in" : NULL,
 //        'data'=>['name'=>'ajax', 'value'=>'false'],
                         ]);
-//    if ($vlnh > 0) {//Ak je >0 zobraz link
-//      $menu_user[] = new MenuItem([
-//          'odkaz'=>'User:forgottenPassword',
-//          'title'=>$udaje_webu['forgot_password'],
-//          'ikonka'=>($this->nastavenie['view_log_in_link_in_header'] & 2) ? "frown-o" : NULL,
-//          'nazov'=>($this->nastavenie['view_log_in_link_in_header'] & 1) ? $udaje_webu['forgot_password'] : NULL,
-//                          ]);
-//    } else {//Ak je 0 nezobraz link
-//      $this->template->fl = new MenuItem([
-//        'odkaz'=>'User:forgottenPassword',
-//        'title'=>$udaje_webu['forgot_password'],
-//        'class'=>'fl',
-//        'ikonka'=>"frown-o",
-//        'nazov'=>$udaje_webu['forgot_password'],
-//                        ]);
-//    }
+    if ($vlnh > 0) {//Ak je >0 zobraz link
+      $menu_user[] = new LesyPP_MenuItem([
+          'odkaz'=>'User:forgottenPassword',
+          'title'=>$udaje_webu['forgot_password'],
+          'ikonka'=>($this->nastavenie['view_log_in_link_in_header'] & 2) ? "frown-o" : NULL,
+          'nazov'=>($this->nastavenie['view_log_in_link_in_header'] & 1) ? $udaje_webu['forgot_password'] : NULL,
+                          ]);
+    } else {//Ak je 0 nezobraz link
+      $this->template->fl = new LesyPP_MenuItem([
+        'odkaz'=>'User:forgottenPassword',
+        'title'=>$udaje_webu['forgot_password'],
+        'class'=>'fl',
+        'ikonka'=>"frown-o",
+        'nazov'=>$udaje_webu['forgot_password'],
+                        ]);
+    }
     if (isset($udaje_webu['registracia_enabled']) && $udaje_webu['registracia_enabled']) {
-      $menu_user[] = new MenuItem([
+      $menu_user[] = new LesyPP_MenuItem([
           'odkaz'=>'User:registracia', 
           'nazov'=>$udaje_webu['register'],
           'class'=>'btn-primary',
@@ -86,7 +86,7 @@ class UserLangMenuControl extends Control {
    * Panel prihlaseneho uzivatela
    * @param string $baseUrl
    * @param string $log_out
-   * @return \App\FrontModule\Components\User\MenuItem */
+   * @return \App\FrontModule\Components\User\LesyPP_MenuItem */
   private function _panelPrihlaseny($baseUrl, $log_out) {
     $menu_user = [];
     $udata = $this->user->getIdentity();
@@ -98,13 +98,13 @@ class UserLangMenuControl extends Control {
         $obb = $obb->src($baseUrl.'/www/ikonky/64/figurky_64.png')->alt('bez avatara');
       }
     } else {$obb = "";}
-    $menu_user[] = new MenuItem([
+    $menu_user[] = new LesyPP_MenuItem([
           'odkaz'=>'UserLog:', 
-          'nazov'=>$obb." ".$udata->meno.' '.$udata->priezvisko,
-          'title'=>$udata->meno.' '.$udata->priezvisko,
+          'nazov'=>$obb." Profil",//.$udata->meno.' '.$udata->priezvisko,
+          'title'=>"Profil",//$udata->meno.' '.$udata->priezvisko,
           'class'=>'btn-success',]);
     if ($this->user->isAllowed('admin', 'enter')) {
-      $menu_user[] = new MenuItem([
+      $menu_user[] = new LesyPP_MenuItem([
         'odkaz'=>':Admin:Homepage:',
         'title'=>'Administrácia',
         'ikonka'  => ($this->nastavenie['admin_link'] & 1) ? 'pencil' : '',
@@ -115,7 +115,7 @@ class UserLangMenuControl extends Control {
     }
     if ($this->user->isInRole('admin')) {
       $hl_m_db_info = $this->lang->getDBInfo();
-      $menu_user[] = new MenuItem([
+      $menu_user[] = new LesyPP_MenuItem([
         'abs_link'=>$baseUrl."/www/adminer/?server=".$hl_m_db_info['host']."&db=".$hl_m_db_info['dbname'], 
         'title'=>'Adminer',
         'target'=>'_blank',
@@ -124,7 +124,7 @@ class UserLangMenuControl extends Control {
         'data'=>['name'=>'ajax', 'value'=>'false'],
                           ]);
     }
-    $menu_user[] = new MenuItem([
+    $menu_user[] = new LesyPP_MenuItem([
         'odkaz'=>'signOut!',
         'ikonka'=>"sign-out",
         'nazov'=>$log_out,
@@ -135,7 +135,7 @@ class UserLangMenuControl extends Control {
   }
 
   /** Vykreslenie komponenty */
-  public function render($params) {
+  public function render($params = []) {
 		//Inicializacia
 		$pthis = $this->presenter;
 		$baseUrl = $this->template->baseUrl;
@@ -151,7 +151,7 @@ class UserLangMenuControl extends Control {
 		$lang_temp = $this->lang->findBy(['prijaty'=>1]);
 		if ($lang_temp !== FALSE && count($lang_temp)>1) {
 			foreach($lang_temp as $lm) {
-				$menu_user[] = new MenuItem([
+				$menu_user[] = new LesyPP_MenuItem([
 						'odkaz'=>['setLang!', $lm->skratka],
 						'title'=>$lm->nazov.", ".$lm->nazov_en,
 						'class'=>($lm->skratka == $pthis->language) ? "lang actual" : "lang",
@@ -161,13 +161,13 @@ class UserLangMenuControl extends Control {
 		}
 		$this->template->menu_user = isset($menu_user) ? $menu_user : [];
 		$this->template->language = $pthis->language;
-		$this->template->setFile(__DIR__ .'/'. (isset($params['templateFile']) ? $params['templateFile'] : 'UserLangMenu').'.latte');
+		$this->template->setFile(__DIR__ .'/'. (isset($params['templateFile']) ? $params['templateFile'] : 'LesyPP_Sutaz_Footer_UserLangMenu').'.latte');
 		$this->template->render();
 	}
 		
 }
 
-class MenuItem extends \Nette\Object {
+class LesyPP_MenuItem extends \Nette\Object {
   public $odkaz;
   public $abs_link;
   public $nazov = "";
@@ -183,7 +183,7 @@ class MenuItem extends \Nette\Object {
   }
 }
 
-interface IUserLangMenuControl {
-  /** @return UserLangMenuControl */
+interface ILesyPPSutazFooterUserLangMenuControl {
+  /** @return LesyPPSutazFooterUserLangMenuControl */
   function create();
 }

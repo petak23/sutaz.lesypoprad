@@ -121,7 +121,7 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
     $form['cancel']->onClick[] = function () {
 			$this->redirect('My:');
 		};
-		return $this->_vzhladForm($form);
+    return $this->_vzhladForm($form);
 	}
   
   /**

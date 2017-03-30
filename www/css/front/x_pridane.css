@@ -53,3 +53,18 @@ footer p.navbar-text {
 .confirm-dialog input[name=no] {
   background-color: #228B22;
 }
+
+div.required label{
+  color: #bd3f18;
+}
+/*
+div.required input{
+  border: 1px solid #bd3f18;
+}*/
+span.error {
+  color: #ff0000;
+  font-weight: bold;
+}
+.has-error .help-block {
+  
+}

@@ -52,8 +52,10 @@ abstract class BasePresenter extends UI\Presenter {
   // -- Komponenty
   /** @var \App\FrontModule\Components\Slider\ISliderControl @inject */
   public $sliderControlFactory;
-  /** @var \App\FrontModule\Components\User\IUserLangMenuControl @inject */
-  public $userLangMenuControlFactory;
+  /** @var \App\FrontModule\Components\User\ILesyPPSutazMainUserLangMenuControl @inject */
+  public $lesyPPSutazMainUserLangMenuControlFactory;
+  /** @var \App\FrontModule\Components\User\ILesyPPSutazFooterUserLangMenuControl @inject */
+  public $lesyPPSutazFooterUserLangMenuControlFactory;
   /** @var \App\FrontModule\Components\Clanky\OdkazNaClanky\IOdkazNaClankyControl @inject */
   public $odkazNaClankyControlFactory;
   /** @var \App\FrontModule\Components\News\INewsControl @inject */
@@ -275,9 +277,16 @@ abstract class BasePresenter extends UI\Presenter {
   
   /**
    * Vytvorenie komponenty pre menu uzivatela a zaroven panel jazykov
-   * @return \App\FrontModule\Components\User\UserLangMenu */
-  public function createComponentUserLangMenu() {
-    return $this->userLangMenuControlFactory->create();
+   * @return \App\FrontModule\Components\User\LesyPPSutazMainUserLangMenu */
+  public function createComponentLesyPPSutazMainUserLangMenu() {
+    return $this->lesyPPSutazMainUserLangMenuControlFactory->create();
+  }
+  
+  /**
+   * Vytvorenie komponenty pre menu uzivatela a zaroven panel jazykov
+   * @return \App\FrontModule\Components\User\LesyPPSutazFooterUserLangMenuControlFactory */
+  public function createComponentLesyPPSutazFooterUserLangMenuControlFactory() {
+    return $this->lesyPPSutazFooterUserLangMenuControlFactory->create();
   }
 
   /** 
@@ -559,22 +568,26 @@ abstract class BasePresenter extends UI\Presenter {
     $renderer->wrappers['controls']['container'] = NULL;
     $renderer->wrappers['pair']['container'] = 'div class=form-group';
     $renderer->wrappers['pair']['.error'] = 'has-error';
-    $renderer->wrappers['control']['container'] = 'div class="col-sm-9 control-field"';
+    $renderer->wrappers['control']['container'] = 'div class="col-md-6"';
     $renderer->wrappers['label']['container'] = 'div class="col-sm-3 control-label"';
-    $renderer->wrappers['control']['description'] = 'span class="help-block alert alert-info"';
-    $renderer->wrappers['control']['errorcontainer'] = 'span class="help-block alert alert-danger"';
-    // make form and controls compatible with Twitter Bootstrap
+    $renderer->wrappers['control']['description'] = 'span class=help-block';
+    $renderer->wrappers['control']['errorcontainer'] = 'div class="alert alert-danger"';
     $form->getElementPrototype()->class('form-horizontal');
-    foreach ($form->getControls() as $control) {
-      if ($control instanceof Controls\Button) {
-        $control->getControlPrototype()->addClass(empty($usedPrimary) ? 'btn btn-primary' : 'btn btn-default');
-        $usedPrimary = TRUE;
-      } elseif ($control instanceof Controls\TextBase || $control instanceof Controls\SelectBox || $control instanceof Controls\MultiSelectBox) {
-        $control->getControlPrototype()->addClass('form-control');
-      } elseif ($control instanceof Controls\Checkbox || $control instanceof Controls\CheckboxList || $control instanceof Controls\RadioList) {
-        $control->getSeparatorPrototype()->setName('div')->addClass($control->getControlPrototype()->type);
+
+    $form->onRender[] = function ($form) {
+      foreach ($form->getControls() as $control) {
+        $type = $control->getOption('type');
+        if ($type === 'button') {
+          $control->getControlPrototype()->addClass(empty($usedPrimary) ? 'btn btn-primary' : 'btn btn-default');
+          $usedPrimary = TRUE;
+        } elseif (in_array($type, ['text', 'textarea', 'select'], TRUE)) {
+          $control->getControlPrototype()->addClass('form-control');
+
+        } elseif (in_array($type, ['checkbox', 'radio'], TRUE)) {
+          $control->getSeparatorPrototype()->setName('div')->addClass($type);
+        }
       }
-    }
+    };
     return $form;
   }
 }
