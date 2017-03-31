@@ -1,14 +1,3 @@
-{*<ul class="nav navbar-nav navbar-right user-lang-menu" n:snippet="userLangMenu" n:if="count($menu_user)" n:inner-foreach="$menu_user as $mu">
-  <li>
-    <a href="{ifset $mu->abs_link}{$mu->abs_link}{else}{if is_array($mu->odkaz)}{plink $mu->odkaz[0], $mu->odkaz[1]['meno']=>$mu->odkaz[1]['obsah']}{else}{plink $mu->odkaz}{/if}{/ifset}" 
-       title="{$mu->title}" 
-       class="navbar-btn {if strlen($mu->class)}{$mu->class}{/if}"
-       {if strlen($mu->target)}target="{$mu->target}"{/if}
-       {if $mu->data['name'] != ''}data-{$mu->data['name']}="{$mu->data['value']}"{/if}>
-      <i n:if="isset($mu->ikonka)" class="fa fa-{$mu->ikonka}"></i> {$mu->nazov|noescape}
-    </a>
-  </li>
-</ul>*}
 {foreach $menu_user as $mu}
 <a href="{ifset $mu->abs_link}{$mu->abs_link}{else}{if is_array($mu->odkaz)}{plink $mu->odkaz[0], $mu->odkaz[1]['meno']=>$mu->odkaz[1]['obsah']}{else}{plink $mu->odkaz}{/if}{/ifset}"
         type="button" class="btn {if strlen($mu->class)}{$mu->class}{/if} btn-lg"

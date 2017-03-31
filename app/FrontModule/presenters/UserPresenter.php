@@ -29,6 +29,10 @@ class UserPresenter extends \App\FrontModule\Presenters\BasePresenter {
    * @inject
    * @var DbTable\Users */
 	public $users;
+  /** 
+   * @inject
+   * @var DbTable\User_team */
+	public $user_team;
   /** @var mix */
   private $clen;
   /** @var mix */
@@ -143,10 +147,17 @@ class UserPresenter extends \App\FrontModule\Presenters\BasePresenter {
 		// Inicializacia
     $values = $button->getForm()->getValues(); 	//Nacitanie hodnot formulara
     $new_password_key = $this->hasser->HashPassword($values->heslo.StrFTime("%Y-%m-%d %H:%M:%S", Time()));
+    if ($values->vyber == 2) {
+      $uloz_user_team = $this->user_team->uloz(['team_nazov'=>$values->team_nazov, 'team_pocet'=>$values->team_pocet, 'team_clenovia'=>$values->team_clenovia]); 
+    }
     $uloz_data_user_profiles = [ //Nastavenie vstupov pre tabulku user_profiles
       'meno'      => $values->meno,
       'priezvisko'=> $values->priezvisko,
       'pohl'      => isset($values->pohl) ? $values->pohl : 'Z',
+      'rok'       => isset($values->rok) && $values->rok > 0 ? $values->rok : NULL,
+      'adresa'    => isset($values->adresa) ? $values->adresa : NULL,
+      'id_skoly'  => isset($values->id_skoly) ? $values->id_skoly : NULL,
+      'id_user_team'=> isset($uloz_user_team['id']) ? $uloz_user_team['id'] : NULL,
       'modified'  => StrFTime("%Y-%m-%d %H:%M:%S", Time()),
       'created'   => StrFTime("%Y-%m-%d %H:%M:%S", Time()),
     ];
@@ -157,6 +168,7 @@ class UserPresenter extends \App\FrontModule\Presenters\BasePresenter {
       'email'     => $values->email,
       'activated' => 0,
     ];
+    
     //Uloz info do tabulky users
     if (($uloz_users = $this->users->uloz($uloz_data_users)) !== FALSE) { //Ulozenie v poriadku
       $uloz_data_user_profiles['id_users'] = $uloz_users['id']; //nacitaj id ulozeneho clena

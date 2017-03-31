@@ -74,7 +74,7 @@ class LesyPPSutazFooterUserLangMenuControl extends Control {
     }
     if (isset($udaje_webu['registracia_enabled']) && $udaje_webu['registracia_enabled']) {
       $menu_user[] = new LesyPP_MenuItem([
-          'odkaz'=>'User:registracia', 
+          'odkaz'=>'User:#view_registracia', 
           'nazov'=>$udaje_webu['register'],
           'class'=>'btn-primary',
                           ]);

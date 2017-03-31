@@ -40,14 +40,27 @@
   <div id="content" class="center-block">
     {control confirmForm}
 	  <header>
-	    <div class="col-lg-6 col-md-7 col-sm-12" id="headimg">
-        <h2 class="col-lg-3 col-sm-3 col-xs-10">SÚŤAŽ</h2>
+	    <div class="col-lg-6 col-md-7 col-xs-12" id="headimg">
+        <nav id="topmenu" class="navbar-header nav-justified">
+          <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#nav-content">
+            &#9776;
+          </button>
+          <div id="nav-content" class="collapse navbar-toggleable-xs">
+          <ul  class="inline-ul navbar-nav">
+          <li class="nav-item"><a n:href="Homepage:">home</a></li>
+          <li class="nav-item"><a n:href="Clanky: 7">o súťaži</a></li>
+          <li class="nav-item"><a href="http://www.lesypoprad.sk">lesypoprad.sk</a></li>
+          </ul>
+          </div>
+        </nav>
+        <h2 class="col-lg-4 col-sm-4 col-md-4 col-xs-10">SÚŤAŽ</h2>
       </div>
 	    <div class="col-lg-4 col-md-5 col-sm-12" id="headline">
-        <h1 class="text-center text-uppercase">{$udaje['titulka']} <br><span class="text-light">{$udaje['titulka_2']}</span></h1>
+        <h1 class="text-center text-uppercase h1-responsive">{$udaje['titulka']} <br><span class="text-light">{$udaje['titulka_2']}</span></h1>
 	    </div>
-	    <div class="col-lg-2 col-md-2 hidden-md" id="smallHeadimg"></div>
+	    <div class="col-lg-2 hidden-md" id="smallHeadimg"></div>
     </header>
+      
     <div class="row top-panel" n:if="count($flashes)">
       <div class="col-md-10 col-md-offset-1" n:inner-foreach="$flashes as $flash" n:if="count($flashes)">
         {var $nees = explode(',', $flash->type)}
@@ -59,6 +72,7 @@
         </div>
       </div>
     </div>
+    {block ponuka}{/block}
     {include #content}
     {* ----- Spodok stranky - FOOTER ----- *}
     {snippet footer}{include 'footer_template.latte'}{/snippet}

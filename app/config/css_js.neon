@@ -36,12 +36,12 @@ webloader:
   css:
     front:
       files:
-#        - %appDir%/../www/css/sutaz.css
         - %appDir%/../www/css/font-awesome.min.css
         - %appDir%/../www/css/bootstrap.min.css
-#        - %appDir%/../www/css/bootstrap-theme.css nn
         - %appDir%/../www/css/lightbox.css
-        - {files: ["*.css", "*.less"], from: %appDir%/../www/css/front} # Nette\Utils\Finder support
+        - %appDir%/../www/css/front/sutaz.css
+        - %appDir%/../www/css/front/responsive.css
+#        - {files: ["*.css", "*.less"], from: %appDir%/../www/css/front} # Nette\Utils\Finder support
       filters:
         - @jwlCssMinFilter
 #      fileFilters:

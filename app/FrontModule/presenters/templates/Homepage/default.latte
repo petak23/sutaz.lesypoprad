@@ -1,11 +1,11 @@
-{block content}
-<section class="textBox">
+{block ponuka}
+<section class="textBox shadow-1">
   {control ukazClanok-5}
 </section>
 <section class="parts-of-web">
   <div class="part-web col-lg-4 col-md-4 col-sm-4 col-xs-12" id="partLogReg">
     <div class="icon">
-      <img src="{$basePath}/www/images/icons/tree_128.png" alt="" width="129" height="128" class="img-responsive center-block img-icon">
+      <img src="{$basePath}/www/images/icons/tree_128.png" alt="Strom" width="129" height="128" class="img-responsive center-block img-icon">
     </div>
     <h3>Chcem súťažiť.</h3>
     {control lesyPPSutazMainUserLangMenu}
@@ -17,10 +17,22 @@
     {control ukazAnotaciu-6}
   </div>
 </section>
-<div class="textBox" style="background-color: #333;">
-  <h2 class="col-lg-10 col-lg-pull-1 col-lg-push-1" style="color: #ccc;">Mapa mestských lesov Poprad</h2>
-</div>
-<section id="google-map">
-  <iframe class="col-lg-12" frameborder="0"  src="https://www.google.com/maps/d/embed?mid=1d-4Hjf_Ru5uSCwF1X_98SOCcCpw&hl=sk &zoom=18 &center=49.052492,20.313210" height="300"></iframe>
+{/block}
+
+{block content}  
+<section id="google-maps">
+  <div class="textBox col-lg-4 shadow-1">
+    <h2><small>Mapa mestských lesov Poprad</small><br>Oblasť Kvetnica</h2>
+  </div>
+  <div id="map1" class="col-lg-8">
+    <script src="{$basePath}/www/js/forestmap.js" type="application/javascript"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7RlQkZwzIZeb32wo23Ikw8vx5hih31r4&callback=initMap"></script>
+  </div>
+  {*<div id="map2" class="col-lg-8">
+    <script src="js/forestmap2.js" type="application/javascript"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7RlQkZwzIZeb32wo23Ikw8vx5hih31r4&callback=initMap"></script>
+  </div>
+  <div class="textBox col-lg-4 shadow-1">
+    <h2><small>Mapa mestských lesov Poprad</small><br>Oblasť Gerlachov</h2>
+  </div>*}
 </section>
-{* control menu templateType=>'fixed', templateFile=>'Echo_Fixed_Main1', cast=>1, article_avatar_view_in =>0, divClass=>'main-nav' *}

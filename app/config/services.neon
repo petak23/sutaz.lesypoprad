@@ -70,6 +70,7 @@ services:
   - DbTable\Lang
   - DbTable\News
   - DbTable\Registracia
+  - DbTable\Skoly
   - DbTable\Slider
   - DbTable\Udaje
   - DbTable\Udaje_typ
@@ -77,6 +78,7 @@ services:
   - DbTable\User_categories
   - DbTable\User_prihlasenie
   - DbTable\User_profiles
+  - DbTable\User_team
   - DbTable\Users
   - DbTable\Verzie
 

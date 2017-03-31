@@ -1,13 +1,109 @@
 {var $robots = noindex}
-{block #content}
-<article class="article-main">
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      <h2 n:inner-block="title"><i class="fa fa-sign-in" aria-hidden="true"></i> {$h2}</h2>
-      <div class="{*bg-primary *}user-forms">{control signInForm}</div> 
+{block ponuka}
+<nav id="mainmenu" class="">
+  <ul class="nav navbar-nav text-center">
+  <li id="webItem1" class="nav-item part-web-item"><a n:href="User:"><img src="{$basePath}/www/images/icons/tree_32.png" alt="" width="33" height="32" class="img-icon"> Chcem súťažiť</a></li>
+  <li id="webItem2" class="nav-item part-web-item"><a n:href="Clanky: 2"><img src="{$basePath}/www/images/icons/letter_32.png" alt="" width="33" height="32" class="img-icon"> Ako súťažiť</a></li>
+  <li id="webItem3" class="nav-item part-web-item"><a n:href="Clanky: 6"><img src="{$basePath}/www/images/icons/users_32.png" alt="" width="33" height="32" class="img-icon"> Zoznam súťažiacich</a></li>
+  </ul>
+</nav>
+{/block}
+
+{block content}
+<section class="textBox shadow">
+  <h2 class="">Vitaj!</h2>
+  <p>Ak si sa už registroval, vyplň prihlasovací formulár. Ak si tu prvýkrát alebo ešte nesúťažíš a chcel by si, neváhaj a vyplň registračný formulár. Pri registrácii najskôr zvoľ či chceš súťažiť ako jednotlivec alebo založíš súťažný tím. Ak si už súčasťou nejakého tímu nemusíš sa opäť registrovať.</p>
+  
+  <form class="" id="login" n:name=signInForm>
+    <h3 class="bottom-line">Prihlásenie</h3>
+    <div class="form-group row">
+      <label n:name=username for="name" class="col-lg-3 col-xs-4 col-form-label text-right">Login</label>
+      <input n:name=username type="text" class="req col-lg-4 col-md-6 col-xs-8" id="name" placeholder="tvoj email">
     </div>
-    <div class="col-md-10 col-md-offset-1">
-      <a n:href="User:forgottenPassword" title="{$udaje['forgot_password']}">{$udaje['forgot_password']}</a>
+    <div class="form-group row">
+      <label n:name=password for="passw" class="col-lg-3 col-xs-4 col-form-label text-right">Heslo</label>
+      <input n:name=password type="password" class="req col-lg-4 col-md-6 col-xs-8" id="passw">
     </div>
+    <div class="form-group row">
+      <label n:name=remember for="remember" class="col-lg-3 col-xs-4 col-form-label text-right">Pamätať si ma:</label>
+      <input n:name=remember type="checkbox" class="req col-lg-4 col-md-6 col-xs-8" id="remember">
+    </div>
+    <div class="form-group row">
+      <label for="sublogin" class="col-sm-4 col-xs-4 col-form-label text-right"></label>
+      <input n:name=login type="submit" value="Prihlásiť" class="btn-success col-lg-2 col-sm-3 col-xs-5" id="sublogin">
+    </div>
+  </form>
+  <div class="col-md-10 col-md-offset-1">
+    <a n:href="User:forgottenPassword" title="{$udaje['forgot_password']}">{$udaje['forgot_password']}</a>
   </div>
-</article>
+  <br>
+  <div id="view_registracia"></div>
+  <h3 class="bottom-line">Registrácia</h3>
+  <p>Pri registrácii najskôr zvoľ či chceš súťažiť ako jednotlivec alebo založíš súťažný tím. Ak si už súčasťou nejakého tímu nemusíš sa opäť registrovať.</p>
+  <form class="" id="registration" n:name="clenRegistraciaForm">
+    <div class="form-group row">
+      <label n:name=vyber for="isTeam" class="col-lg-3 col-xs-5 col-form-label text-right">Jednotlivec/Tím</label>
+      <select n:name=vyber class="req custom-select col-lg-4 col-md-6 col-xs-7 first" id="isTeam"></select>
+    </div>
+    <fieldset id="view_main" style="visibility: none;">
+      <legend>Údaje jednotlivca. V prípade tímu údaje vedúceho tímu. </legend>
+      <div class="form-group row">
+        <label n:name=meno for="inputName" class="col-lg-3 col-xs-4 col-form-label text-right">Meno</label>
+        <input n:name=meno type="text" class="req col-lg-4 col-md-6 col-xs-8" id="inputName">
+      </div>
+      <div class="form-group row">
+        <label n:name=priezvisko for="inputSurname" class="col-lg-3 col-xs-4 col-form-label text-right">Priezvisko</label>
+        <input n:name=priezvisko type="text" class="req col-lg-4 col-md-6 col-xs-8" id="inputSurname">
+      </div>
+      <div class="form-group row">
+        <label n:name=username for="inputUsername" class="col-lg-3 col-xs-4 col-form-label text-right">Užívateľské meno</label>
+        <input n:name=username type="email" class="req col-lg-4 col-md-6 col-xs-8" id="inputUsername">
+      </div>
+      <div class="form-group row">
+        <label n:name=email for="inputEmail" class="col-lg-3 col-xs-4 col-form-label text-right">Email</label>
+        <input n:name=email type="email" class="req col-lg-4 col-md-6 col-xs-8" id="inputEmail" placeholder="napr.: tvojemeno@gmail.com">
+      </div>
+      <div class="form-group row">
+        <label n:name=heslo for="inputPass" class="col-lg-3 col-xs-4 col-form-label text-right">Heslo</label>
+        <input n:name=heslo type="password" class="req col-lg-4 col-md-6 col-xs-8" id="inputPass">
+      </div>
+      <div class="form-group row">
+        <label n:name=heslo2 for="inputPass2" class="col-lg-3 col-xs-4 col-form-label text-right">Over heslo</label>
+        <input n:name=heslo2 type="password" class="req col-lg-4 col-md-6 col-xs-8" id="inputPass2">
+      </div>
+      <div class="form-group row">
+        <label n:name=rok for="inputAge" class="col-lg-3 col-xs-4 col-form-label text-right">Vek</label>
+        <input n:name=rok type="number" value="7" min="6" max="99" class="req col-md-2 col-xs-3" id="inputAge">
+      </div>
+      <div class="form-group row">
+        <label n:name=adresa for="inputAddress" class="col-lg-3 col-xs-4 col-form-label text-right">Adresa</label>
+        <textarea n:name=adresa placeholder="ulica, číslo, obec" class="col-lg-4 col-md-6 col-xs-8" rows="10" id="inputAddress"></textarea>
+      </div>
+      <div class="form-group row">
+        <label n:name=id_skoly for="inputName" class="col-lg-3 col-xs-4 col-form-label text-right">Škola</label>
+        <select n:name=id_skoly class="req custom-select col-lg-4 col-md-6 col-xs-8 first"></select>
+      </div>
+    </fieldset>
+    <fieldset id="view_team" style="visibility: none;">
+      <legend>Údaje tímu</legend>
+      <div class="form-group row">
+        <label n:name=team_nazov for="inputTeamName" class="col-lg-3 col-xs-4 col-form-label text-right">Meno tímu</label>
+        <input n:name=team_nazov type="text" class="req col-lg-4 col-md-6 col-xs-8" id="inputTeamName">
+      </div>
+      <div class="form-group row">
+        <label n:name=team_pocet for="inputMembers" class="col-lg-3 col-xs-4 col-form-label text-right">Počet členov</label>
+        <input n:name=team_pocet type="number" value="2" min="2" max="10" class="req col-md-2 col-xs-3" id="inputMembers">
+      </div>
+      <div class="form-group row">
+        <label n:name=team_clenovia for="namesOfMembers" class="col-lg-3 col-xs-4 col-form-label text-right">Adresa</label>
+        <textarea n:name=team_clenovia placeholder="zadajte mená členov tímu" class="req col-lg-4 col-md-6 col-xs-8" rows="10" id="namesOfMembers"></textarea>
+      </div>
+    </fieldset>
+    <div class="form-group row" id="view_send" style="visibility: none;">
+      <label for="namesOfMembers" class="col-lg-3 col-sm-2 col-xs-1 col-form-label text-right"></label>
+      <input n:name=uloz type="submit" value="Odoslať" class="btn-success col-lg-2 col-sm-3 col-xs-5">
+      <label for="namesOfMembers" class="col-xs-1 col-form-label text-right"></label>
+      <input n:name=cancel type="reset" value="Vymaž údaje" class="btn-warning col-lg-2 col-sm-3 col-xs-5">
+    </div>
+  </form>
+</section>

@@ -6,7 +6,7 @@ body
 }
 h3 
 {
-	font-size: xx-large;
+	font-size: x-large;
 	margin: 5% auto;
 }
 header 
@@ -23,13 +23,14 @@ header
 		color: #54860b;
 		font-size: 250%;
 		font-weight: 700;
-		line-height: 57.195px;
+		line-height: 200%;
 		text-align: center;
 		position: relative; top: 70%;
+		box-shadow: 5px 5px 7px 0 rgba(0, 0, 0, 0.5);
 	}
 	header h1
 	{ 	
-		margin: 5% auto;
+		margin: 0 auto; padding: 5%;
 		width: 60%;
 		font-family: 'Source Sans Pro';
 		color: #fff;
@@ -37,6 +38,35 @@ header
 		font-weight: 700;
 		line-height: 110%;
 	}
+form
+{}
+form input, form select, form textarea, form label
+{
+	border: #E5BE84 2px solid; border-radius: 8px;
+	height: 45px;
+	font-size: 140%; 
+	padding: 8px 16px;
+}
+form input[disabled], form textarea[disabled]
+{	cursor: not-allowed;}
+form textarea
+	{	height: 96px;}
+form label
+{	border: none;}
+form legend
+{
+	font-size: 120%;
+	color: #888;
+}
+
+.btn
+{	color:#222!important;}
+.btn-lg
+{	margin: 2px;}
+.btn-primary
+{	background-color:#eebd70;}
+.btn-success
+{	background-color:#79cc18;}
 .parts-of-web
 {
 	overflow: hidden;
@@ -48,6 +78,20 @@ header
 {
 	font-weight: 300;
 }
+.part-web-item
+{
+	text-align: center;
+	width: 33.3%;
+	margin: 0; padding: 0;
+}
+.part-web-item a
+{
+	color: #fff;
+	font-size: 120%;
+	display: inline-block;
+}
+nav .part-web-item a:hover, nav .part-web-item:hover
+{	background-color: #6A3F00;}
 .part-web
 {
 	text-align: center;
@@ -64,9 +108,83 @@ header
 		margin-left: auto;
 	}
 	.part-web .btn { border-radius: 1em; }
+.textBox
+{
+	background: #fff;
+	padding: 14px 12%;
+	z-index: 5;
+}
+.textBox h2
+{
+	color:#4a7509;
+	font-size: 220%;
+	font-weight: 700;
+	margin: 10px 0 0 0;
+}
+.textBox h3
+{
+	color: #6A3F00;
+	font-size: 180%;
+	clear: both;
+	margin: 2% 0;
+}
+.bottom-line
+{
+	border-bottom: 1px dashed #777;
+}
+.shadow-1
+{
+	box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.5);
+}
 #content 
 {
-	width: 100%; max-width: 1440px;
+	width: 100%; max-width: 1440px; min-width: 320px;
+}
+#topmenu
+{
+	width: 100%; height: 40px;
+	background: #412600;
+	z-index: 10;
+}
+	#topmenu ul
+	{
+		width: 100%;
+		padding: 10px 0; margin: 0;		
+		text-align: center;
+	}
+	#topmenu ul li
+	{
+		display: inline-block;
+		width: 32%;
+		font-size: 100%;
+		margin: 0 0 0 0!important;
+		border-right: solid 1px;
+		color: #9bcc4a;
+	}
+	#topmenu ul li:last-child
+	{	border:none;}
+	#topmenu ul li a
+	{
+		color: #9bcc4a;
+	}
+	#topmenu ul li a:hover
+	{
+		color: #fff;
+		text-decoration: underline;
+	}
+	#topmenu button
+	{
+		display: none;
+	}
+#mainmenu ul
+{
+	padding: 0; margin: 0;
+	width: 100%;
+	float: none;
+}
+#mainmenu ul li a
+{
+	padding: 10px 0;
 }
 #headimg
 {
@@ -85,41 +203,35 @@ header
 	height: 100%; padding: 0;
 	background: #724002;
 }
-.textBox
-{
-	background: #ddd;
-	overflow: hidden;
-}
-.textBox h2
-{
-	color: #412600;
-}
-
-#partLogReg 
+#webItem1
+{ 	background: #412600; }
+#partLogReg
 { 	background: #724002; }
 #partLogReg h3 
 {	color: #fff; }
-#partHow 
+#partHow, #webItem2
 { 	background: #4A7509; }
 #partHow h3 
 {	color: #fff; }
-#partUsers 
+#partUsers, #webItem3
 { 	background: #9BCC4A; }
 	#partUsers h3 
 	{ 	color: #222; }
 	#partUsers p 
 	{ 	color: #222; }
+	#partUsers button
+	{ 	background-color: #4a7509; color: #fff!important; }
 
-#google-map
+#map1, #map2
 {
-	overflow: hidden;
-	width: 100%; height: 254px;
+	height: 250px;
 }
-	#google-map iframe
-	{
-		margin: 0; padding: 0;
-		position: relative;	top:-46px;
-	}
+#google-maps .textBox
+{
+	height: 250px;
+	text-align: center;
+	padding: 50px 0 0 0;
+}
 footer 
 {
 	width: 100%; min-height: 100px;
@@ -130,41 +242,4 @@ footer
 footer li a
 {
 	color: #9bcc4a;
-}
-
-@media (max-width: 480px) 
-{
-  .part-web 
-  {
-    display: table;
-	  width: 100%;
-	  float: left;
-  }
-  .part-web img
-  {
-	  max-width: 72px;
-  }
-	 .part-web .icon
-  {
-	  display: table-cell;
-	  height: 100%;
-	  float: none;
-	  vertical-align: middle;
-  }
-}
-@media (max-width : 799px )
-{
-	.part-web img
-  {
-	  max-width: 96px;
-  }
-  #smallHeadimg 
-  {
-    display: none;
-  }
-  #headimg 
-  {
-    height: 200px;
-	background-position: right 10%; 
-  }
 }
