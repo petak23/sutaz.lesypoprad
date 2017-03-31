@@ -52,8 +52,16 @@ class TableOfUsersControl extends Nette\Application\UI\Control {
    */
   public function render() { 
     $this->template->setFile(__DIR__ . "/TableOfUsers.latte");
-    $this->template->user_profiles = $this->user_profiles->findBy(["id_registracia <= 5"]);
-    $this->template->dokumenty = $this->dokumenty->findAll()/*->group('dokumenty.id_user_profiles')*/;
+    $pokus = $this->user_profiles->findBy(['id_registracia > 0', 'id_registracia <=5']);
+    $tou = [];
+    foreach ($pokus as $p) {
+      $tou[] = ['meno'  => $p->meno . " " . $p->priezvisko,
+              'pocet' => $this->dokumenty->findBy(['id_user_profiles' => $p->id])->count('*'),
+             ];
+    }
+//    dump($tou);die();
+    
+    $this->template->tou = $tou;
     $this->template->texty = $this->texty;
     $this->template->render();
   }

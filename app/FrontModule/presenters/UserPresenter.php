@@ -134,8 +134,11 @@ class UserPresenter extends \App\FrontModule\Presenters\BasePresenter {
    * Formular pre registraciu uzivatela.
 	 * @return Nette\Application\UI\Form */
 	protected function createComponentClenRegistraciaForm() {
-    $form = $this->registerForm->create($this->user_view_fields, $this->link('User:forgotPassword'));
-    $form['uloz']->onClick[] = [$this, 'userRegisterFormSubmitted'];
+    $form = $this->registerForm->create($this->link('User:forgotPassword'));
+    $form['registracia_uloz']->onClick[] = [$this, 'userRegisterFormSubmitted'];
+    $form['cancel']->onClick[] = function () {
+			$this->redirect('User:');
+		};
     $form->getElementPrototype()->class = 'noajax';
 		return $this->_vzhladForm($form);
 	}
@@ -146,10 +149,12 @@ class UserPresenter extends \App\FrontModule\Presenters\BasePresenter {
   public function userRegisterFormSubmitted($button) {
 		// Inicializacia
     $values = $button->getForm()->getValues(); 	//Nacitanie hodnot formulara
+//    dump($values);die();
     $new_password_key = $this->hasser->HashPassword($values->heslo.StrFTime("%Y-%m-%d %H:%M:%S", Time()));
     if ($values->vyber == 2) {
       $uloz_user_team = $this->user_team->uloz(['team_nazov'=>$values->team_nazov, 'team_pocet'=>$values->team_pocet, 'team_clenovia'=>$values->team_clenovia]); 
     }
+    
     $uloz_data_user_profiles = [ //Nastavenie vstupov pre tabulku user_profiles
       'meno'      => $values->meno,
       'priezvisko'=> $values->priezvisko,
