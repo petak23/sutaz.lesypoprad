@@ -61,6 +61,7 @@ services:
   - DbTable\Clanok_lang
   - DbTable\Dlzka_novinky
   - DbTable\Dokumenty
+  - DbTable\Dokumenty_kategoria
   - DbTable\Druh
   - DbTable\Hlavicka
   - DbTable\Hlavne_menu

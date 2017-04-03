@@ -41,6 +41,7 @@ webloader:
         - %appDir%/../www/css/lightbox.css
         - %appDir%/../www/css/front/sutaz.css
         - %appDir%/../www/css/front/responsive.css
+        - %appDir%/../www/css/front/x_pridane.css
 #        - {files: ["*.css", "*.less"], from: %appDir%/../www/css/front} # Nette\Utils\Finder support
       filters:
         - @jwlCssMinFilter
