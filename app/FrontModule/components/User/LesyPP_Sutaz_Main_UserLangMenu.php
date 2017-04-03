@@ -9,13 +9,13 @@ use Language_support;
 
 /**
  * Plugin pre zobrazenie ponuky o užívateľovi a jazykoch
- * Posledna zmena(last change): 28.03.2017
+ * Posledna zmena(last change): 03.04.2017
  *
  * @author Ing. Peter VOJTECH ml. <petak23@gmail.com>
  * @copyright  Copyright (c) 2013 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link       http://petak23.echo-msz.eu
- * @version 1.0.8
+ * @version 1.0.9
  */
 class LesyPPSutazMainUserLangMenuControl extends Control {
   /** @var Language_support\User Prednastavene texty pre prihlasovaci form */
@@ -26,19 +26,21 @@ class LesyPPSutazMainUserLangMenuControl extends Control {
   
   /** @var DbTable\Lang */
   public $lang;
-
-  /** @var User */
+  /** @var DbTable\Dokumenty */
+  public $dokumenty;
+  /** @var DbTable\User */
   protected $user;
  
   /**
    * @param DbTable\Lang $lang
    * @param User $user
    * @param Language_support\User $lang_supp */
-  public function __construct(DbTable\Lang $lang, User $user, Language_support\User $lang_supp) {
+  public function __construct(DbTable\Lang $lang, User $user, Language_support\User $lang_supp, DbTable\Dokumenty $dokumenty) {
     parent::__construct();
     $this->lang = $lang;
     $this->user = $user;
     $this->texty = $lang_supp;
+    $this->dokumenty = $dokumenty;
   }
   
   /** 
@@ -82,22 +84,30 @@ class LesyPPSutazMainUserLangMenuControl extends Control {
         $obb = $obb->src($baseUrl.'/www/ikonky/64/figurky_64.png')->alt('bez avatara');
       }
     } else {$obb = "";}
-    $menu_user[] = new MenuItem([
+    $this->template->profil = new MenuItem([
           'odkaz'=>'UserLog:', 
-          'nazov'=>$obb." Profil",//.$udata->meno.' '.$udata->priezvisko,
-          'title'=>'Profil',//$udata->meno.' '.$udata->priezvisko,
-          'class'=>'btn-success',]);
+          'nazov'=>$udata->meno.' '.$udata->priezvisko]);
+    $this->template->pocet_prispevkov = $this->dokumenty->findBy(['id_user_profiles' => $udata->getId()])->count('*');
+//    $menu_user[] = new MenuItem([
+//          'odkaz'=>'UserLog:', 
+//          'nazov'=>$obb.$udata->meno.' '.$udata->priezvisko,
+//          'title'=>$udata->meno.' '.$udata->priezvisko,
+//          'class'=>'btn-success',]);
     $menu_user[] = new MenuItem([
           'odkaz'=>'My:', 
-          'nazov'=>$obb." Moje príspevky",//.$udata->meno.' '.$udata->priezvisko,
-          'title'=>'Moje príspevky',//$udata->meno.' '.$udata->priezvisko,
+          'nazov'=>"Pridať príspevok",
+          'class'=>'btn-success',]);
+    $menu_user[] = new MenuItem([
+          'odkaz'=>'My:add', 
+          'nazov'=>"Moje konto",
+          'title'=>"Pozrieť moje príspevky v konte",
           'class'=>'btn-primary',]);
     $menu_user[] = new MenuItem([
         'odkaz'=>'signOut!',
         'ikonka'=>"sign-out",
         'nazov'=>$log_out,
         'class'=>'btn-warning noajax',
-        'data'=>['name'=>'ajax', 'value'=>'false'],
+//        'data'=>['name'=>'ajax', 'value'=>'false'],
                         ]);
     return $menu_user;
   }
@@ -109,6 +119,7 @@ class LesyPPSutazMainUserLangMenuControl extends Control {
 		$baseUrl = $this->template->baseUrl;
     $this->nastavenie = $pthis->nastavenie['user_panel'];
     $this->nastavenie['view_avatar'] = $pthis->nastavenie['user_panel']['view_avatar'] && $pthis->nastavenie['user_view_fields']['avatar'];
+    $this->template->isLoggedIn = $this->user->isLoggedIn();
 		if ($this->user->isLoggedIn()) { 
       //Panel prihlaseneho uzivatela
       $menu_user = $this->_panelPrihlaseny($baseUrl, $pthis->udaje_webu['log_out']);

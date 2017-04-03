@@ -11,6 +11,8 @@
 }
 @media (max-width : 799px )
 {
+	h3
+	{	font-size: 150%;}
 	.h1-responsive
 	{	font-size: 300%;}
 	.part-web img
@@ -39,10 +41,21 @@
 	{	height: 100px; padding: 0;}
 	#google-maps .textBox h2
 	{	font-size: x-large;}
-	
+	#partLogReg input, #partLogReg label
+	{
+		border-radius: 6px;
+		height: 33px;
+		font-size: 110%; 
+		padding: 4px 8px;
+	}
 }
 @media (max-width : 640px )
 {
+	h3
+	{
+		text-align: left;
+		margin-left: 12%;
+	}
 	form input, form select, form textarea, form label
 	{
 		border-radius: 6px;
@@ -56,10 +69,19 @@
 	{
 		font-size: 100%;
 	}
+	#partLogReg input
+	{	width: 50%;}
+	.info-user button
+	{	margin-left: 12%}
 	.h1-responsive
 	{	font-size: 250%;}
 	.part-web-item
 	{	width: 100%;}
+	.parts-of-web 
+	{
+		height: auto;
+		overflow: hidden;
+	}
 	.part-web 
 	{
 		display: table;
