@@ -3,8 +3,58 @@
 {control subMenu}
 {/block}
 {block content}
-<h2 n:block=title>{$h2}</h2>
-{control fotoEditForm}
+{var $user_i = $user->getIdentity()}
+<section class="textBox shadow-1 loggedin">
+  <div class="row">
+    <div class="icon col-xs-2">{dump $user_i->avatar_75}
+      {if isset($user_i->avatar_75) && is_file('www/'.$user_i->avatar_75)}
+      <img src="{$basePath}/www/{$user_i->avatar_75}" alt="Avatar" width="72" height="72" class="pull-right">
+    {else}
+      <img src="{$basePath}/www/images/icons/users_72.png" alt="Avatar" width="72" height="72" class="pull-right">
+    {/if}
+    </div>
+    <h2 class="col-xs-10"><small>Si prihlásený ako</small><br>{$user_i->username} <span>({$user_i->meno} {$user_i->priezvisko})</span></h2>
+  </div>
+  <p class="text-info">V tejto chvíli máš <span>{$pocet_prispevkov}</span> súťažných príspevkov. Na tejto stránke môžeš pridať nové súťažné príspevky.</p> 
+  <h3 class="bottom-line">Nový súťažný príspevok</h3>
+  {control fotoEditForm}
+  {*<form class="" id="registration" n:name="fotoEditForm">
+    <div class="form-group row">
+      <label n:name=vyber for="cathegory" class="col-lg-3 col-xs-4 col-form-label text-right">Kategória</label>
+      <select n:name=vyber class="req custom-select col-lg-3 col-md-5 col-xs-7 first" id="cathegory"></select>
+    </div>
+    <fieldset>
+      <legend>Údaje o súťažnom príspevku</legend>
+      <div class="form-group row">
+        <label n:name=nazov for="inputKind" class="col-lg-3 col-xs-4 col-form-label text-right">Názov druhu</label>
+        <input n:name=nazov type="text" class="req col-lg-4 col-md-6 col-xs-8" id="inputKind">
+      </div>
+      <div class="form-group row">
+        <label n:name=nazov_latin for="inputLatin" class="col-lg-3 col-xs-4 col-form-label text-right">Latinský názov</label>
+        <input n:name=nazov_latin type="text" class="req col-lg-4 col-md-6 col-xs-8" id="inputLatin">
+      </div>
+      <div class="form-group row">
+        <label n:name=coords for="inputGps" class="col-lg-3 col-xs-4 col-form-label text-right">GPS súradnice</label>
+        {input coords}
+        //<input n:name=coords type="text" class="col-lg-4 col-md-6 col-xs-8" id="inputGps">
+      </div>
+      <div class="form-group row">
+        <label n:name=priloha for="inputFile" class="col-lg-3 col-xs-4 text-right col-form-label ">Fotografia</label>
+        <input n:name=priloha class="btn btn-lg btn-default" type="file" id="inputFile"><span class="has-error"></span>
+      </div>
+      <div class="form-group row" id="view_send">
+      <label class="col-lg-3 col-sm-2 col-xs-1 col-form-label text-right"></label>
+      <input n:name=uloz type="submit" value="Ulož" class="btn-success col-lg-2 col-sm-3 col-xs-5">
+      <label class="col-xs-1 col-form-label text-right"></label>
+      <input n:name=cancel type="reset" value="Cancel" class="btn-warning col-lg-2 col-sm-3 col-xs-5">
+    </div>
+    </fieldset>
+  </form>*}
+
+</section>
+
+
+
 {/block}
 
 {block spec_js}
@@ -12,48 +62,6 @@
     $(function() {
       $('[data-nette-gpspicker]').gpspicker();
     });
-/*    function showErrors(errors, focus)
-    {
-      errors.forEach(function(error) {
-        if (error.message) {
-          $(error.element).closest('tr').addClass('has-error').find('.error').remove();
-          $('<span class=error>').text(error.message).insertAfter(error.element);
-        }
-
-        if (focus && error.element.focus) {
-          error.element.focus();
-          focus = false;
-        }
-      });
-    }
-
-    function removeErrors(elem)
-    {
-      if ($(elem).is('form')) {
-        $('.has-error', elem).removeClass('has-error');
-        $('.error', elem).remove();
-      } else {
-        $(elem).closest('tr').removeClass('has-error').find('.error').remove();
-      }
-    }
-
-    Nette.showFormErrors = function(form, errors) {
-      removeErrors(form);
-      showErrors(errors, true);
-    };
-
-    $(function() {
-      $(':input').keypress(function() {
-        removeErrors(this);
-      });
-
-      $(':input').blur(function() {
-        Nette.formErrors = [];
-        Nette.validateControl(this);
-        showErrors(Nette.formErrors);
-      });
-    });*/
-
   </script>
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC7RlQkZwzIZeb32wo23Ikw8vx5hih31r4&sensor=false"></script>
   {*<script src="http://api4.mapy.cz/loader.js"></script>

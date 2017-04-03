@@ -6,7 +6,7 @@ use DbTable, Language_support;
 /**
  * Prezenter pre vypísanie profilu a správu foto príloh.
  * (c) Ing. Peter VOJTECH ml.
- * Posledna zmena(last change): 30.03.2017
+ * Posledna zmena(last change): 03.04.2017
  *
  *	Modul: FRONT
  *
@@ -14,7 +14,7 @@ use DbTable, Language_support;
  * @copyright  Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link       http://petak23.echo-msz.eu
- * @version 1.0.2
+ * @version 1.0.3
  */
 class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
   
@@ -107,7 +107,7 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
   
   /** Render pre editaciu prilohy. */
 	public function renderEdit() {
-		$this->template->h2 = $this->h2;
+		$this->template->pocet_prispevkov = $this->dokumenty->findBy(['id_user_profiles' => $this->user_id])->count('*');
 	}
   
   /** 
@@ -121,7 +121,7 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
     $form['cancel']->onClick[] = function () {
 			$this->redirect('My:');
 		};
-    return $this->_vzhladForm($form);
+    return $form;//$this->_vzhladForm($form);
 	}
   
   /**
