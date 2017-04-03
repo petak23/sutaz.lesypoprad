@@ -60,6 +60,8 @@ abstract class BasePresenter extends UI\Presenter {
   public $odkazNaClankyControlFactory;
   /** @var \App\FrontModule\Components\News\INewsControl @inject */
   public $newsControlFactory;
+  /** @var \App\FrontModule\Components\SubMenu\ISubMenuControl @inject */
+  public $subMenuControlFactory;
 
 
   // -- Premenne z o stareho CommonBasePresentera
@@ -400,6 +402,13 @@ abstract class BasePresenter extends UI\Presenter {
    * @return \App\FrontModule\Components\News\INewsControl */
   public function createComponentNews() {
     return $this->newsControlFactory->create();
+  }
+  
+  /** 
+   * Komponenta pre zobrazenie noviniek
+   * @return \App\FrontModule\Components\SubMenu\ISubMenuControl */
+  public function createComponentSubMenu() {
+    return $this->subMenuControlFactory->create();
   }
   
   /** Komponenta pre vypis kontaktneho formulara

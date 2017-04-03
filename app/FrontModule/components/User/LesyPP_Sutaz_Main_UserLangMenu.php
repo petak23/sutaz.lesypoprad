@@ -94,11 +94,11 @@ class LesyPPSutazMainUserLangMenuControl extends Control {
 //          'title'=>$udata->meno.' '.$udata->priezvisko,
 //          'class'=>'btn-success',]);
     $menu_user[] = new MenuItem([
-          'odkaz'=>'My:', 
+          'odkaz'=>'My:add', 
           'nazov'=>"Pridať príspevok",
           'class'=>'btn-success',]);
     $menu_user[] = new MenuItem([
-          'odkaz'=>'My:add', 
+          'odkaz'=>'My:', 
           'nazov'=>"Moje konto",
           'title'=>"Pozrieť moje príspevky v konte",
           'class'=>'btn-primary',]);

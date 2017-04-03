@@ -20,6 +20,9 @@
 {block article-podclanky}
   {control menu templateType=>'tree', templateFile=>'Echo_Tree_Clanky', level=>$uroven_aside, avatar => $avatar_path, anotacia => TRUE, nadpis => $viac_info, divClass => FALSE}
 {/block}
+{block ponuka}
+{control subMenu}
+{/block}
 
 {block content}
 <article class="article-main">
