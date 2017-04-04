@@ -3,16 +3,17 @@
   {control ukazClanok-5}
 </section>
 <section class="parts-of-web">
-  <div class="part-web col-lg-4 col-md-4 col-sm-4 col-xs-12" id="partLogReg">
+  <div class="part-web col-sm-4 col-xs-12" id="partLogReg">
     <div class="icon">
-      <img src="{$basePath}/www/images/icons/tree_128.png" alt="Strom" width="129" height="128" class="img-responsive center-block img-icon">
+      <img src="{$basePath}/www/images/icons/tree_128.png" alt="Strom" width="128" height="128" class="img-responsive center-block img-icon">
     </div>
+	<p>Tu sa môžeš prihlásiť a pridať svoje príspevky do súťaže. Ak ešte nemáš konto klikni na <i>Registrácia</i> a vyplň registračný formulár.</p>
     {control lesyPPSutazMainUserLangMenu}
   </div>
-  <div class="part-web col-lg-4 col-md-4 col-sm-4 col-xs-12" id="partHow">
+  <div class="part-web col-sm-4 col-xs-12" id="partHow">
     {control ukazAnotaciu-2}
   </div>
-  <div class="part-web col-lg-4 col-md-4 col-sm-4 col-xs-12" id="partUsers">
+  <div class="part-web col-sm-4 col-xs-12" id="partUsers">
     {control ukazAnotaciu-6}
   </div>
 </section>
@@ -23,15 +24,13 @@
   <div class="textBox col-lg-4 shadow-1">
     <h2><small>Mapa mestských lesov Poprad</small><br>Oblasť Kvetnica</h2>
   </div>
+  <script src="{$basePath}/www/js/forestmap.js" type="application/javascript"></script>
   <div id="map1" class="col-lg-8">
-    <script src="{$basePath}/www/js/forestmap.js" type="application/javascript"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7RlQkZwzIZeb32wo23Ikw8vx5hih31r4&callback=initMap"></script>
   </div>
-  {*<div id="map2" class="col-lg-8">
-    <script src="js/forestmap2.js" type="application/javascript"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7RlQkZwzIZeb32wo23Ikw8vx5hih31r4&callback=initMap"></script>
+  <div id="map2" class="col-lg-8">
   </div>
   <div class="textBox col-lg-4 shadow-1">
     <h2><small>Mapa mestských lesov Poprad</small><br>Oblasť Gerlachov</h2>
-  </div>*}
+  </div>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8yGkZAqQpywm922mhn4rNpAUuCpHgjPs&callback=initMap"></script>
 </section>
