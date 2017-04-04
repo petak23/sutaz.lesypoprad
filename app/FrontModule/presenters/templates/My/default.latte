@@ -3,37 +3,38 @@
 {control subMenu}
 {/block}
 {block content}
-<article class="article-main row">
-  <div class="col-md-10 col-md-offset-1">
-    <h2 n:inner-block="title">{$h2}</h2>
-    <div class="row">
-      <div class="col-md-2 bg-info">
-        <img src="{$basePath}/www/{('/www/'.isset($clen->avatar_75) ? $clen->avatar_75 : 'ikonky/64/figurky_64.png')}" alt="avatar" class="img-thumbnail" />
-      </div>
-      <dl class="col-md-10 my-info">
-        <dt>{$texty->trText('default_meno')} {$texty->trText('default_priezvisko')}:</dt>
-        <dd>{$clen->meno} {$clen->priezvisko|upper}</dd>
-        <dt>{$texty->trText('default_log_name')}:</dt>
-        <dd>{$clen->users->username}</dd>
-        <dt>{$texty->trText('default_email')}:</dt>
-        <dd>{$clen->users->email} {$clen->priezvisko|upper}</dd>
-        <dt>{$texty->trText('default_registracia')}:</dt>
-        <dd>{$clen->id_registracia} - {$clen->registracia->nazov} ({$clen->registracia->role})</dd>
-      </dl>
+{var $user_i = $user->getIdentity()}
+<section class="textBox shadow-1 loggedin">
+  <div class="row">
+    <div class="icon col-xs-2">
+      {if isset($user_i->avatar_75) && is_file('www/'.$user_i->avatar_75)}
+      <img src="{$basePath}/www/{$user_i->avatar_75}" alt="Avatar" width="72" height="72" class="pull-right">
+    {else}
+      <img src="{$basePath}/www/images/icons/users_72.png" alt="Avatar" width="72" height="72" class="pull-right">
+    {/if}
     </div>
-    <div class="row">
-      <div>
-        <div>
-          {control fotoPrilohy}
-        </div>
-        <div>
-          <h4>Mapa fotiek</h4>
-          {control map}
-        </div>  
-      </div>
-    </div>
+    <h2 class="col-xs-10"><small>Si prihlásený ako</small><br>{$user_i->username} <span>({$user_i->meno} {$user_i->priezvisko})</span></h2>
   </div>
-</article>
+  <p class="text-info">V tejto chvíli máš <span>{$pocet_prispevkov}</span> súťažných príspevkov. Zmeniť to môžeš pridaním ďalších súťažných príspevkov cez odkaz "Pridať príspevok".</p> 
+  {var $po = $udaje['max_pocet_foto'] == 0 || $udaje['max_pocet_foto'] > $pocet_prispevkov}
+  <a n:href="My:add" {if !$po}disabled="disabled" title="Už nie je možné pridať súťažný príspevok. Dosiahli ste max. počet."{else}title="Pridať súťažný príspevok"{/if}>
+    <button type="button" class="btn btn-success btn-lg">Pridať príspevok</button>
+  </a>
+  <h3 class="bottom-line">Kategórie</h3>  
+  {foreach $dkategoria as $dk}
+    <a n:href="My: $dk->id" title="{$dk->nazov}" class="btn btn-primary btn-lg">{$dk->nazov}</a>
+  {/foreach}
+  {if $pocet_prispevkov}  
+  <h3 class="bottom-line">Mapa príspevkov (kategória Poznávanie druhov).</h3>
+	<div class="col-sm-10 col-xs-12">
+    {control map}
+		{*<iframe height="350" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC7RlQkZwzIZeb32wo23Ikw8vx5hih31r4 &q=Poprad+Kvatnica&zoom=11" allowfullscreen></iframe>*}
+  </div>
+  <h3 class="bottom-line">Zoznam príspevkov - kategória Poznávanie druhov.</h3>
+  {control fotoPrilohy}
+  {/if}
+</section>          
+          
 {/block}
 {block spec_js}
   <script src="{$basePath}/www/js/googleMapAPI.js"></script>

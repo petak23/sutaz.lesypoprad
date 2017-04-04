@@ -6,7 +6,7 @@ use DbTable, Language_support;
 /**
  * Prezenter pre vypísanie profilu a správu foto príloh.
  * (c) Ing. Peter VOJTECH ml.
- * Posledna zmena(last change): 03.04.2017
+ * Posledna zmena(last change): 04.04.2017
  *
  *	Modul: FRONT
  *
@@ -14,7 +14,7 @@ use DbTable, Language_support;
  * @copyright  Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link       http://petak23.echo-msz.eu
- * @version 1.0.3
+ * @version 1.0.4
  */
 class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
   
@@ -22,6 +22,10 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
    * @inject
    * @var DbTable\Users */
 	public $users;
+    /** 
+   * @inject
+   * @var DbTable\Dokumenty_kategoria */
+	public $dokumenty_kategoria;
   /**
    * @inject
    * @var Language_support\My */
@@ -61,12 +65,15 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
     //Najdem aktualne prihlaseneho clena
     $this->user_id = $this->user->getIdentity()->getId();
     $this->user_view_fields = $this->nastavenie['user_view_fields'];
+    $this->template->pocet_prispevkov = $this->dokumenty->findBy(['id_user_profiles' => $this->user_id])->count('*');
 	}
   /**
    * Defaultna akcia */
-  public function actionDefault() {
+  public function actionDefault($kategoria = 1) {
     $this->fotky = $this->dokumenty->findBy(["id_user_profiles" =>$this->user_id, 
-                                             "id_hlavne_menu"   =>$this->udaje_webu["hl_udaje"]["id"]]);
+                                             "id_hlavne_menu"   =>$this->udaje_webu["hl_udaje"]["id"],
+                                             "id_dokumenty_kategoria" => $kategoria,
+            ]);
     
   }
   
@@ -76,6 +83,7 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
     $this->template->h2 = $this->trLang('h2');
     $this->template->texty = $this->texty_presentera;
     $this->template->foto = $this->fotky;
+    $this->template->dkategoria = $this->dokumenty_kategoria->findAll();
   }
   
   /**
@@ -107,7 +115,6 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
   
   /** Render pre editaciu prilohy. */
 	public function renderEdit() {
-		$this->template->pocet_prispevkov = $this->dokumenty->findBy(['id_user_profiles' => $this->user_id])->count('*');
 	}
   
   /** 
@@ -144,7 +151,7 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
               ->setMessage('<h2>'.$marker->nazov.'</h2><br />'
                       . '<img src="'.$this->template->basePath.'/'.$marker->thumb.'" alt="'.$marker->nazov.'" class="img-rounded">'
 //                      . '<img class="jslghtbx-thmb img-rounded" src="'.$this->template->basePath.'/'.$marker->thumb.'" alt="'.$marker->nazov.'" data-jslghtbx="'.$this->template->basePath.'/'.$marker->subor.'" class="noajax" data-ajax="false" data-jslghtbx-group="mygroup1">'
-                      . '<br />'.$marker->popis)
+                      . '<br />'.$marker->nazov_latin)
               ->setIcon('www/ikonky/64/fotoaparat_64.png');
     }
     $map->addMarkers($markers);

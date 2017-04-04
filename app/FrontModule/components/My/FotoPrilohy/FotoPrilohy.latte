@@ -1,30 +1,28 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3>
-      {var $po = $max_pocet_foto == 0 || $max_pocet_foto > count($dokumenty)}
-      <a href="{plink My:add}" type="button" class="btn btn-success button-right" {if !$po}disabled="disabled" title="Už nie je možné pridať fotku. Dosiahli ste max. počet."{else}title="Pridaj nový obrázok"{/if}>
-        <i class="fa fa-file-o"></i> Pridaj nový obrázok
-      </a>
-    </h3>
-  </div>
-  <table class="table table-bordered table-striped table-hover" n:if="count($dokumenty)">
-    <tr><th></th><th>Názov</th><th>Popis</th><th>Súradnice</th><th></th></tr>
-    <tr n:foreach="$dokumenty as $d">
-      <td class="sirka15">
-        <img class="jslghtbx-thmb img-rounded" src="{$basePath}/{$d->thumb}" alt="{$d->nazov}" data-jslghtbx="{$basePath}/{$d->subor}" class="noajax" data-ajax="false" data-jslghtbx-group="mygroup1">
-      </td>  
-      <td class="sirka15">
-        {$d->nazov}
-      </td>
-      <td class="sirka40">{$d->popis}</td>
-      <td class="sirka15">{$d->lat}<br />{$d->lng}</td>
-      <td>
-        <div class="btn-group" role="group" aria-label="adminLinks">
-          <a href="{plink My:edit $d->id}" class="btn btn-success btn-sm" title="Editovať"><i class="fa fa-pencil fa-1_5x"></i></a>
-          <a {* n:if="$user->isAllowed('Admin:Clanky', 'prilohy')"*} href="{plink confirmForm:confirmDelete! id=>$d->id, druh=>'priloha', nazov=>$d->nazov, zdroj_na_zmazanie=>'fotku'}" class="btn btn-danger btn-sm" title="Zmazať">
-            <i class="fa fa-trash-o fa-1_5x"></i></a>
-        </div>
-      </td>
-    </tr>
+<div class="table-responsive">
+  <table class="table table-unbordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Druh</th>
+        <th>Názov druhu{*Slovenský názov<br>Latinský názov*}</th>
+        <th>Súradnice</th>
+        <th>zmeniť</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  n:foreach="$dokumenty as $d">
+        <th scope="row">{$iterator->counter}</th>
+        <td><img class="jslghtbx-thmb img-rounded" src="{$basePath}/{$d->thumb}" alt="{$d->nazov}" data-jslghtbx="{$basePath}/{$d->subor}" class="noajax" data-ajax="false" data-jslghtbx-group="mygroup1"></td>
+        <td>{$d->nazov}<br>{$d->nazov_latin}</td>
+        <td>{$d->lat}<br />{$d->lng}</td>
+        <td>
+          <a href="{plink My:edit $d->id}" class="btn btn-default btn-sm" title="Editovať">
+            <span class="glyphicon glyphicon-pencil"></span></a>
+          <a href="{plink confirmForm:confirmDelete! id=>$d->id, druh=>'priloha', nazov=>$d->nazov, zdroj_na_zmazanie=>'príspevok'}" class="btn btn-danger btn-sm" title="Zmazať">
+            <span class="glyphicon glyphicon-remove"></a>
+          
+        </td>
+      </tr>      
+    </tbody>
   </table>
 </div>
