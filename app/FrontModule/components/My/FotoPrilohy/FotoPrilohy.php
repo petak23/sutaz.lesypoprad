@@ -7,13 +7,13 @@ use DbTable;
 /**
  * Komponenta pre spravu priloh clanku.
  * 
- * Posledna zmena(last change): 30.03.2017
+ * Posledna zmena(last change): 05.04.2017
  *
  * @author Ing. Peter VOJTECH ml. <petak23@gmail.com> 
  * @copyright Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link http://petak23.echo-msz.eu
- * @version 1.0.2
+ * @version 1.0.3
  */
 
 class FotoPrilohyControl extends Nette\Application\UI\Control {
@@ -45,9 +45,13 @@ class FotoPrilohyControl extends Nette\Application\UI\Control {
   }
   
   /** Render */
-	public function render() {
-    $this->template->setFile(__DIR__ . '/FotoPrilohy.latte');
-    $this->template->dokumenty = $this->dokumenty->findBy(['id_hlavne_menu'=>$this->udaje_webu["hl_udaje"]["id"], "id_user_profiles" =>$this->user->getIdentity()->getId()]);
+	public function render($params = []) {
+    $idk = (isset($params['id_dokumenty_kategoria']) && $params['id_dokumenty_kategoria']) ? $params['id_dokumenty_kategoria'] : 1;
+    $dokumenty = $this->dokumenty->findBy(['id_hlavne_menu'         =>$this->udaje_webu["hl_udaje"]["id"], 
+                                           'id_user_profiles'       =>$this->user->getIdentity()->getId(),
+                                           'id_dokumenty_kategoria' => $idk]);
+    $this->template->setFile(__DIR__ . '/FotoPrilohy_'.$idk.'.latte');
+    $this->template->dokumenty = $dokumenty;
     $this->template->max_pocet_foto = $this->udaje_webu["max_pocet_foto"];
 		$this->template->render();
 	}

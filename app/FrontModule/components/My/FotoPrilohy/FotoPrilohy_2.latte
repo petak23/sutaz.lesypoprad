@@ -5,16 +5,16 @@
         <th>#</th>
         <th>Druh</th>
         <th>Názov druhu{*Slovenský názov<br>Latinský názov*}</th>
-        <th>Súradnice</th>
         <th>zmeniť</th>
       </tr>
     </thead>
     <tbody>
       <tr  n:foreach="$dokumenty as $d">
         <th scope="row">{$iterator->counter}</th>
-        <td><img class="jslghtbx-thmb img-rounded" src="{$basePath}/{$d->thumb}" alt="{$d->nazov}" data-jslghtbx="{$basePath}/{$d->subor}" class="noajax" data-ajax="false" data-jslghtbx-group="mygroup1"></td>
+        <td>
+          <img class="jslghtbx-thmb img-rounded" src="{$basePath}/{$d->thumb}" alt="{$d->nazov}" data-jslghtbx="{$basePath}/{$d->subor}" class="noajax" data-ajax="false" data-jslghtbx-group="mygroup1">
+        </td>
         <td>{$d->nazov}<br>{$d->nazov_latin}</td>
-        <td>{$d->lat}<br />{$d->lng}</td>
         <td>
           <a href="{plink My:edit $d->id}" class="btn btn-default btn-sm" title="Editovať">
             <span class="glyphicon glyphicon-pencil"></span></a>

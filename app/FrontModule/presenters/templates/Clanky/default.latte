@@ -17,24 +17,20 @@
 *}
 {var $uroven_aside = $uroven > 2 ? $uroven - 1 : 2}
 {block title}{$h2}{/block}
-{block article-podclanky}
+{* block article-podclanky}
   {control menu templateType=>'tree', templateFile=>'Echo_Tree_Clanky', level=>$uroven_aside, avatar => $avatar_path, anotacia => TRUE, nadpis => $viac_info, divClass => FALSE}
-{/block}
+{/block *}
 {block ponuka}
 {control subMenu}
 {/block}
 
 {block content}
-<article class="article-main">
-  <div class="row">
-    <div class="col-xs-12 col-md-12">
-      {if $clanok_view}
-        {control ukazTentoClanok}
-      {else}
-        {control menu templateType=>'single', cast => 1, level => $uroven, avatar => $avatar_path, article_avatar_view_in => TRUE, anotacia => TRUE, nadpis => $viac_info, divClass => 'podclanky'}
-      {/if}  
-    </div>
-  </div>
+<section class="textBox shadow-1 guide">
+  {if $clanok_view}
+    {control ukazTentoClanok}
+  {else}
+    {control menu templateType=>'single', cast => 1, level => $uroven, avatar => $avatar_path, article_avatar_view_in => TRUE, anotacia => TRUE, nadpis => $viac_info, divClass => 'podclanky'}
+  {/if}  
   {control prilohy}
   <div class="row" n:if="(isset($komponenty) && count($komponenty)) || $komentare_povolene">
     <div class="col-xs-12 col-md-12">
@@ -51,4 +47,4 @@
       {if $komentare_povolene}{control komentar-$komentare_povolene}{/if}
     </div>
   </div>
-</article>
+</section>

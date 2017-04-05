@@ -67,16 +67,14 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
     $this->user_view_fields = $this->nastavenie['user_view_fields'];
     $this->template->pocet_prispevkov = $this->dokumenty->findBy(['id_user_profiles' => $this->user_id])->count('*');
 	}
+  
   /**
    * Defaultna akcia */
-  public function actionDefault($kategoria = 1) {
+  public function actionDefault() {
     $this->fotky = $this->dokumenty->findBy(["id_user_profiles" =>$this->user_id, 
                                              "id_hlavne_menu"   =>$this->udaje_webu["hl_udaje"]["id"],
-                                             "id_dokumenty_kategoria" => $kategoria,
-            ]);
-    
+                                            ]); 
   }
-  
   
   public function renderDefault() {
     $this->template->clen = $this->user_profiles->findOneBy(['id_users'=>$this->user_id]);
@@ -146,11 +144,10 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
   public function createComponentMap() {
     $map = $this->map->create();
     $markers = $this->markers->create();
-    foreach ($this->fotky as $marker) {
+    foreach ($this->fotky->where('id_dokumenty_kategoria', 1) as $marker) {
       $markers->addMarker([$marker->lat, $marker->lng], FALSE, $marker->nazov)
               ->setMessage('<h2>'.$marker->nazov.'</h2><br />'
                       . '<img src="'.$this->template->basePath.'/'.$marker->thumb.'" alt="'.$marker->nazov.'" class="img-rounded">'
-//                      . '<img class="jslghtbx-thmb img-rounded" src="'.$this->template->basePath.'/'.$marker->thumb.'" alt="'.$marker->nazov.'" data-jslghtbx="'.$this->template->basePath.'/'.$marker->subor.'" class="noajax" data-ajax="false" data-jslghtbx-group="mygroup1">'
                       . '<br />'.$marker->nazov_latin)
               ->setIcon('www/ikonky/64/fotoaparat_64.png');
     }
