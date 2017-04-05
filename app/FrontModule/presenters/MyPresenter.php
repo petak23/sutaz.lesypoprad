@@ -122,6 +122,7 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
     $form = $this->editFotoPrilohyFormFactory->create($this->upload_size, "www/files/myfoto/", $this->nastavenie['prilohy_images'], $this->nastavenie['wwwDir']);
     $form['uloz']->onClick[] = function ($button) {
       $this->flashOut(!count($button->getForm()->errors), 'My:', 'Foto príloha bola úspešne uložená!', 'Došlo k chybe a zmena sa neuložila. Skúste neskôr znovu...');
+//      dump($button->getForm()->errors);
 		};
     $form['cancel']->onClick[] = function () {
 			$this->redirect('My:');
