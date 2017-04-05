@@ -1,13 +1,15 @@
 {if $isLoggedIn}
-  <h3><span class="h-gray">Prihlásený:</span> <a href="{plink $profil->odkaz}" title="{$profil->nazov}">{$profil->nazov}</a></h3>
-	<h3><span class="h-gray">Počet príspevkov:</span> {$pocet_prispevkov}</h3>
+  <div class="info-user text-left col-xs-10 col-xs-offset-1">
+    <h3><span class="h-gray">Prihlásený:</span> <a href="{plink $profil->odkaz}" title="{$profil->nazov}">{$profil->nazov}</a></h3>
+    <h3><span class="h-gray">Počet príspevkov:</span> {$pocet_prispevkov}</h3>
 {else}
   <h3>Chcem súťažiť.</h3>
 {/if}
 {foreach $menu_user as $mu}
 <a href="{ifset $mu->abs_link}{$mu->abs_link}{else}{if is_array($mu->odkaz)}{plink $mu->odkaz[0], $mu->odkaz[1]['meno']=>$mu->odkaz[1]['obsah']}{else}{plink $mu->odkaz}{/if}{/ifset}"
-        type="button" class="btn {if strlen($mu->class)}{$mu->class}{/if} btn-lg"
+        type="button" class="btn {if strlen($mu->class)}{$mu->class}{/if} {* btn-lg*}"
         title="{$mu->title}"
         {if strlen($mu->target)}target="{$mu->target}"{/if}
         {if $mu->data['name'] != ''}data-{$mu->data['name']}="{$mu->data['value']}"{/if}>{$mu->nazov|noescape}</a>
 {/foreach}
+{if $isLoggedIn}</div>{/if}
