@@ -7,7 +7,6 @@ use Nette\Mail\Message;
 use Nette\Mail\SendmailMailer;
 use Nette\Security\User;
 use Latte;
-use DbTable;
 use Language_support;
 
 /**
@@ -115,28 +114,26 @@ class KontaktControl extends Control {
       $renderer->wrappers['control']['description'] = 'span class=help-block';
       $renderer->wrappers['control']['errorcontainer'] = 'div class="alert alert-danger"';
       $form->addSubmit('uloz', $this->trLang('komponent_kontakt_uloz'))
-           ->setAttribute('class', 'btn btn-success');
-      $form->onSuccess[] = [$this, 'onZapisDotaz'];
-//      dump($this->user->getIdentity()->data);die();
+           ->setAttribute('class', 'btn btn-success')
+           ->onClick[] = [$this, 'onZapisDotaz'];
       if ($this->user->isLoggedIn()) {
-        $form['meno']->setDisabled()->setDefaultValue($this->user->getIdentity()->data['meno']." ".$this->user->getIdentity()->data['priezvisko']);
-        $form['email']->setDisabled()->setDefaultValue($this->user->getIdentity()->data['email']);
+        $form['meno']->setDefaultValue($this->user->getIdentity()->data['meno']." ".$this->user->getIdentity()->data['priezvisko']);
+        $form['email']->setDefaultValue($this->user->getIdentity()->data['email']);
       }
       
       return $form;
   }
 
   /** Spracovanie formulara
-   * @param \Nette\Application\UI\Form $form
-   */
-  public function onZapisDotaz(Form $form) {
-    $values = $form->getValues(); 				//Nacitanie hodnot formulara
+   * @param Nette\Forms\Controls\SubmitButton $button Data formulara */
+  public function onZapisDotaz($button) {
+    $values = $button->getForm()->getValues(); 				//Nacitanie hodnot formulara
     $templ = new Latte\Engine;
-    $params = array(
+    $params = [
       "nadpis"      => sprintf('Správa z kontaktného formulará stránky %s', $this->nazov_stranky),
       "dotaz_meno"  => sprintf('Užívateľ s menom %s poslal nasledujúcu správu:', $values->meno),
       "dotaz_text"  => $values->text,
-    );
+    ];
     $mail = new Message;
     $mail->setFrom($values->meno.' <'.$values->email.'>')
          ->addTo($this->emails)

@@ -418,8 +418,8 @@ abstract class BasePresenter extends UI\Presenter {
    */
 	public function createComponentKontakt() {
 		$kontakt = $this->kontaktControlFactory->create();
-//    $spravca = $this->user_profiles->findOneBy(['poznamka' => "Správca"]);
-    $spravca = $this->user_profiles->find(1);
+    $spravca = $this->user_profiles->findOneBy(['poznamka' => "Správca"]);
+//    $spravca = $this->user_profiles->find(1);
 		$kontakt->setSpravca($spravca->users->email);
     $kontakt->setNazovStranky($this->nazov_stranky);
 		return $kontakt;	
