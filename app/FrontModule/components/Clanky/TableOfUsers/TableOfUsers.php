@@ -52,7 +52,7 @@ class TableOfUsersControl extends Nette\Application\UI\Control {
    */
   public function render() { 
     $this->template->setFile(__DIR__ . "/TableOfUsers.latte");
-    $pokus = $this->user_profiles->findBy(['id_registracia > 0', 'id_registracia <=5']);
+    $pokus = $this->user_profiles->findBy(['id_registracia > 0', 'id_registracia <=2']);
     $tou = [];
     foreach ($pokus as $p) {
       $tou[] = ['meno'  => $p->meno . " " . $p->priezvisko,

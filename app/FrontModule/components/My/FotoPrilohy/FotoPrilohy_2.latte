@@ -5,6 +5,7 @@
       <tr>
         <th>#</th>
         <th>Druh</th>
+        <th>Dokument</th>
         <th>Názov druhu{*Slovenský názov<br>Latinský názov*}</th>
         <th>zmeniť</th>
       </tr>
@@ -13,9 +14,18 @@
       <tr  n:foreach="$dokumenty as $d">
         <th scope="row">{$iterator->counter}</th>
         <td>
-          <img class="jslghtbx-thmb img-rounded" src="{$basePath}/{$d->thumb}" alt="{$d->nazov}" data-jslghtbx="{$basePath}/{$d->subor}" class="noajax" data-ajax="false" data-jslghtbx-group="mygroup1">
+          {var $dikon = [1=>'photo', 2=>'camera', 3=>'brush']}
+          {*<img class="jslghtbx-thmb img-rounded" src="{$basePath}/{$d->thumb}" alt="{$d->nazov}" data-jslghtbx="{$basePath}/{$d->subor}" class="noajax" data-ajax="false" data-jslghtbx-group="mygroup1">*}
+          <img src="{$basePath}/www/images/icons/{$dikon[$d->druh]}_32.png" alt="{$d->nazov}">
         </td>
-        <td>{$d->nazov}<br>{$d->nazov_latin}</td>
+        <td>
+          {if $d->druh == 2}
+            <a href="{$basePath}/{$d->subor}" target="_blank" title="{$d->nazov}">{$d->nazov}</a>
+          {else}
+            <img class="jslghtbx-thmb img-rounded" src="{$basePath}/{$d->thumb}" alt="{$d->nazov}" data-jslghtbx="{$basePath}/{$d->subor}" class="noajax" data-ajax="false" data-jslghtbx-group="mygroup1">
+          {/if}
+        </td>
+        <td>{$d->nazov} {*<br>{$d->nazov_latin*}</td>
         <td>
           <a href="{plink My:edit $d->id}" class="btn btn-default btn-sm" title="Editovať">
             <span class="glyphicon glyphicon-pencil"></span></a>

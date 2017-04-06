@@ -62,6 +62,7 @@
 	    <div class="col-lg-2 hidden-md" id="smallHeadimg"></div>
     </header>
       
+    {block ponuka}{/block}  
     <div class="row top-panel" n:if="count($flashes)">
       <div class="col-md-10 col-md-offset-1" n:inner-foreach="$flashes as $flash" n:if="count($flashes)">
         {var $nees = explode(',', $flash->type)}
@@ -73,7 +74,6 @@
         </div>
       </div>
     </div>
-    {block ponuka}{/block}
     {include #content}
     {* ----- Spodok stranky - FOOTER ----- *}
     {snippet footer}{include 'footer_template.latte'}{/snippet}

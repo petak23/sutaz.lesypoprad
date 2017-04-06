@@ -37,9 +37,13 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
   
   /** @var Forms\My\EditFotoPrilohyFormFactory @inject */
   public $editFotoPrilohyFormFactory;
+    /** @var Forms\My\EditDokumentFormFactory @inject */
+  public $editDokumentFormFactory;
   /** @var \App\FrontModule\Components\My\FotoPrilohy\IFotoPrilohyControl @inject */
   public $fotoPrilohyControlFactory;
-
+  
+  /** @var */
+  public $dkategoria;
 
   /** @var string */
   private $h2;
@@ -49,6 +53,8 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
   private $markers;
   
   public $fotky;
+  /** @var int */
+  public $kategoria;
 
 	public function __construct(\Oli\GoogleAPI\IMapAPI $mapApi, \Oli\GoogleAPI\IMarkers $markers) {
     parent::__construct();
@@ -66,6 +72,7 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
     $this->user_id = $this->user->getIdentity()->getId();
     $this->user_view_fields = $this->nastavenie['user_view_fields'];
     $this->template->pocet_prispevkov = $this->dokumenty->findBy(['id_user_profiles' => $this->user_id])->count('*');
+    $this->dkategoria = $this->dokumenty_kategoria->findAll();
 	}
   
   /**
@@ -81,20 +88,35 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
     $this->template->h2 = $this->trLang('h2');
     $this->template->texty = $this->texty_presentera;
     $this->template->foto = $this->fotky;
-    $this->template->dkategoria = $this->dokumenty_kategoria->findAll();
+    $this->template->dkategoria = $this->dkategoria;
   }
   
   /**
    * Akcia pre pridanie fotky k profilu */
-  public function actionAdd() {
-    $this->h2 = "Pridanie fotky";
-    $this["fotoEditForm"]->setDefaults([
+  public function actionAdd($kategoria = 0) {
+    $this->kategoria = $kategoria;
+    if ($kategoria == 0) {
+      $this->h2 = "Zvoľ kategóriu:";
+    } elseif ($kategoria == 1) {
+      $this->h2 = "Nový súťažný príspevok:";
+      $this["fotoEditForm"]->setDefaults([
         "id"              =>0, 
         "id_hlavne_menu"  =>$this->udaje_webu["hl_udaje"]["id"], 
         "id_user_profiles"=>$this->user_id,
-        "id_registracia"  =>1, //$this->id_reg,
+        "id_registracia"  =>1,
+        "id_dokumenty_kategoria"=> 1,
         "coords"          =>['lat' => 49.017935, 'lng' => 20.276091],
         ]);
+    } elseif ($kategoria == 2) {
+      $this->h2 = "Nový súťažný príspevok:";
+      $this["dokumentForm"]->setDefaults([
+        "id"              =>0, 
+        "id_hlavne_menu"  =>$this->udaje_webu["hl_udaje"]["id"], 
+        "id_user_profiles"=>$this->user_id,
+        "id_registracia"  =>1,
+        "id_dokumenty_kategoria"=>2,
+        ]);
+    }
     $this->setView("edit");
     
   }
@@ -103,16 +125,28 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
    * @param int $id Id dokumentu na editaciu
    */
   public function actionEdit($id) {
-		if (($foto_priloha = $this->dokumenty->find($id)) === FALSE) { 
+		if (($priloha = $this->dokumenty->find($id)) === FALSE) { 
       return $this->error(sprintf("Pre zadané id som nenašiel prílohu! id=' %s'!", $id)); 
     }
-    $this->h2 =  'Editácia údajov fotky:'.$foto_priloha->nazov;
-    $this["fotoEditForm"]->setDefaults($foto_priloha);
-    $this["fotoEditForm"]->setDefaults(["coords"=>['lat' => $foto_priloha->lat, 'lng' => $foto_priloha->lng]]);
+    $this->kategoria = $priloha->id_dokumenty_kategoria;
+    if ($this->kategoria == 1) {
+      $this->h2 =  'Editácia fotky: '.$priloha->nazov;
+      $this["fotoEditForm"]->setDefaults($priloha);
+      $this["fotoEditForm"]->setDefaults(["coords"=>['lat' => $priloha->lat, 'lng' => $priloha->lng]]);
+    } elseif ($this->kategoria == 2) {
+      $this->h2 =  'Editácia dokumentu: '.$priloha->nazov;
+      $this["dokumentForm"]->setDefaults($priloha);
+//      $this["dokumentForm"]->setDefaults(["coords"=>['lat' => $priloha->lat, 'lng' => $priloha->lng]]);
+    }
+    
+    
   }
   
   /** Render pre editaciu prilohy. */
 	public function renderEdit() {
+    $this->template->dkategoria = $this->dkategoria;
+    $this->template->h2 = $this->h2;
+    $this->template->kategoria = $this->kategoria;
 	}
   
   /** 
@@ -122,6 +156,21 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
     $form = $this->editFotoPrilohyFormFactory->create($this->upload_size, "www/files/myfoto/", $this->nastavenie['prilohy_images'], $this->nastavenie['wwwDir']);
     $form['uloz']->onClick[] = function ($button) {
       $this->flashOut(!count($button->getForm()->errors), 'My:', 'Foto príloha bola úspešne uložená!', 'Došlo k chybe a zmena sa neuložila. Skúste neskôr znovu...');
+//      dump($button->getForm()->errors);
+		};
+    $form['cancel']->onClick[] = function () {
+			$this->redirect('My:');
+		};
+    return $form;//$this->_vzhladForm($form);
+	}
+  
+    /** 
+   * Formular pre editaciu dokumentov
+	 * @return Nette\Application\UI\Form */
+	protected function createComponentDokumentForm() {
+    $form = $this->editDokumentFormFactory->create($this->upload_size, "www/files/myfoto/", $this->nastavenie['prilohy_images'], $this->nastavenie['wwwDir']);
+    $form['uloz']->onClick[] = function ($button) {
+      $this->flashOut(!count($button->getForm()->errors), 'My:', 'Dokument bol úspešne uložený!', 'Došlo k chybe a zmena sa neuložila. Skúste neskôr znovu...');
 //      dump($button->getForm()->errors);
 		};
     $form['cancel']->onClick[] = function () {

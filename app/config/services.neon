@@ -111,6 +111,7 @@ services:
   - App\AdminModule\Presenters\Forms\Verzie\EditVerzieFormFactory
 
   - App\FrontModule\Presenters\Forms\My\EditFotoPrilohyFormFactory
+  - App\FrontModule\Presenters\Forms\My\EditDokumentFormFactory
   - App\FrontModule\Presenters\Forms\User\SignInFormFactory
   - App\FrontModule\Presenters\Forms\User\RegisterFormFactory
   - App\FrontModule\Presenters\Forms\UserLog\UserEditFormFactory

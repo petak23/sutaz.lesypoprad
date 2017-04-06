@@ -16,8 +16,18 @@
     <h2 class="col-xs-10"><small>Si prihlásený ako</small><br>{$user_i->username} <span>({$user_i->meno} {$user_i->priezvisko})</span></h2>
   </div>
   <p class="text-info">V tejto chvíli máš <span>{$pocet_prispevkov}</span> súťažných príspevkov. Na tejto stránke môžeš pridať nové súťažné príspevky.</p> 
-  <h3 class="bottom-line">Nový súťažný príspevok</h3>
-  {control fotoEditForm}
+  <h3 class="bottom-line">{$h2}</h3>
+  {if $kategoria == 0}
+    <div class="row" n:inner-foreach="$dkategoria as $dk">
+      <a n:href="My:add $dk->id" title="Pridať súťažný príspevok do kategórie: {$dk->nazov}">
+        <button type="button" class="btn btn-success btn-lg">{$dk->nazov}</button>
+      </a>
+    </div>
+  {elseif $kategoria == 1}
+    {control fotoEditForm}
+  {elseif $kategoria == 2}
+    {control dokumentForm}
+  {/if}
 </section>
 {/block}
 
