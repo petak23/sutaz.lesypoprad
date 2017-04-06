@@ -5,21 +5,24 @@ use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use Nette\Mail\Message;
 use Nette\Mail\SendmailMailer;
+use Nette\Security\User;
 use Latte;
+use DbTable;
+use Language_support;
 
 /**
  * Komponenta pre vytvorenie kontaktneho formulara a odoslanie e-mailu
  * 
- * Posledna zmena(last change): 30.05.2016
+ * Posledna zmena(last change): 06.04.2017
  *
  * @author Ing. Peter VOJTECH ml. <petak23@gmail.com>
- * @copyright  Copyright (c) 2012 - 2016 Ing. Peter VOJTECH ml.
+ * @copyright  Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link       http://petak23.echo-msz.eu
- * @version 1.0.3
+ * @version 1.0.4
  */
 
-class Kontakt extends Control {
+class KontaktControl extends Control {
 
   /** @var string */
   private $emails = "";
@@ -27,35 +30,36 @@ class Kontakt extends Control {
   private $textA_rows = 8;
   /** @var int */
   private $textA_cols = 60;
-	/** @var array */
-	private $text_form = array(
-   'h4'       => 'Kontaktný formulár',
-   'uvod'     => '',
-	 'meno'     => 'Vaše meno:',
-	 'email'    => 'Váš e-mail(aby sme mohli odpovedať...):',
-	 'email_ar'	=> 'Prosím zadajte e-mail v správnom tvare. Napr. jano@hruska.com',
-	 'email_sr'	=> 'Váš e-mail musí byť zadaný!',
-   'text'     => 'Váš dotaz:',
-   'text_sr'	=> 'Text dotazu musí byť zadaný!',
-   'uloz'     => 'Pošli dotaz',
-   'send_ok'  => 'Váš dotaz bol zaslaný v poriadku. Ďakujeme za zaslanie dotazu.',
-   'send_er'  => 'Váš dotaz nebol zaslaný!. Došlo k chybe. Prosím skúste to neskôr znovu.<br />' 
-	);
   /** @var string */
   private $nazov_stranky = "";
+    /** @var User */
+  protected $user;
+  /** @var Language_support\User Prednastavene texty pre prihlasovaci form */
+	public $texty;
+  
+  /**
+   * @param User $user
+   * @param Language_support\User $lang_supp */
+  public function __construct(User $user, Language_support\User $lang_supp) {
+    parent::__construct();
+    $this->user = $user;
+    $this->texty = $lang_supp;
+  }
+  
+  /** 
+   * Vratenie textu pre dany kluc a jazyk
+   * @param string $key - kluc daneho textu
+   * @return string - hodnota pre dany text */
+  private function trLang($key) {
+    return $this->texty->trText($key);
+  }
 
   /** Funkcia pre nastavenie textov formulara a sablony.
-   *  Nastavitelne polia su: 'h4', 'uvod', 'meno', 'email', 'email_ar', 'email_sr', 'text', 'text_sr', 'uloz',
-   *  'send_ok', 'send_er'
-   * @param array $texty - pole textov
    * @param int $rows - pocet riadkov textarea
-   * @param int $cols - pocet stlpcov textarea
-   */
-  public function setSablona($texty = array(), $rows = NULL, $cols = NULL)
-  {
-    if (is_array($texty) && count($texty)) { $this->text_form = array_merge($this->text_form, $texty);}
-    if (isset($rows)) $this->textA_rows = $rows;
-    if (isset($cols)) $this->textA_cols = $cols;
+   * @param int $cols - pocet stlpcov textarea */
+  public function setSablona($rows = NULL, $cols = NULL) {
+    if (isset($rows)) { $this->textA_rows = $rows; }
+    if (isset($cols)) { $this->textA_cols = $cols; }
   }
 
   /** Funkcia pre nastavenie emailovych adries, na ktore sa odosle formular
@@ -79,8 +83,8 @@ class Kontakt extends Control {
    */
   public function render() {
     $this->template->setFile(__DIR__ . '/Kontakt.latte');
-		$this->template->h4 = $this->text_form['h4'];
-		$this->template->uvod = $this->text_form['uvod'];
+		$this->template->h4 = $this->trLang('komponent_kontakt_h4');
+		$this->template->uvod = $this->trLang('komponent_kontakt_uvod');
     $this->template->render();
   }
 
@@ -90,22 +94,35 @@ class Kontakt extends Control {
   protected function createComponentKontaktForm() {
       $form = new Form;
       $form->addProtection();
-      $form->addText('meno', $this->text_form['meno'], 30, 50);
-      $form->addText('email', $this->text_form['email'], 30, 50)
+      $form->addText('meno', $this->trLang('komponent_kontakt_meno'), 30, 50);
+      $form->addText('email', $this->trLang('komponent_kontakt_email'), 30, 50)
          ->setType('email')
-				 ->addRule(Form::EMAIL, $this->text_form['email_ar'])
-				 ->setRequired($this->text_form['email_sr']);
-      $form->addTextArea('text', $this->text_form['text'])
+				 ->addRule(Form::EMAIL, $this->trLang('komponent_kontakt_email_ar'))
+				 ->setRequired($this->trLang('komponent_kontakt_email_sr'));
+      $form->addTextArea('text', $this->trLang('komponent_kontakt_text'))
            ->setAttribute('rows', $this->textA_rows)
            ->setAttribute('cols', $this->textA_cols)
-           ->setRequired($this->text_form['text_sr']);
+           ->setRequired($this->trLang('komponent_kontakt_text_sr'));
       $renderer = $form->getRenderer();
-      $renderer->wrappers['controls']['container'] = 'dl';
-      $renderer->wrappers['pair']['container'] = NULL;
-      $renderer->wrappers['label']['container'] = 'dt';
-      $renderer->wrappers['control']['container'] = 'dd';
-      $form->addSubmit('uloz', $this->text_form['uloz']);
+      $renderer->wrappers['error']['container'] = 'div class="row"';
+      $renderer->wrappers['error']['item'] = 'div class="col-md-6 col-md-offset-3 alert alert-danger"';
+      $renderer->wrappers['controls']['container'] = NULL;
+      $renderer->wrappers['pair']['container'] = 'div class="form-group row"';
+      $renderer->wrappers['pair']['.error'] = 'has-error';
+      $renderer->wrappers['control']['container'] = 'div class="col-md-6"';
+      $renderer->wrappers['label']['container'] = 'div class="col-lg-3 col-xs-4 col-form-label text-right"';
+      $renderer->wrappers['control']['container'] = 'div class="req col-lg-4 col-md-6 col-xs-8"';
+      $renderer->wrappers['control']['description'] = 'span class=help-block';
+      $renderer->wrappers['control']['errorcontainer'] = 'div class="alert alert-danger"';
+      $form->addSubmit('uloz', $this->trLang('komponent_kontakt_uloz'))
+           ->setAttribute('class', 'btn btn-success');
       $form->onSuccess[] = [$this, 'onZapisDotaz'];
+//      dump($this->user->getIdentity()->data);die();
+      if ($this->user->isLoggedIn()) {
+        $form['meno']->setDisabled()->setDefaultValue($this->user->getIdentity()->data['meno']." ".$this->user->getIdentity()->data['priezvisko']);
+        $form['email']->setDisabled()->setDefaultValue($this->user->getIdentity()->data['email']);
+      }
+      
       return $form;
   }
 
@@ -128,10 +145,15 @@ class Kontakt extends Control {
     try {
       $sendmail = new SendmailMailer;
       $sendmail->send($mail);
-      $this->presenter->flashMessage($this->text_form['send_ok'], 'success');
+      $this->presenter->flashMessage($this->trLang('komponent_kontakt_send_ok'), 'success');
     } catch (Exception $e) {
-      $this->presenter->flashMessage($this->text_form['send_er'].$e->getMessage(), 'danger,n');
+      $this->presenter->flashMessage($this->trLang('komponent_kontakt_send_er').$e->getMessage(), 'danger,n');
     }
     $this->redirect('this');
   }
+}
+
+interface IKontaktControl {
+  /** @return KontaktControl */
+  function create();
 }

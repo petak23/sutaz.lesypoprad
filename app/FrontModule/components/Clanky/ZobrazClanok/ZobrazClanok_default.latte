@@ -5,7 +5,7 @@
     </div>
   </div>
   <h2 n:if="!(isset($nastav['view_h2']) && !$nastav['view_h2'])">
-    {$clanok->nazov} <small n:if="$user->isLoggedIn()">- Template: default</small>
+    {$clanok->nazov} {* <small n:if="$user->isLoggedIn()">- Template: default</small>*}
   </h2>
   <div>
     <span n:if="$clanok_hlavicka & 1">{$clanok->hlavne_menu->modified|date:'j.n.Y'}</span>

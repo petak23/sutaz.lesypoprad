@@ -36,6 +36,11 @@ parameters:
 #      parametre: NULL
     tableOfUsers:
       nazov: 'Zoznam užívateľov'
-      fa_ikonka: 'users-o'
+      fa_ikonka: 'users'
+      jedinecna: TRUE
+      parametre: NULL
+    kontakt:
+      nazov: 'Kontaktný formulár'
+      fa_ikonka: 'comments'
       jedinecna: TRUE
       parametre: NULL
