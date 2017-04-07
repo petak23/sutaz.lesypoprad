@@ -52,15 +52,15 @@ class TableOfUsersControl extends Nette\Application\UI\Control {
    */
   public function render() { 
     $this->template->setFile(__DIR__ . "/TableOfUsers.latte");
-    $pokus = $this->user_profiles->findBy(['id_registracia > 0', 'id_registracia <=2']);
+    $pokus = $this->dokumenty->prispevky();
     $tou = [];
     foreach ($pokus as $p) {
       $tou[] = ['meno'  => $p->meno . " " . $p->priezvisko,
-              'pocet' => $this->dokumenty->findBy(['id_user_profiles' => $p->id])->count('*'),
+                'tim'   => ($p->id_user_team !== NULL) ? $this->user_profiles->findOneBy(['id_user_team'=>$p->id_user_team])->user_team->nazov : "-",
+                'pocet' => $p->pocet,
              ];
     }
 //    dump($tou);die();
-    
     $this->template->tou = $tou;
     $this->template->texty = $this->texty;
     $this->template->render();

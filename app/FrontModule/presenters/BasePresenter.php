@@ -408,8 +408,8 @@ abstract class BasePresenter extends UI\Presenter {
 	public function createComponentKontakt() {
 		$kontakt = $this->kontaktControlFactory->create();
     $emails_to = [];
-    foreach ($this->user_profiles->findBy(['id_registracia >= 5']) as $c) {
-      $emails_to[] = $c->email; 
+    foreach ($this->user_profiles->findBy(['id_registracia >= 4']) as $c) {
+      $emails_to[] = $c->users->email; 
     }
 		$kontakt->setSpravca($emails_to);
     $kontakt->setNazovStranky($this->nazov_stranky);

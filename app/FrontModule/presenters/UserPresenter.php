@@ -152,7 +152,7 @@ class UserPresenter extends \App\FrontModule\Presenters\BasePresenter {
 //    dump($values);die();
     $new_password_key = $this->hasser->HashPassword($values->heslo.StrFTime("%Y-%m-%d %H:%M:%S", Time()));
     if ($values->vyber == 2) {
-      $uloz_user_team = $this->user_team->uloz(['team_nazov'=>$values->team_nazov, 'team_pocet'=>$values->team_pocet, 'team_clenovia'=>$values->team_clenovia]); 
+      $uloz_user_team = $this->user_team->uloz(['nazov'=>$values->team_nazov, 'pocet'=>$values->team_pocet, 'clenovia'=>$values->team_clenovia]); 
     }
     
     $uloz_data_user_profiles = [ //Nastavenie vstupov pre tabulku user_profiles

@@ -8,7 +8,7 @@
   <div class="row">
     <div class="icon col-xs-2">
       {if isset($user_i->avatar_75) && is_file('www/'.$user_i->avatar_75)}
-      <img src="{$basePath}/www/{$user_i->avatar_75}" alt="Avatar" width="72" height="72" class="pull-right">
+      <img src="{$basePath}/www/{$user_i->avatar_75}" alt="Avatar" width="72" height="72" class="pull-right img-circle">
     {else}
       <img src="{$basePath}/www/images/icons/users_72.png" alt="Avatar" width="72" height="72" class="pull-right">
     {/if}

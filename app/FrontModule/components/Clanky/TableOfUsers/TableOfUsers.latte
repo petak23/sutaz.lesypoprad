@@ -1,9 +1,10 @@
 <div n:snippet="tableOfUsers">
 	<h3 n:if="FALSE && strlen($texty['h3'])">{$texty['h3']}</h3>
   <table class="col-xs-12 col-md-12" n:if="count($tou)">
-    <tr><th>Meno</th><th>Počet príspevkov</th></tr>
+    <tr><th>Meno</th><th>Tím</th><th>Počet príspevkov</th></tr>
     <tr n:foreach="$tou as $t">
       <td>{$t['meno']}</td>
+      <td>{$t['tim']}</td>
       <td>{$t['pocet']}</td>
     </tr>
   </table>
