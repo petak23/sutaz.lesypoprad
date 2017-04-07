@@ -235,18 +235,7 @@ abstract class BasePresenter extends UI\Presenter {
 		$this->template->article_avatar_view_in = $this->nastavenie["article_avatar_view_in"];
     $this->template->omrvinky_enabled = $this->nastavenie["omrvinky_enabled"];
     $this->template->view_log_in_link_in_header = $this->nastavenie['user_panel']["view_log_in_link_in_header"];
-//    $this->template->sign = $this->signalled;
 	}
-
-//  public function afterRender() {
-//    if ($this->isAjax() && !$this->isControlInvalid() && !$this->isSignalled()) {
-//      $this->redrawControl();
-//    }
-//  }
-  
-//  public function isSignalled() {
-//    return $this->signalled;
-//  }
   
   /** Signal pre odhlasenie sa */
 	public function handleSignOut() {
@@ -418,9 +407,11 @@ abstract class BasePresenter extends UI\Presenter {
    */
 	public function createComponentKontakt() {
 		$kontakt = $this->kontaktControlFactory->create();
-    $spravca = $this->user_profiles->findOneBy(['poznamka' => "Správca"]);
-//    $spravca = $this->user_profiles->find(1);
-		$kontakt->setSpravca($spravca->users->email);
+    $emails_to = [];
+    foreach ($this->user_profiles->findBy(['id_registracia >= 5']) as $c) {
+      $emails_to[] = $c->email; 
+    }
+		$kontakt->setSpravca($emails_to);
     $kontakt->setNazovStranky($this->nazov_stranky);
 		return $kontakt;	
 	}

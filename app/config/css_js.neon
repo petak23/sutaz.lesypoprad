@@ -37,7 +37,7 @@ webloader:
     front:
       files:
         - %appDir%/../www/css/font-awesome.min.css
-        - %appDir%/../www/css/bootstrap.min.css
+        - %appDir%/../www/css/bootstrap.css
         - %appDir%/../www/css/lightbox.css
         - %appDir%/../www/css/front/sutaz.css
         - %appDir%/../www/css/front/responsive.css
@@ -54,7 +54,7 @@ webloader:
     admin:
       files:
         - %appDir%/../www/css/font-awesome.min.css
-        - %appDir%/../www/css/bootstrap.min.css
+        - %appDir%/../www/css/bootstrap.css
         - %appDir%/../www/css/bootstrap-theme.css
         - %appDir%/../www/css/lightbox.css
         - {files: ["*.css", "*.less"], from: %appDir%/../www/css/admin} # Nette\Utils\Finder support

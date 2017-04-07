@@ -12,19 +12,19 @@ use Language_support;
 /**
  * Komponenta pre vytvorenie kontaktneho formulara a odoslanie e-mailu
  * 
- * Posledna zmena(last change): 06.04.2017
+ * Posledna zmena(last change): 07.04.2017
  *
  * @author Ing. Peter VOJTECH ml. <petak23@gmail.com>
  * @copyright  Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link       http://petak23.echo-msz.eu
- * @version 1.0.4
+ * @version 1.0.5
  */
 
 class KontaktControl extends Control {
 
-  /** @var string */
-  private $emails = "";
+  /** @var array */
+  private $emails = [];
   /** @var int */
   private $textA_rows = 8;
   /** @var int */
@@ -53,28 +53,35 @@ class KontaktControl extends Control {
     return $this->texty->trText($key);
   }
 
-  /** Funkcia pre nastavenie textov formulara a sablony.
+  /** 
+   * Funkcia pre nastavenie textov formulara a sablony.
    * @param int $rows - pocet riadkov textarea
-   * @param int $cols - pocet stlpcov textarea */
+   * @param int $cols - pocet stlpcov textarea
+   * @return \App\FrontModule\Components\User\KontaktControl */
   public function setSablona($rows = NULL, $cols = NULL) {
     if (isset($rows)) { $this->textA_rows = $rows; }
     if (isset($cols)) { $this->textA_cols = $cols; }
+    return $this;
   }
 
-  /** Funkcia pre nastavenie emailovych adries, na ktore sa odosle formular
-	 * @param  string $emails - pole s emailovymi adresami
-	 */
+  /** 
+   * Funkcia pre nastavenie emailovych adries, na ktore sa odosle formular
+	 * @param  array $emails - pole s emailovymi adresami
+	 * @return \App\FrontModule\Components\User\KontaktControl*/
   public function setSpravca($emails) {
-    if (isset($emails)) {
+    if (isset($emails) && is_array($emails)) {
       $this->emails = $emails;
     }
+    return $this;
   }
   
-  /** Funkcia pre nastavenie nazvu stranky
+  /** 
+   * Funkcia pre nastavenie nazvu stranky
 	 * @param  string $nazov_stranky
-	 */
+	 * @return \App\FrontModule\Components\User\KontaktControl*/
   public function setNazovStranky($nazov_stranky) {
     $this->nazov_stranky = $nazov_stranky;
+    return $this;
   }
 
   /**
@@ -96,11 +103,13 @@ class KontaktControl extends Control {
       $form->addText('meno', $this->trLang('komponent_kontakt_meno'), 30, 50);
       $form->addText('email', $this->trLang('komponent_kontakt_email'), 30, 50)
          ->setType('email')
+         ->setAttribute('placeholder', $this->trLang('komponent_kontakt_email_ph'))
 				 ->addRule(Form::EMAIL, $this->trLang('komponent_kontakt_email_ar'))
 				 ->setRequired($this->trLang('komponent_kontakt_email_sr'));
       $form->addTextArea('text', $this->trLang('komponent_kontakt_text'))
            ->setAttribute('rows', $this->textA_rows)
            ->setAttribute('cols', $this->textA_cols)
+           ->setAttribute('placeholder', $this->trLang('komponent_kontakt_text_ph'))
            ->setRequired($this->trLang('komponent_kontakt_text_sr'));
       $renderer = $form->getRenderer();
       $renderer->wrappers['error']['container'] = 'div class="row"';
@@ -114,7 +123,7 @@ class KontaktControl extends Control {
       $renderer->wrappers['control']['description'] = 'span class=help-block';
       $renderer->wrappers['control']['errorcontainer'] = 'div class="alert alert-danger"';
       $form->addSubmit('uloz', $this->trLang('komponent_kontakt_uloz'))
-           ->setAttribute('class', 'btn btn-success')
+           ->setAttribute('class', 'btn-success')
            ->onClick[] = [$this, 'onZapisDotaz'];
       if ($this->user->isLoggedIn()) {
         $form['meno']->setDefaultValue($this->user->getIdentity()->data['meno']." ".$this->user->getIdentity()->data['priezvisko']);
@@ -135,9 +144,11 @@ class KontaktControl extends Control {
       "dotaz_text"  => $values->text,
     ];
     $mail = new Message;
-    $mail->setFrom($values->meno.' <'.$values->email.'>')
-         ->addTo($this->emails)
-         ->setSubject(sprintf('Správa z kontaktného formulará stránky %s', $this->nazov_stranky))
+    $mail->setFrom($values->meno.' <'.$values->email.'>');
+    foreach ($this->emails as $em) {
+      $mail->addTo($em);
+    }
+    $mail->setSubject(sprintf('Správa z kontaktného formulará stránky %s', $this->nazov_stranky))
          ->setHtmlBody($templ->renderToString(__DIR__ . '/Kontakt_email-html.latte', $params));
     try {
       $sendmail = new SendmailMailer;

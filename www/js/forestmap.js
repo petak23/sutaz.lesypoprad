@@ -1,8 +1,14 @@
 function initMap() 
 {
+	"use strict";
   var map = new google.maps.Map(document.getElementById('map1'), {
     zoom: 12,
-    center: {lat: 49.021956, lng: 20.285658},
+    center: {lat: 49.031956, lng: 20.285658},
+    mapTypeId: 'roadmap'
+  });
+	var map2 = new google.maps.Map(document.getElementById('map2'), {
+    zoom: 12,
+    center: {lat: 49.08454, lng: 20.24368},
     mapTypeId: 'roadmap'
   });
 
@@ -48,7 +54,48 @@ function initMap()
     {lat:49.0280836, lng:20.2592182},
     {lat:49.0270353, lng:20.2575445}
   ];
-  // Construct the polygon.
+	var forestCoords2 = [
+	  {lat:49.0818494, lng:20.2163887},
+	  {lat:49.0787011, lng:20.2139854},
+	  {lat:49.0771269, lng:20.2203369},
+	  {lat:49.0772394, lng:20.2301216},
+	  {lat:49.0798255, lng:20.2282333},
+	  {lat:49.0826365, lng:20.2306366},
+	  {lat:49.0851099, lng:20.2345848},
+	  {lat:49.0903937, lng:20.2354431},
+	  {lat:49.0909558, lng:20.2316666},
+	  {lat:49.0921923, lng:20.2316666},
+	  {lat:49.0924172, lng:20.229435},
+	  {lat:49.0929792, lng:20.2264309},
+	  {lat:49.0937099, lng:20.222826},
+	  {lat:49.0866277, lng:20.2215385},
+	  {lat:49.0826365, lng:20.2213669},
+	  {lat:49.0824116, lng:20.2201653},
+	  {lat:49.0816808, lng:20.2185345},
+	  {lat:49.0818494, lng:20.2163887}
+  ];
+	var forestCoords3 = [
+		{lat:49.095958, lng:20.2258301},
+	   {lat:49.0969134, lng:20.2262592},
+	   {lat:49.096239, lng:20.2301216},
+	   {lat:49.1014654, lng:20.2331257},
+	   {lat:49.101634, lng:20.2351856},
+	   {lat:49.1024769, lng:20.2360439},
+	   {lat:49.1033198, lng:20.2368164},
+	   {lat:49.1051742, lng:20.2317524},
+	   {lat:49.1064103, lng:20.2348423},
+	   {lat:49.1087141, lng:20.2354431},
+	   {lat:49.1078713, lng:20.2308941},
+	   {lat:49.1080398, lng:20.2237701},
+	   {lat:49.1093321, lng:20.2212811},
+	   {lat:49.106916, lng:20.2200794},
+	   {lat:49.1057923, lng:20.2204227},
+	   {lat:49.1011844, lng:20.2209377},
+	   {lat:49.1006225, lng:20.2201653},
+	   {lat:49.0966324, lng:20.2217102},
+	   {lat:49.095958, lng:20.2258301}
+  ];
+  // Construct the polygons.
   var urbanForest = new google.maps.Polygon({
     paths: forestCoords,
     strokeColor: '#FF0000',
@@ -58,4 +105,24 @@ function initMap()
     fillOpacity: 0.35
   });
   urbanForest.setMap(map);
+	
+  var urbanForest2 = new google.maps.Polygon({
+    paths: forestCoords2,
+    strokeColor: '#FF0000',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#FF0000',
+    fillOpacity: 0.35
+  });
+	
+  urbanForest2.setMap(map2);
+	var urbanForest3 = new google.maps.Polygon({
+    paths: forestCoords3,
+    strokeColor: '#FF0000',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#FF0000',
+    fillOpacity: 0.35
+  });
+  urbanForest3.setMap(map2);
 }
