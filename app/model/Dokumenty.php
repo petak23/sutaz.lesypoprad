@@ -43,19 +43,9 @@ class Dokumenty extends Table {
   }
     
   public function prispevky() {
-    return $this->connection->query('SELECT user_profiles.meno, user_profiles.priezvisko, user_profiles.id_user_team, COUNT(*) as pocet 
-FROM dokumenty, user_profiles
-WHERE id_user_profiles = user_profiles.id AND user_profiles.id_registracia > 0 AND user_profiles.id_registracia <=2
-GROUP BY id_user_profiles
-ORDER BY pocet DESC');
-            
-//            
-//            'SELECT user_profiles.meno, user_profiles.priezvisko, COUNT(*) '
-//                        . 'FROM dokumenty, user_profiles '
-//                        . 'WHERE '
-////                        . 'id_user_profiles = user_profiles.id '
-//                        . 'AND user_profiles.id_registracia > 0 AND user_profiles.id_registracia <=2 '
-//                        . 'GROUP BY id_user_profiles'  
-//                          );
+    return $this->connection->query('SELECT user_profiles.meno, user_profiles.priezvisko, user_profiles.id_user_team, COUNT(*) as pocet FROM dokumenty, user_profiles '
+                                   .'WHERE id_user_profiles = user_profiles.id AND user_profiles.id_registracia > 0 AND user_profiles.id_registracia <=2 AND id_dokumenty_kategoria = 1 '
+                                   .'GROUP BY id_user_profiles '
+                                   .'ORDER BY pocet DESC');
   }
 }

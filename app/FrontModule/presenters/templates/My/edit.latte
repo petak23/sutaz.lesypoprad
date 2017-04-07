@@ -19,8 +19,9 @@
   <h3 class="bottom-line">{$h2}</h3>
   {if $kategoria == 0}
     <div class="row" n:inner-foreach="$dkategoria as $dk">
-      <a n:href="My:add $dk->id" title="Pridať súťažný príspevok do kategórie: {$dk->nazov}">
-        <button type="button" class="btn btn-success btn-lg">{$dk->nazov}</button>
+      {var $po = $dk->id == 2 && !($udaje['max_pocet_foto'] == 0 || $udaje['max_pocet_foto'] > $pocet_prispevkov_visual)}
+      <a n:href="My:add $dk->id" {if $po}disabled="disabled" title="Už nie je možné pridať príspevok. Dosiahli ste max. počet."{else}title="Pridať príspevok do kategórie: {$dk->nazov}"{/if}>
+        <button class="btn btn-success btn-lg" {if $po}disabled="disabled"{/if}>{$dk->nazov}</button>
       </a>
     </div>
   {elseif $kategoria == 1}

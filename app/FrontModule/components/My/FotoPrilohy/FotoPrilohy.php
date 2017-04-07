@@ -49,7 +49,7 @@ class FotoPrilohyControl extends Nette\Application\UI\Control {
     $idk = (isset($params['id_dokumenty_kategoria']) && $params['id_dokumenty_kategoria']) ? $params['id_dokumenty_kategoria'] : 1;
     $dokumenty = $this->dokumenty->findBy(['id_hlavne_menu'         =>$this->udaje_webu["hl_udaje"]["id"], 
                                            'id_user_profiles'       =>$this->user->getIdentity()->getId(),
-                                           'id_dokumenty_kategoria' => $idk]);
+                                           'id_dokumenty_kategoria' => $idk])->order('zmena DESC');
     $this->template->setFile(__DIR__ . '/FotoPrilohy_'.$idk.'.latte');
     $this->template->dokumenty = $dokumenty;
     $this->template->max_pocet_foto = $this->udaje_webu["max_pocet_foto"];

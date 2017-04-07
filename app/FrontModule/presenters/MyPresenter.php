@@ -71,16 +71,14 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
     //Najdem aktualne prihlaseneho clena
     $this->user_id = $this->user->getIdentity()->getId();
     $this->user_view_fields = $this->nastavenie['user_view_fields'];
-    $this->template->pocet_prispevkov = $this->dokumenty->findBy(['id_user_profiles' => $this->user_id])->count('*');
+    $this->template->pocet_prispevkov = $this->dokumenty->findBy(['id_user_profiles' => $this->user_id])->count('*'); //, 'id_dokumenty_kategoria' =>2
     $this->dkategoria = $this->dokumenty_kategoria->findAll();
 	}
   
   /**
    * Defaultna akcia */
   public function actionDefault() {
-    $this->fotky = $this->dokumenty->findBy(["id_user_profiles" =>$this->user_id, 
-                                             "id_hlavne_menu"   =>$this->udaje_webu["hl_udaje"]["id"],
-                                            ]); 
+    $this->fotky = $this->dokumenty->findBy(["id_user_profiles" =>$this->user_id, "id_hlavne_menu" =>$this->udaje_webu["hl_udaje"]["id"]]); 
   }
   
   public function renderDefault() {
@@ -136,7 +134,6 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
     } elseif ($this->kategoria == 2) {
       $this->h2 =  'Editácia dokumentu: '.$priloha->nazov;
       $this["dokumentForm"]->setDefaults($priloha);
-//      $this["dokumentForm"]->setDefaults(["coords"=>['lat' => $priloha->lat, 'lng' => $priloha->lng]]);
     }
     
     
@@ -147,6 +144,7 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
     $this->template->dkategoria = $this->dkategoria;
     $this->template->h2 = $this->h2;
     $this->template->kategoria = $this->kategoria;
+    $this->template->pocet_prispevkov_visual = $this->dokumenty->findBy(['id_user_profiles' => $this->user_id, 'id_dokumenty_kategoria' =>2])->count('*');
 	}
   
   /** 
