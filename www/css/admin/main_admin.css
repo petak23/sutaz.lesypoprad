@@ -1,5 +1,5 @@
 /* AUTHOR: Peter VOJTECH ml. - VZ; CREATION DATE: 22.2.2010 */
-/* UPDATED 08.03.2016 - PV*/
+/* UPDATED 10.04.2017 - PV*/
 
 html {
   text-align: center;
@@ -106,22 +106,15 @@ a[href^="error:"] {
 }
 a.pridaj, .edit, a.vymaz, a.delPocitadlo {
   text-shadow: none;
-  border: 1px outset rgba(50, 50, 50, 0.2);
-  -webkit-border-radius: 0.2em;
-  -moz-border-radius: 0.2em;
-  border-radius: 0.2em;
-  color: transparent !important;
+  border: 0; 
   display: inline-block;
-  height: 16px;
-  width: 16px;
+  height: 24px;
+  width: 24px;
   opacity: 0.6;
   background-repeat: no-repeat;
   background-position: center;
   background-color: transparent;
 }
-a.pridaj { background-image: url(../../ikonky/16/pridaj_16.png);}
-.edit { background-image: url(../../ikonky/16/uprav_16.png);}
-a.vymaz {  background-image: url(../../ikonky/16/vymaz_16.png);}
 a.delPocitadlo {  background-image: url(../../ikonky/16/document_delete16.png);}
 
 a.pridaj:hover, .edit:hover, a.vymaz:hover, a.delPocitadlo:hover {
