@@ -1,12 +1,18 @@
-<div n:snippet="tableOfUsers">
-	<h3 n:if="FALSE && strlen($texty['h3'])">{$texty['h3']}</h3>
-  <table class="col-xs-12 col-md-12" n:if="count($tou)">
-    <tr><th>Meno</th><th>Tím</th><th>Počet príspevkov</th></tr>
-    <tr n:foreach="$tou as $t">
-      <td>{$t['meno']}</td>
-      <td>{$t['tim']}</td>
-      <td>{$t['pocet']}</td>
-    </tr>
+<p class="text-info">Zatiaľ sa do súťaže prihlásilo <b>{$sutaziacich}</b> súťažiacich, ktorí odoslali <b>{$prispevkov}</b> súťažných príspevkov.</p>
+<h3 class="bottom-line">Kategória Poznávanie druhov.</h3>
+<div class="table-responsive">
+  <table class="table table-striped" n:if="count($tou)">
+    <thead>
+      <tr><th>#</th><th>Meno</th><th>Tím</th><th>Počet príspevkov</th></tr>
+    </thead>
+    <tbody>
+      <tr n:foreach="$tou as $t">
+        <th scope="row">{$iterator->counter}</th>
+        <td>{$t['meno']}</td>
+        <td>{$t['tim']}</td>
+        <td>{$t['pocet']}</td>
+      </tr>
+    </tbody>
   </table>
   <div class="col-xs-12 col-md-12" n:if="!count($tou)">
     {$texty['nie_je']}

@@ -6,7 +6,7 @@ use DbTable, Language_support;
 /**
  * Prezenter pre vypísanie profilu a správu foto príloh.
  * (c) Ing. Peter VOJTECH ml.
- * Posledna zmena(last change): 04.04.2017
+ * Posledna zmena(last change): 10.04.2017
  *
  *	Modul: FRONT
  *
@@ -14,7 +14,7 @@ use DbTable, Language_support;
  * @copyright  Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link       http://petak23.echo-msz.eu
- * @version 1.0.4
+ * @version 1.0.5
  */
 class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
   
@@ -197,7 +197,7 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
               ->setMessage('<h2>'.$marker->nazov.'</h2><br />'
                       . '<img src="'.$this->template->basePath.'/'.$marker->thumb.'" alt="'.$marker->nazov.'" class="img-rounded">'
                       . '<br />'.$marker->nazov_latin)
-              ->setIcon('www/ikonky/64/fotoaparat_64.png');
+              ->setIcon('www/images/icons/find_48.png');
     }
     $map->addMarkers($markers);
     return $map;

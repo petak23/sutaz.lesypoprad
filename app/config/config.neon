@@ -37,7 +37,7 @@ parameters:
     tx: 150       #Rozmer nahladu
     ty: 112
   user_view_fields: #Nastavuje viditelne(volitelne) polozky uzivatela
-    rok: FALSE       #Zobrazenie roku narodenia
+    rok: TRUE       #Zobrazenie roku narodenia
     telefon: FALSE   #Zobrazenie telefonu
     pohl: FALSE      #Zobrazenie pohlavia
     avatar: TRUE    #Zobrazenie avataru

@@ -10,7 +10,7 @@ use DbTable, Language_support;
 /**
  * Prezenter pre spravu uzivatela po prihlásení.
  * (c) Ing. Peter VOJTECH ml.
- * Posledna zmena(last change): 07.03.2017
+ * Posledna zmena(last change): 10.04.2017
  *
  *	Modul: FRONT
  *
@@ -18,7 +18,7 @@ use DbTable, Language_support;
  * @copyright  Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link       http://petak23.echo-msz.eu
- * @version 1.1.2
+ * @version 1.1.3
  *
  */
 class UserLogPresenter extends \App\FrontModule\Presenters\BasePresenter {
@@ -75,6 +75,11 @@ class UserLogPresenter extends \App\FrontModule\Presenters\BasePresenter {
       'created'     => $clen->created->format('d.m.Y H:i:s'),
       'modified'    => $clen->modified->format('d.m.Y H:i:s'), 
     ]);
+    if ($clen->id_user_team != NULL) {
+      $this["userEditForm"]->setDefaults([
+        'team_nazov'=>$clen->user_team->nazov, 'team_pocet'=>$clen->user_team->pocet, 'team_clenovia'=>$clen->user_team->clenovia,
+      ]);
+    }
   }
   
   public function renderDefault() {
@@ -92,14 +97,14 @@ class UserLogPresenter extends \App\FrontModule\Presenters\BasePresenter {
 	 * @return Nette\Application\UI\Form
 	 */
 	protected function createComponentUserEditForm() {
-    $form = $this->userEditFormFactory->create($this->user_view_fields, $this->nastavenie['send_e_mail_news'], $this->template->basePath, $this->context->parameters['wwwDir'], $this->clen);  
+    $form = $this->userEditFormFactory->create($this->user_view_fields, $this->template->basePath, $this->context->parameters['wwwDir'], $this->clen);  
     $form['uloz']->onClick[] = function ($form) {
       $this->flashOut(!count($form->errors), 'UserLog:', $this->trLang('user_edit_save_ok'), $this->trLang('user_edit_save_err'));
 		};
     $form['cancel']->onClick[] = function () {
 			$this->redirect('UserLog:');
 		};
-		return $this->_vzhladForm($form);
+		return $form; //$this->_vzhladForm($form);
 	}
   
   public function actionMailChange() {
