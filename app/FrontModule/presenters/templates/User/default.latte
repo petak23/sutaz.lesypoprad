@@ -33,7 +33,10 @@
   <br>
   <div id="view_registracia"></div>
   <h3 class="bottom-line">Registrácia</h3>
-  <p>Pri registrácii najskôr zvoľ či chceš súťažiť ako jednotlivec alebo založíš súťažný tím. Ak si už súčasťou nejakého tímu nemusíš sa opäť registrovať.</p>
+  <blockquote class="pozor">
+    <h4>Pozor!</h4>
+    <p>Pre úspešné dokončenie registrácie nezabudni kliknúť na aktivačný odkaz, ktorý ti príde na email!</p>
+  </blockquote>
   <form class="" id="registration" n:name="clenRegistraciaForm">
     <div class="form-group row">
       <label n:name=vyber for="isTeam" class="col-lg-3 col-xs-5 col-form-label text-right">Jednotlivec/Tím</label>
@@ -76,6 +79,10 @@
       <div class="form-group row">
         <label n:name=id_skoly for="inputName" class="col-lg-3 col-xs-4 col-form-label text-right">Škola</label>
         <select n:name=id_skoly class="req custom-select col-lg-4 col-md-6 col-xs-8 first"></select>
+      </div>
+      <div class="form-group row" id="view_add_school" style="visibility: none;">
+        <label n:name=add_school for="addSchool" class="col-lg-3 col-xs-4 col-form-label text-right">Pridaj novú školu</label>
+        <input n:name=add_school type="text" class="req col-lg-4 col-md-6 col-xs-8" id="addSchool">
       </div>
     </fieldset>
     <fieldset id="view_team" style="visibility: none;">

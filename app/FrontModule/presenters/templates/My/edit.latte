@@ -15,7 +15,7 @@
     </div>
     <h2 class="col-xs-10"><small>Si prihlásený ako</small><br>{$user_i->username} <span>({$user_i->meno} {$user_i->priezvisko})</span></h2>
   </div>
-  <p class="text-info">V tejto chvíli máš <span>{$pocet_prispevkov}</span> súťažných príspevkov. Na tejto stránke môžeš pridať nové súťažné príspevky.</p> 
+  <p class="text-info">Počet súťažných príspevkov, ktoré si zatiaľ poslal: <span>{$pocet_prispevkov}</span>. Na tejto stránke môžeš pridať nové súťažné príspevky.</p> 
   <h3 class="bottom-line">{$h2}</h3>
   {if $kategoria == 0}
     <div class="row" n:inner-foreach="$dkategoria as $dk">
@@ -39,8 +39,5 @@
     });
   </script>
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC7RlQkZwzIZeb32wo23Ikw8vx5hih31r4&sensor=false"></script>
-  {*<script src="http://api4.mapy.cz/loader.js"></script>
-  <script>Loader.load()</script>*}
   <script type="text/javascript" src="{$basePath}/www/js/nette.gpsPicker.js"></script>
-  
 {/block}

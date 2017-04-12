@@ -97,7 +97,7 @@ class UserLogPresenter extends \App\FrontModule\Presenters\BasePresenter {
 	 * @return Nette\Application\UI\Form
 	 */
 	protected function createComponentUserEditForm() {
-    $form = $this->userEditFormFactory->create($this->user_view_fields, $this->template->basePath, $this->context->parameters['wwwDir'], $this->clen);  
+    $form = $this->userEditFormFactory->create($this->user_view_fields, $this->template->basePath, $this->context->parameters['wwwDir'], $this->clen, $this->nazov_stranky);  
     $form['uloz']->onClick[] = function ($form) {
       $this->flashOut(!count($form->errors), 'UserLog:', $this->trLang('user_edit_save_ok'), $this->trLang('user_edit_save_err'));
 		};

@@ -10,7 +10,7 @@ use DbTable, Language_support;
 /**
  * Prezenter pre prihlasenie, registraciu a aktiváciu uzivatela, obnovenie zabudnutého hesla a zresetovanie hesla.
  *
- * Posledna zmena(last change): 20.03.2017
+ * Posledna zmena(last change): 12.04.2017
  *
  *	Modul: FRONT
  *
@@ -18,7 +18,7 @@ use DbTable, Language_support;
  * @copyright  Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link       http://petak23.echo-msz.eu
- * @version 1.1.0
+ * @version 1.1.1
  */
 class UserPresenter extends \App\FrontModule\Presenters\BasePresenter {
 	/**
@@ -29,6 +29,10 @@ class UserPresenter extends \App\FrontModule\Presenters\BasePresenter {
    * @inject
    * @var DbTable\Users */
 	public $users;
+  /** 
+   * @inject
+   * @var DbTable\Skoly */
+	public $skoly;
   /** 
    * @inject
    * @var DbTable\User_team */
@@ -149,12 +153,31 @@ class UserPresenter extends \App\FrontModule\Presenters\BasePresenter {
   public function userRegisterFormSubmitted($button) {
 		// Inicializacia
     $values = $button->getForm()->getValues(); 	//Nacitanie hodnot formulara
-//    dump($values);die();
     $new_password_key = $this->hasser->HashPassword($values->heslo.StrFTime("%Y-%m-%d %H:%M:%S", Time()));
     if ($values->vyber == 2) {
       $uloz_user_team = $this->user_team->uloz(['nazov'=>$values->team_nazov, 'pocet'=>$values->team_pocet, 'clenovia'=>$values->team_clenovia]); 
     }
-    
+    if ($this->skoly->findAll()->max('id') < $values->id_skoly) { //Idem pridať školu
+      $this->skoly->pridaj(['id'=>$values->id_skoly, 'nazov'=>$values->add_school]);
+      $templ = new Latte\Engine;
+      $params = [
+        "site_name"  => $this->nazov_stranky,
+        "nadpis"     => 'Pridanie školy užívateľom: '.$values->meno.' '.$values->priezvisko,
+        "nova_id"    => $values->id_skoly,
+        "nova_nazov" => $values->add_school,
+      ];
+      $mail = new Message;
+      $mail->setFrom($this->nazov_stranky.' <'.$this->clen->users->email.'>')
+           ->addTo('jozue@anigraph.eu')->setSubject('Sutaz.lesypoprad.sk: Pridanie školy užívateľom: '.$values->meno.' '.$values->priezvisko)
+           ->setHtmlBody($templ->renderToString(__DIR__ . '/templates/User/email_add_school-html.latte', $params));
+      try {
+        $sendmail = new SendmailMailer;
+        $sendmail->send($mail);
+      } catch (Exception $e) {
+        $this->flashMessage('Pri pridávaní školy došlo k chybe: '.$e->getMessage(), 'danger,n');
+      }
+      unset($values->add_school);
+    }
     $uloz_data_user_profiles = [ //Nastavenie vstupov pre tabulku user_profiles
       'meno'      => $values->meno,
       'priezvisko'=> $values->priezvisko,
@@ -166,14 +189,13 @@ class UserPresenter extends \App\FrontModule\Presenters\BasePresenter {
       'modified'  => StrFTime("%Y-%m-%d %H:%M:%S", Time()),
       'created'   => StrFTime("%Y-%m-%d %H:%M:%S", Time()),
     ];
-
     $uloz_data_users = [ //Nastavenie vstupov pre tabulku users
       'username'  => $values->username,
       'password'  => $this->hasser->HashPassword($values->heslo),
       'email'     => $values->email,
       'activated' => 0,
     ];
-    
+
     //Uloz info do tabulky users
     if (($uloz_users = $this->users->uloz($uloz_data_users)) !== FALSE) { //Ulozenie v poriadku
       $uloz_data_user_profiles['id_users'] = $uloz_users['id']; //nacitaj id ulozeneho clena

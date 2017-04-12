@@ -4,7 +4,7 @@
  *
  *	Modul: FRONT
  *
- * Posledna zmena(last change): 05.04.2017
+ * Posledna zmena(last change): 12.04.2017
  * @copyright  Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link       http://petak23.echo-msz.eu
@@ -38,7 +38,11 @@
 
 <body>
   <div id="content" class="center-block">
+    
+    {* ----- Potvrdzovací formulár ----- *}
     {control confirmForm}
+    
+    {* ----- Hlavička ----- *}
 	  <header>
 	    <div class="col-lg-6 col-md-7 col-xs-12" id="headimg">
         <nav id="topmenu" class="navbar-header nav-justified">
@@ -54,7 +58,7 @@
             </ul>
           </div>
         </nav>
-        {*<a href="http://www.lesypoprad.sk" target="_blank">*}<img src="{$basePath}/www/images/logoML-biele.png" class="logo">{*</a>*}
+        <a n:href="Homepage:" title="home"><img src="{$basePath}/www/images/logoML-biele.png" class="logo"></a>
         <h2 class="col-md-4 col-xs-10">SÚŤAŽ</h2>
       </div>
 	    <div class="col-lg-4 col-md-5 col-xs-12" id="headline">
@@ -63,21 +67,49 @@
 	    <div class="col-lg-2 hidden-md" id="smallHeadimg"></div>
     </header>
       
-    {block ponuka}{/block}  
-    <div class="row top-panel" n:if="count($flashes)">
-      <div class="col-md-10 col-md-offset-1" n:inner-foreach="$flashes as $flash" n:if="count($flashes)">
-        {var $nees = explode(',', $flash->type)}
-        <div class="alert alert-{$nees[0]} fade in" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          {if isset($nees[1]) && $nees[1] == 'n'}{$flash->message|noescape}{else}{$flash->message}{/if}
-        </div>
+    {* ----- Flash správy ----- *} 
+    {foreach $flashes as $flash}
+      {var $nees = explode(',', $flash->type)}
+      <div class="alert alert-{$nees[0]} fade in" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <img src="{$basePath}/www/images/upozornenie_{substr($nees[0], 0, 1)}.png" alt="">
+        {if isset($nees[1]) && $nees[1] == 'n'}{$flash->message|noescape}{else}{$flash->message}{/if}
       </div>
-    </div>
+    {/foreach}
+    
+    {* ----- Hlavný obsah ----- *}
+    {block ponuka}{/block}
     {include #content}
+    
     {* ----- Spodok stranky - FOOTER ----- *}
-    {snippet footer}{include 'footer_template.latte'}{/snippet}
+    <footer n:snippet="footer">
+      <nav class="navbar-text col-lg-12">
+        <ul class="list-inline">
+          {control lesyPPSutazFooterUserLangMenuControlFactory}
+          {control menu templateType=>'fixed', templateFile=>'LesyPP_Sutaz_Fixed_Footer', cast=>1, article_avatar_view_in =>0}
+          <li><a href="http://www.lesypoprad.sk" title="Mestské lesy Poprad">Mestské lesy Poprad</a></li>
+        </ul>
+      </nav>
+      <p class="navbar-text">
+        {*<span>Admin: {$user_admin->meno} {$user_admin->priezvisko} ({$user_admin->users->email|uprav_email})</span>*}
+        <span n:if="$user_spravca !== FALSE && $user_admin->id != $user_spravca->id">
+          {$udaje['spravca']}: {$user_spravca->meno} {$user_spravca->priezvisko}
+          ({$user_spravca->users->email|uprav_email})
+        </span>
+        <span>&copy; {$udaje['copy']} {date('Y')}</span>
+        <span>{$udaje['last_update']} {$verzia->datum|date:'j.n.Y'}</span>
+        <br>
+        <a href="http://nette.org/cs/" class="logo-nette" title="Nette Framework - populárny nástroj pre vytváranie webových aplikácií v PHP.">
+          <img src="{$basePath}/www/images/nette-powered1.gif" alt="nette powered"></a>
+        <br>
+        <span class="vstup-admin" n:if="$view_log_in_link_in_header < 0 && !$user->isLoggedIn()">
+          {var $txt_vstup = 'Prihlásenie pre administráciu webu'}
+          <a n:href="User:default#prihlas" title="{$txt_vstup}">{$txt_vstup}</a>
+        </span>
+      </p>
+    </footer>
 	</div>
   {control js}
   {block spec_js}{/block}

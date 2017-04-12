@@ -1,14 +1,21 @@
 <nav id="mainmenu" class="">
   <ul class="nav navbar-nav text-center">
-  <li id="webItem1" class="nav-item part-web-item">
-    {if $user->isLoggedIn()}
-      <a href="{plink My:}"><img src="{$basePath}/www/images/icons/tree_32.png" alt="" width="33" height="32" class="img-icon"> Moje konto</a>
-    {else}
-      <a href="{plink User:}"><img src="{$basePath}/www/images/icons/tree_32.png" alt="" width="33" height="32" class="img-icon"> Chcem súťažiť</a>
-    {/if}
-  </li>
-  <li id="webItem2" class="nav-item part-web-item"><a href="{plink Clanky: 2}"><img src="{$basePath}/www/images/icons/letter_32.png" alt="" width="33" height="32" class="img-icon"> Ako súťažiť</a></li>
-  <li id="webItem3" class="nav-item part-web-item"><a href="{plink Clanky: 6}"><img src="{$basePath}/www/images/icons/users_32.png" alt="" width="33" height="32" class="img-icon"> Zoznam súťažiacich</a></li>
+    <li id="webItem1" class="nav-item part-web-item">
+      {if $user->isLoggedIn()}
+        <a href="{plink My:}" title="Moje konto"><img src="{$basePath}/www/images/icons/tree_32.png" alt="" width="33" height="32" class="img-icon"> Moje konto</a>
+      {else}
+        <a href="{plink User:}"><img src="{$basePath}/www/images/icons/tree_32.png" alt="" width="33" height="32" class="img-icon"> Chcem súťažiť</a>
+      {/if}
+    </li>
+    <li id="webItem2" class="nav-item part-web-item">
+      <a href="{plink Clanky: 2}" title="Ako súťažiť"><img src="{$basePath}/www/images/icons/letter_32.png" alt="" width="33" height="32" class="img-icon"> Ako súťažiť</a>
+    </li>
+    <li id="webItem3" class="nav-item part-web-item">
+      <a href="{plink Clanky: 6}" title="Zoznam súťažiacich"><img src="{$basePath}/www/images/icons/users_32.png" alt="" width="33" height="32" class="img-icon"> Zoznam súťažiacich</a>
+    </li>
+    <li id="webItem4" class="nav-item part-web-item">
+      <a href="{plink signOut!}" title="Odhlás sa..."><img src="{$basePath}/www/images/icons/user_32.png" alt="" width="33" height="32" class="img-icon">  Odhlás sa</a>
+    </li>
   </ul>
 </nav>
 
