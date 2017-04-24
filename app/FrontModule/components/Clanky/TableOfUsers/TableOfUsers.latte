@@ -8,7 +8,7 @@
     <tbody>
       <tr n:foreach="$tou as $t">
         <th scope="row">{$iterator->counter}</th>
-        <td>{$t['meno']}</td>
+        <td><a n:tag-if="$t['id']" href="{plink My: $t['id']}" title="Profil užívateľa {$t['meno']}">{$t['meno']}</a></td>
         <td>{$t['tim']}</td>
         <td>{$t['pocet']}</td>
       </tr>

@@ -54,6 +54,7 @@ class RouterFactory {
                 }
             ],
     ]);
+    $frontRouter[] = new Route('my[/<action>][/user_id]', 'My:default');
     $frontRouter[] = new Route('forgottenPassword', 'User:forgottenPassword');
     $frontRouter[] = new Route('profile', 'UserLog:default');
     $frontRouter[] = new Route('registration', 'User:registracia');

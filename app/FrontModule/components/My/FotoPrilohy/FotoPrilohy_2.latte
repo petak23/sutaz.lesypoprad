@@ -7,7 +7,7 @@
         <th>Druh</th>
         <th>Dokument</th>
         <th>Názov druhu{*Slovenský názov<br>Latinský názov*}</th>
-        <th>zmeniť</th>
+        <th n:if="$my_profile">zmeniť</th>
       </tr>
     </thead>
     <tbody>
@@ -26,7 +26,7 @@
           {/if}
         </td>
         <td>{$d->nazov} {*<br>{$d->nazov_latin*}</td>
-        <td>
+        <td n:if="$my_profile">
           <a href="{plink My:edit $d->id}" class="btn btn-default btn-sm" title="Editovať">
             <span class="glyphicon glyphicon-pencil"></span></a>
           <a href="{plink confirmForm:confirmDelete! id=>$d->id, druh=>'priloha', nazov=>$d->nazov, zdroj_na_zmazanie=>'príspevok'}" class="btn btn-danger btn-sm" title="Zmazať">

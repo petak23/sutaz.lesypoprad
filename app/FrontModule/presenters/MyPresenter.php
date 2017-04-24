@@ -6,7 +6,7 @@ use DbTable, Language_support;
 /**
  * Prezenter pre vypísanie profilu a správu foto príloh.
  * (c) Ing. Peter VOJTECH ml.
- * Posledna zmena(last change): 10.04.2017
+ * Posledna zmena(last change): 24.04.2017
  *
  *	Modul: FRONT
  *
@@ -14,7 +14,7 @@ use DbTable, Language_support;
  * @copyright  Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link       http://petak23.echo-msz.eu
- * @version 1.0.5
+ * @version 1.0.6
  */
 class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
   
@@ -51,12 +51,14 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
   private $map;
   /** @var \Oli\GoogleAPI\IMarkers */
   private $markers;
-  
+  /** @var Nette\Database\Table\Selection */
   public $fotky;
   /** @var int */
   public $kategoria;
+  /** @var boolean Nastavenie zobrazenia vlastneho profilu */
+  private $my_profile = TRUE;
 
-	public function __construct(\Oli\GoogleAPI\IMapAPI $mapApi, \Oli\GoogleAPI\IMarkers $markers) {
+  public function __construct(\Oli\GoogleAPI\IMapAPI $mapApi, \Oli\GoogleAPI\IMarkers $markers) {
     parent::__construct();
     $this->map = $mapApi;
     $this->markers = $markers;
@@ -76,8 +78,11 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
 	}
   
   /**
-   * Defaultna akcia */
-  public function actionDefault() {
+   * Defaultna akcia 
+   * @param int $user_id Id uzivatela, ktorý sa zobrazí */
+  public function actionDefault($user_id = 0) {
+    $this->user_id = ($this->user->getIdentity()->id_registracia > 3 && $user_id) ? $user_id : $this->user_id;
+    $this->my_profile = !($this->user->getIdentity()->id_registracia > 3 && $user_id);
     $this->fotky = $this->dokumenty->findBy(["id_user_profiles" =>$this->user_id, "id_hlavne_menu" =>$this->udaje_webu["hl_udaje"]["id"]]); 
   }
   
@@ -87,6 +92,8 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
     $this->template->texty = $this->texty_presentera;
     $this->template->foto = $this->fotky;
     $this->template->dkategoria = $this->dkategoria;
+    $this->template->my_profile = $this->my_profile;
+    $this->template->pocet_prispevkov = $this->dokumenty->findBy(['id_user_profiles' => $this->user_id])->count('*'); //, 'id_dokumenty_kategoria' =>2
   }
   
   /**
@@ -182,7 +189,7 @@ class MyPresenter extends \App\FrontModule\Presenters\BasePresenter {
    * @return \App\FrontModule\Components\My\FotoPrilohy\IFotoPrilohyControl */
 	public function createComponentFotoPrilohy() {
     $prilohyClanok = $this->fotoPrilohyControlFactory->create(); 
-    $prilohyClanok->setTitle($this->udaje_webu);
+    $prilohyClanok->setTitle($this->udaje_webu)->setUserId($this->user_id);
     return $prilohyClanok;
   }
   

@@ -7,7 +7,7 @@
         <th>Fotka</th>
         <th>Názov druhu{*Slovenský názov<br>Latinský názov*}</th>
         <th>Súradnice</th>
-        <th>zmeniť</th>
+        <th n:if="$my_profile">zmeniť</th>
       </tr>
     </thead>
     <tbody>
@@ -16,7 +16,7 @@
         <td><img class="jslghtbx-thmb img-rounded" src="{$basePath}/{$d->thumb}" alt="{$d->nazov}" data-jslghtbx="{$basePath}/{$d->subor}" class="noajax" data-ajax="false" data-jslghtbx-group="mygroup1"></td>
         <td>{$d->nazov}<br>{$d->nazov_latin}</td>
         <td>{$d->lat}<br />{$d->lng}</td>
-        <td>
+        <td n:if="$my_profile">
           <a href="{plink My:edit $d->id}" class="btn btn-default btn-sm" title="Editovať">
             <span class="glyphicon glyphicon-pencil"></span></a>
           <a href="{plink confirmForm:confirmDelete! id=>$d->id, druh=>'priloha', nazov=>$d->nazov, zdroj_na_zmazanie=>'príspevok'}" class="btn btn-danger btn-sm" title="Zmazať">

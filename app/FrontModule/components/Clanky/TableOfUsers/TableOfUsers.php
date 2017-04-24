@@ -1,21 +1,22 @@
 <?php
 namespace App\FrontModule\Components\Clanky\TableOfUsers;
 
-use Nette;
+use Nette\Application\UI;
+use Nette\Security\User;
 use DbTable;
 
 /**
  * Komponenta pre zobrazenie aktívnych uzivatelov pre FRONT modul
- * Posledna zmena(last change): 10.04.2017
+ * Posledna zmena(last change): 24.04.2017
  *
  * @author Ing. Peter VOJTECH ml <petak23@gmail.com>
  * @copyright Copyright (c) 2012 - 2017 Ing. Peter VOJTECH ml.
  * @license
  * @link http://petak23.echo-msz.eu
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
-class TableOfUsersControl extends Nette\Application\UI\Control {
+class TableOfUsersControl extends UI\Control {
 
   /** @var DbTable\Dokumenty */
   private $dokumenty;
@@ -32,7 +33,7 @@ class TableOfUsersControl extends Nette\Application\UI\Control {
 
   /**
    * @param DbTable\Dokumenty $dokumenty */
-  public function __construct(DbTable\Dokumenty $dokumenty, DbTable\User_profiles $user_profiles, Nette\Security\User $user) {
+  public function __construct(DbTable\Dokumenty $dokumenty, DbTable\User_profiles $user_profiles, User $user) {
     parent::__construct();
     $this->dokumenty = $dokumenty;
     $this->user_profiles = $user_profiles;
@@ -47,20 +48,20 @@ class TableOfUsersControl extends Nette\Application\UI\Control {
     return $this;
   }
   
-  /** Render funkcia pre vypisanie odkazu na clanok 
-   * @see Nette\Application\Control#render()
-   */
+  /** 
+   * Render funkcia pre vypisanie odkazu na clanok 
+   * @see Nette\Application\Control#render() */
   public function render() { 
     $this->template->setFile(__DIR__ . "/TableOfUsers.latte");
     $pokus = $this->dokumenty->prispevky();
     $tou = [];
     foreach ($pokus as $p) {
-      $tou[] = ['meno'  => $p->meno . " " . $p->priezvisko,
+      $tou[] = ['id'    => $this->user->getIdentity()->id_registracia > 3 ? $p->id_user_profiles : 0,
+                'meno'  => $p->meno . " " . $p->priezvisko,
                 'tim'   => ($p->id_user_team !== NULL) ? $this->user_profiles->findOneBy(['id_user_team'=>$p->id_user_team])->user_team->nazov : "-",
                 'pocet' => $p->pocet,
              ];
     }
-//    dump($tou);die();
     $this->template->tou = $tou;
     $this->template->sutaziacich = $this->user_profiles->findBy(["id_registracia"=>1])->count();
     $this->template->prispevkov = $this->dokumenty->findBy(["id_dokumenty_kategoria"=>1])->count();

@@ -13,15 +13,20 @@
     {/if}
     </div>
     <h2 class="col-xs-10">
-      <small>Si prihlásený ako</small><br>
+      <small>{if $my_profile}Si prihlásený ako{else}Zobrazuje sa profil užívateľa{/if}</small><br>
       <a n:href="UserLog:" title="Užívateľský profil {$clen->users->username}">{$clen->users->username} <span>({$clen->meno} {$clen->priezvisko})</span></a>
     </h2>
   </div>
-  <p class="text-info">Počet súťažných príspevkov, ktoré si zatiaľ poslal: <span>{$pocet_prispevkov}</span>. Zmeniť to môžeš pridaním ďalších súťažných príspevkov cez odkaz "Pridať príspevok".</p> 
-  {var $po = $udaje['max_pocet_foto'] == 0 || $udaje['max_pocet_foto'] > $pocet_prispevkov}
-  <a n:href="My:add" {if !$po}disabled="disabled" title="Už nie je možné pridať súťažný príspevok. Dosiahli ste max. počet."{else}title="Pridať súťažný príspevok"{/if}>
-    <button type="button" class="btn btn-success btn-lg">Pridať príspevok</button>
-  </a>
+  <p class="text-info">
+    Počet súťažných príspevkov, ktoré {if $my_profile}si{else}užívateľ{/if} zatiaľ poslal: <span>{$pocet_prispevkov}</span>. 
+    {if $my_profile}Zmeniť to môžeš pridaním ďalších súťažných príspevkov cez odkaz "Pridať príspevok".{/if}
+  </p>
+  {if $my_profile}
+    {var $po = $udaje['max_pocet_foto'] == 0 || $udaje['max_pocet_foto'] > $pocet_prispevkov}
+    <a n:href="My:add" {if !$po}disabled="disabled" title="Už nie je možné pridať súťažný príspevok. Dosiahli ste max. počet."{else}title="Pridať súťažný príspevok"{/if}>
+      <button type="button" class="btn btn-success btn-lg">Pridať príspevok</button>
+    </a>
+  {/if}
   {if $pocet_prispevkov}
     <h3 class="bottom-line">Mapa príspevkov (kategória Poznávanie druhov).</h3>
     <div class="col-sm-10 col-xs-12">
@@ -29,10 +34,16 @@
     </div>
     {foreach $dkategoria as $dk}
       <h3 class="bottom-line">Zoznam príspevkov - kategória: {$dk->nazov}.</h3>
-      {control fotoPrilohy id_dokumenty_kategoria=>$dk->id}
+      {control fotoPrilohy id_dokumenty_kategoria=>$dk->id, my_profile=>$my_profile}
     {/foreach}
   {else}
-    <h3 class="bottom-line">Zatiaľ nemáš žiaden príspevok. Môžeš pridať <a n:href="My:add" title="Pridať súťažný príspevok">prvý.</a></h3>
+    <h3 class="bottom-line">
+      {if $my_profile}
+        Zatiaľ nemáš žiaden príspevok. Môžeš pridať <a n:href="My:add" title="Pridať súťažný príspevok">prvý.</a>
+      {else}
+        Užívateľ zatiaľ nemá žiade príspevok.
+      {/if}
+    </h3>
   {/if}
 </section>          
           
