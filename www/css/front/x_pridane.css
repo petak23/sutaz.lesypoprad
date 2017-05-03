@@ -94,3 +94,8 @@ span.error {
 #webItem4 {
     background: #412600;
 }
+
+/* -- Formuláre -- */
+form input {
+  color: black;
+}
